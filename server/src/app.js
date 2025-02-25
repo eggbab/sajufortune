@@ -23,11 +23,6 @@ app.get('/', (req, res) => {
 });
 
 // MongoDB 연결
-mongoose.connect(config.mongodbUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB에 연결되었습니다.'))
-.catch(err => console.error('MongoDB 연결 오류:', err));
+mongoose.connect(config.mongodbUri);
 
 module.exports = app;

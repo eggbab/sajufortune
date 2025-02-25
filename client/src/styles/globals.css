@@ -17,8 +17,8 @@
     --warning: #fdcb6e;
     
     /* 현대적인 폰트 */
-    --font-main: 'Pretendard', 'Noto Sans KR', sans-serif;
-    --font-heading: 'GmarketSans', 'Nanum Myeongjo', serif;
+    --font-main: 'Noto Sans KR', sans-serif;
+    --font-heading: 'Nanum Myeongjo', serif;
     
     /* 애니메이션 */
     --transition-fast: 0.3s ease;
@@ -41,19 +41,8 @@
     padding: 0;
 }
 
-@font-face {
-    font-family: 'GmarketSans';
-    src: url('/fonts/GmarketSansBold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Pretendard';
-    src: url('/fonts/PretendardVariable.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-}
+/* Google Fonts 사용 */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
 body {
     font-family: var(--font-main);

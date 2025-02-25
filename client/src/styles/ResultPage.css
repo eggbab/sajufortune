@@ -1,17 +1,17 @@
 /* ResultPage 스타일 */
 .result-page {
-    background-color: #f8f9fa;
+    background-color: #f8f9ff;
     min-height: 100vh;
   }
   
   .result-header {
     background-color: rgba(26, 26, 46, 0.95);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
     padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
   }
   
   .result-main {
@@ -148,72 +148,319 @@
   }
   
   .result-content {
+    padding: 50px 0;
+  }
+  
+  .result-intro {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .result-intro h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--dark);
+  }
+  
+  .birth-info {
+    font-size: 1.1rem;
+    color: var(--gray-text);
+    margin-bottom: 15px;
+  }
+  
+  .user-concerns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .concern-tag {
+    background-color: rgba(108, 92, 231, 0.1);
+    color: var(--primary);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .result-section {
     background-color: white;
-    border-radius: 12px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     padding: 30px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     margin-bottom: 40px;
   }
   
-  .tab-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: #333;
+  .result-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: var(--dark);
+    position: relative;
+    padding-bottom: 15px;
   }
   
-  .content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+  .result-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary), var(--accent1));
+    border-radius: 2px;
   }
   
-  .grid-item {
-    margin-bottom: 30px;
+  .dominant-element h2 span {
+    font-weight: 700;
   }
   
-  .characteristics p {
-    margin-bottom: 15px;
-    line-height: 1.7;
-    color: #666;
-  }
+  .dominant-element h2 span.fire { color: #ff7675; }
+  .dominant-element h2 span.water { color: #0984e3; }
+  .dominant-element h2 span.wood { color: #00b894; }
+  .dominant-element h2 span.earth { color: #fdcb6e; }
+  .dominant-element h2 span.metal { color: #74b9ff; }
   
-  .advice-box {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 10px;
+  .element-distribution {
+    display: flex;
+    gap: 40px;
     margin-top: 30px;
   }
   
-  .advice-box h4 {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    color: #333;
+  .element-chart {
+    flex: 1;
+    display: flex;
+    justify-content: center;
   }
   
-  .lucky-items {
-    margin-top: 40px;
+  .pie-chart {
+    width: 250px;
+  }
+  
+  .chart-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #dfe6e9;
+    margin-bottom: 20px;
+  }
+  
+  .pie-segment {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: 50% 100%;
+  }
+  
+  .pie-segment.fire { background-color: #ff7675; }
+  .pie-segment.wood { background-color: #00b894; }
+  .pie-segment.earth { background-color: #fdcb6e; }
+  .pie-segment.metal { background-color: #74b9ff; }
+  .pie-segment.water { background-color: #0984e3; }
+  
+  .chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    margin-right: 15px;
+  }
+  
+  .color-box {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    border-radius: 3px;
+  }
+  
+  .color-box.fire { background-color: #ff7675; }
+  .color-box.wood { background-color: #00b894; }
+  .color-box.earth { background-color: #fdcb6e; }
+  .color-box.metal { background-color: #74b9ff; }
+  .color-box.water { background-color: #0984e3; }
+  
+  .element-explanation {
+    flex: 2;
+  }
+  
+  .element-explanation h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--dark-text);
+  }
+  
+  .element-explanation p {
+    margin-bottom: 20px;
+    color: var(--gray-text);
+    line-height: 1.7;
+  }
+  
+  .element-bars {
+    margin-top: 30px;
+  }
+  
+  .element-bar-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .element-name {
+    width: 80px;
+    font-size: 0.95rem;
+    color: var(--dark-text);
+  }
+  
+  .bar-container {
+    flex: 1;
+    height: 10px;
+    background-color: #f1f2f6;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0 15px;
+  }
+  
+  .bar {
+    height: 100%;
+    border-radius: 5px;
+  }
+  
+  .bar.fire { background-color: #ff7675; }
+  .bar.wood { background-color: #00b894; }
+  .bar.earth { background-color: #fdcb6e; }
+  .bar.metal { background-color: #74b9ff; }
+  .bar.water { background-color: #0984e3; }
+  
+  .bar-value {
+    width: 40px;
+    text-align: right;
+    font-size: 0.9rem;
+    color: var(--gray-text);
+  }
+  
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+  }
+  
+  .result-card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary), var(--accent1));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 1.2rem;
+  }
+  
+  .result-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--dark-text);
+  }
+  
+  .result-card p {
+    color: var(--gray-text);
+    line-height: 1.7;
+  }
+  
+  .forecast-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .forecast-month {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s ease;
+  }
+  
+  .forecast-month:hover {
+    transform: translateY(-3px);
+  }
+  
+  .month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .month-header h3 {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  
+  .star-rating {
+    display: flex;
+    gap: 2px;
+  }
+  
+  .star-rating i {
+    color: #dfe6e9;
+    font-size: 0.9rem;
+  }
+  
+  .star-rating i.active {
+    color: #fdcb6e;
+  }
+  
+  .forecast-month p {
+    font-size: 0.95rem;
+    color: var(--gray-text);
+    line-height: 1.5;
   }
   
   .lucky-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 25px;
   }
   
-  .lucky-item {
-    background-color: #f9f9f9;
+  .lucky-card {
+    background-color: white;
+    border-radius: 12px;
     padding: 20px;
-    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
     text-align: center;
   }
   
-  .lucky-item h4 {
+  .lucky-card h3 {
     font-size: 1.1rem;
     margin-bottom: 15px;
-    color: #333;
+    color: var(--dark-text);
   }
   
-  .lucky-item-content {
+  .lucky-items {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -221,441 +468,97 @@
   }
   
   .lucky-tag {
-    display: inline-block;
-    padding: 6px 12px;
-    background-color: #f1f1f1;
+    background-color: rgba(108, 92, 231, 0.1);
+    color: var(--primary);
+    padding: 5px 15px;
     border-radius: 20px;
     font-size: 0.9rem;
-    color: #555;
   }
   
-  .premium-teaser {
-    background-color: #f8f8f8;
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 30px;
-    border: 1px solid #e0e0e0;
-  }
-  
-  .premium-teaser h4 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .premium-teaser p {
-    margin-bottom: 15px;
-    color: #666;
-  }
-  
-  .btn-premium {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-premium:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
-  }
-  
-  .talisman-section {
-    padding: 50px 0;
-    background-color: #f8f9fa;
-  }
-  
-  .talisman-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 30px;
-    margin-top: 40px;
-    background-color: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-  }
-  
-  .talisman-image-wrapper {
-    position: relative;
-    padding: 30px;
-    text-align: center;
-  }
-  
-  .talisman-image {
-    width: 100%;
-    height: 300px;
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  .talisman-image.blurred {
-    filter: blur(8px);
-  }
-  
-  .talisman-blur-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  .advice-content {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    color: white;
-    font-weight: 600;
+    align-items: flex-start;
+    gap: 20px;
   }
   
-  .talisman-blur-overlay span {
-    margin-bottom: 15px;
+  .advice-icon {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-top: 5px;
+  }
+  
+  .advice-content p {
+    flex: 1;
     font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--dark-text);
   }
   
-  .talisman-info {
-    padding: 30px;
-  }
-  
-  .talisman-info h3 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: #333;
-  }
-  
-  .talisman-info p {
-    margin-bottom: 20px;
-    line-height: 1.7;
-    color: #666;
-  }
-  
-  .talisman-benefits {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin: 20px 0;
-  }
-  
-  .talisman-benefits h4 {
-    grid-column: 1 / -1;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .benefit-item {
-    display: flex;
-    align-items: center;
-  }
-  
-  .benefit-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    background-color: #f0f0f0;
-    border-radius: 50%;
-    margin-right: 10px;
-    font-size: 0.9rem;
-  }
-  
-  .talisman-download {
-    margin-top: 30px;
-  }
-  
-  .btn-download {
-    background-color: #00b894;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  .btn-download:hover {
-    background-color: #00a189;
-  }
-  
-  .download-note {
-    font-size: 0.9rem;
-    color: #777;
-    margin-top: 10px;
-  }
-  
-  .result-actions {
+  .share-and-save {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin: 50px 0;
+    margin-top: 50px;
   }
   
-  .btn-secondary {
-    background-color: #f5f5f5;
-    color: #333;
-    border: 1px solid #ddd;
-    padding: 12px 24px;
-    border-radius: 6px;
+  .btn-outline {
+    background-color: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
   }
   
-  .btn-secondary:hover {
-    background-color: #e9e9e9;
-  }
-  
-  .btn-primary {
-    background-color: #6c5ce7;
+  .btn-outline:hover {
+    background-color: var(--primary);
     color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
   }
   
-  .btn-primary:hover {
-    background-color: #5f50e6;
-  }
-  
-  .icon {
-    margin-right: 8px;
-  }
-  
-  /* 프리미엄 모달 */
-  .premium-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background-color: white;
-    border-radius: 12px;
-    padding: 30px;
-    width: 90%;
-    max-width: 700px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
+  .btn-text {
     background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #666;
+    color: var(--primary);
+    font-weight: 500;
     cursor: pointer;
+    transition: color 0.3s ease;
   }
   
-  .premium-modal h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #333;
+  .btn-text:hover {
+    color: var(--accent1);
   }
   
-  .premium-features {
-    margin-bottom: 30px;
-  }
-  
-  .feature {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
-  }
-  
-  .feature-icon {
-    font-size: 1.5rem;
-    margin-right: 15px;
-    color: #6c5ce7;
-  }
-  
-  .feature-text h4 {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  .feature-text p {
-    color: #666;
-    line-height: 1.6;
-  }
-  
-  .premium-price {
+  .result-footer {
+    background-color: #f1f2f6;
+    padding: 30px 0;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 50px;
   }
   
-  .price-tag {
-    margin-bottom: 20px;
-  }
-  
-  .original-price {
-    text-decoration: line-through;
-    color: #999;
-    font-size: 1.1rem;
-    margin-right: 10px;
-  }
-  
-  .discount-price {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #333;
-  }
-  
-  .discount-label {
-    display: inline-block;
-    background-color: #ff7675;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    margin-left: 10px;
-    font-weight: 600;
-  }
-  
-  .btn-purchase {
-    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
+  .result-footer .container {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
   }
   
-  .btn-purchase:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
-  }
-  
-  .guarantee {
-    font-size: 0.9rem;
-    color: #666;
-  }
-  
-  /* 차트 스타일 */
-  .recharts-wrapper {
-    margin: 0 auto;
-  }
-  
-  /* 반응형 디자인 */
-  @media (max-width: 992px) {
-    .result-summary {
-      grid-template-columns: 1fr;
-    }
-    
-    .content-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .lucky-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-    
-    .talisman-container {
-      grid-template-columns: 1fr;
-    }
-    
-    .talisman-image-wrapper {
-      padding-bottom: 0;
-    }
-    
-    .talisman-benefits {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .result-banner h1 {
-      font-size: 2rem;
-    }
-    
-    .pillar-display {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .result-tabs {
-      flex-wrap: wrap;
-    }
-    
-    .tab-btn {
-      flex: 1 0 auto;
-      text-align: center;
-    }
-    
-    .lucky-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .result-actions {
-      flex-direction: column;
-      gap: 15px;
-    }
-    
-    .btn-primary, .btn-secondary, .btn-premium {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .pillar-display {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  /* 로딩 스크린 */
-  .loading-screen {
+  .loading-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f8f9fa;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 20px;
   }
   
   .loading-spinner {
     width: 50px;
     height: 50px;
     border: 5px solid rgba(108, 92, 231, 0.2);
+    border-top: 5px solid var(--primary);
     border-radius: 50%;
-    border-top-color: #6c5ce7;
     animation: spin 1s linear infinite;
-    margin-bottom: 20px;
   }
   
   @keyframes spin {
@@ -663,9 +566,71 @@
     100% { transform: rotate(360deg); }
   }
   
-  /* 오행 관련 색상 */
-  .wood { background-color: #00b894; }
-  .fire { background-color: #e17055; }
-  .earth { background-color: #fdcb6e; }
-  .metal { background-color: #b2bec3; }
-  .water { background-color: #0984e3; }
+  @media (max-width: 992px) {
+    .element-distribution {
+      flex-direction: column;
+    }
+    
+    .forecast-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .element-chart {
+      margin-bottom: 30px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .result-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .forecast-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .lucky-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .share-and-save {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .result-footer .container {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .forecast-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .result-section {
+      padding: 20px;
+    }
+    
+    .element-bar-item {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    .element-name {
+      margin-bottom: 5px;
+    }
+    
+    .bar-container {
+      margin: 5px 0;
+      width: 100%;
+    }
+    
+    .bar-value {
+      align-self: flex-end;
+      width: 100%;
+      text-align: right;
+    }
+  }

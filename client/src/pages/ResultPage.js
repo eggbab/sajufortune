@@ -14,17 +14,19 @@ function ResultPage() {
   const [activeTab, setActiveTab] = useState('overview');
   const [premium, setPremium] = useState(false);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    // 결과 데이터가 없으면 홈페이지로 리다이렉트
-    if (!userData || !sajuResult) {
+    // 전달된 state 확인
+    if (location.state && location.state.userData && location.state.sajuResult) {
+      setUserData(location.state.userData);
+      setSajuResult(location.state.sajuResult);
+      setLoading(false);
+    } else {
+      // state가 없으면 홈으로 리다이렉트
       history.replace('/');
     }
-    
-    // 스크롤을 맨 위로 이동
-    window.scrollTo(0, 0);
-  }, [userData, sajuResult, history]);
+  }, [location, history]);
   
   // 로딩 애니메이션 표시 - 요구사항 8 반영
   useEffect(() => {
@@ -128,6 +130,10 @@ function ResultPage() {
     } else {
       alert('공유 기능은 해당 브라우저에서 지원하지 않습니다.');
     }
+  };
+  
+  const goHome = () => {
+    history.push('/');
   };
   
   return (

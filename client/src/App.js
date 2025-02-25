@@ -93,13 +93,16 @@ function App() {
         };
         
         // 결과 페이지로 데이터와 함께 이동
-        history.push('/result', { 
-          userData: formData,
-          sajuResult: mockData
+        history.push({
+          pathname: '/result',
+          state: { 
+            userData: formData,
+            sajuResult: mockData
+          }
         });
         
         setLoading(false);
-      }, 3000); // 3초 후 결과로 이동
+      }, 2000); // 2초 후 결과로 이동
     } catch (error) {
       setError('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
       setLoading(false);
@@ -116,9 +119,13 @@ function App() {
     }
   };
 
+  const handleSampleAnalyzeClick = () => {
+    scrollToSection('saju-form');
+  };
+
   return (
     <div className="App">
-      {/* 헤더 */}
+      {/* 헤더 - 개선된 디자인 */}
       <header className="site-header">
         <div className="container">
           <div className="header-content">
@@ -128,9 +135,9 @@ function App() {
             <nav className="main-nav">
               <ul>
                 <li><a href="/">홈</a></li>
-                <li><button onClick={() => scrollToSection('features')}>특징</button></li>
-                <li><button onClick={() => scrollToSection('sample-results')}>분석 예시</button></li>
-                <li><button onClick={() => scrollToSection('testimonials')}>이용후기</button></li>
+                <li><button onClick={() => scrollToSection('about')}>소개</button></li>
+                <li><button onClick={() => scrollToSection('features')}>서비스</button></li>
+                <li><button onClick={() => scrollToSection('testimonials')}>후기</button></li>
                 <li><button onClick={() => scrollToSection('saju-form')} className="nav-cta">무료 분석 받기</button></li>
               </ul>
             </nav>
@@ -139,13 +146,48 @@ function App() {
       </header>
 
       <main>
-        {/* 히어로 섹션 */}
+        {/* 히어로 섹션 - 완전 개선 */}
         <section className="hero">
-          <div className="container centered">
+          <div className="hero-bg-wrapper">
+            <div className="hero-particles"></div>
+            <div className="hero-stars"></div>
+          </div>
+          <div className="container">
             <div className="hero-content">
-              <h1>당신의 운명을<br />AI가 분석합니다</h1>
-              <p>사주팔자를 기반으로 한 정확한 운세 분석,<br />지금 바로 무료로 체험해보세요.</p>
-              <button onClick={() => scrollToSection('saju-form')} className="btn-primary">무료 사주 분석 받기</button>
+              <div className="hero-text">
+                <h1>당신의 운명을<br />AI로 <span className="text-highlight">해석</span>합니다</h1>
+                <p>사주팔자를 기반으로 한 정확한 운세 분석<br />지금 바로 무료로 체험해보세요</p>
+                <div className="hero-buttons">
+                  <button onClick={() => scrollToSection('saju-form')} className="btn-primary">
+                    <span>무료 사주 분석 받기</span>
+                    <i className="fas fa-angle-right"></i>
+                  </button>
+                  <button onClick={() => scrollToSection('about')} className="btn-secondary">
+                    <span>서비스 더 알아보기</span>
+                    <i className="fas fa-info-circle"></i>
+                  </button>
+                </div>
+              </div>
+              <div className="hero-image">
+                <div className="fortune-wheel">
+                  <div className="wheel-outer"></div>
+                  <div className="wheel-inner"></div>
+                  <div className="wheel-center"></div>
+                  <div className="wheel-symbol wood">木</div>
+                  <div className="wheel-symbol fire">火</div>
+                  <div className="wheel-symbol earth">土</div>
+                  <div className="wheel-symbol metal">金</div>
+                  <div className="wheel-symbol water">水</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* 스크롤 유도 애니메이션 */}
+            <div className="scroll-indicator">
+              <div className="scroll-icon">
+                <i className="fas fa-angle-down"></i>
+              </div>
+              <p>아래로 스크롤하여 더 알아보기</p>
             </div>
           </div>
         </section>
@@ -196,79 +238,254 @@ function App() {
           </div>
         </section>
 
-        {/* 다른 사용자의 사주 분석 결과 미리보기 (개선된 디자인) */}
+        {/* 다른 사용자 분석 결과 섹션 - 완전 개선 */}
         <section id="sample-results" className="sample-results">
           <div className="container">
             <h2>다른 사용자들의 분석 결과</h2>
             <p className="section-subtitle">실제 사용자들이 받은 사주 분석 결과의 일부를 미리 살펴보세요</p>
             
-            <div className="results-grid">
-              <div className="result-preview">
-                <div className="result-preview-header">
-                  <h3>30대 남성 - 화(火) 주요 오행</h3>
-                  <span className="element-tag fire">화(火)</span>
-                </div>
-                <div className="result-preview-content">
-                  <div className="result-charts">
-                    <div className="sample-chart pie-chart"></div>
-                    <div className="sample-chart bar-chart"></div>
+            <div className="result-samples">
+              <div className="result-sample-card">
+                <div className="sample-header">
+                  <div className="sample-title">
+                    <h3>30대 남성 - 화(火) 주요 오행</h3>
+                    <span className="element-badge fire">화(火)</span>
                   </div>
-                  <div className="preview-text-container">
-                    <p className="preview-text">
-                      열정적이고 적극적인 성격으로, 창의력이 뛰어나고 새로운 도전을 즐깁니다. 
-                      리더십이 강하며 목표를 향해 끊임없이 노력하는 추진력이 있습니다. 
-                      감정 표현이 자유롭고 사교성이 좋아 인간관계를 넓게 형성합니다.
-                    </p>
-                    <div className="text-fade-out"></div>
+                  <div className="sample-user">
+                    <div className="user-avatar">김</div>
+                    <div className="birth-info">1990년 7월 18일 오전 11시</div>
+                  </div>
+                </div>
+                
+                <div className="sample-content">
+                  <div className="element-chart">
+                    <div className="chart-title">오행 분석</div>
+                    <div className="chart-container">
+                      <div className="pie-visual">
+                        <div className="pie-slice fire" style={{transform: 'rotate(0deg)', clipPath: 'polygon(50% 50%, 50% 0%, 100% 0%, 100% 60%, 50% 50%)'}}></div>
+                        <div className="pie-slice wood" style={{transform: 'rotate(130deg)', clipPath: 'polygon(50% 50%, 50% 0%, 100% 0%, 80% 60%, 50% 50%)'}}></div>
+                        <div className="pie-slice earth" style={{transform: 'rotate(190deg)', clipPath: 'polygon(50% 50%, 50% 0%, 90% 0%, 70% 70%, 50% 50%)'}}></div>
+                        <div className="pie-slice metal" style={{transform: 'rotate(270deg)', clipPath: 'polygon(50% 50%, 50% 0%, 80% 0%, 60% 60%, 50% 50%)'}}></div>
+                        <div className="pie-slice water" style={{transform: 'rotate(330deg)', clipPath: 'polygon(50% 50%, 50% 0%, 70% 0%, 60% 40%, 50% 50%)'}}></div>
+                      </div>
+                      <div className="element-distribution">
+                        <div className="element-row">
+                          <span className="element-name">화(火)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar fire" style={{width: '42%'}}></div>
+                          </div>
+                          <span className="element-percent">42%</span>
+                        </div>
+                        <div className="element-row">
+                          <span className="element-name">목(木)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar wood" style={{width: '23%'}}></div>
+                          </div>
+                          <span className="element-percent">23%</span>
+                        </div>
+                        <div className="element-row">
+                          <span className="element-name">토(土)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar earth" style={{width: '15%'}}></div>
+                          </div>
+                          <span className="element-percent">15%</span>
+                        </div>
+                        <div className="element-row">
+                          <span className="element-name">금(金)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar metal" style={{width: '12%'}}></div>
+                          </div>
+                          <span className="element-percent">12%</span>
+                        </div>
+                        <div className="element-row">
+                          <span className="element-name">수(水)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar water" style={{width: '8%'}}></div>
+                          </div>
+                          <span className="element-percent">8%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="personality-traits">
+                    <div className="traits-title">성격 특성</div>
+                    <div className="traits-radar">
+                      <div className="radar-chart">
+                        <div className="radar-area" style={{clipPath: 'polygon(50% 10%, 85% 30%, 90% 70%, 50% 90%, 15% 65%, 20% 25%)'}}></div>
+                        <div className="radar-axis vertical"></div>
+                        <div className="radar-axis horizontal"></div>
+                        <div className="radar-axis diagonal1"></div>
+                        <div className="radar-axis diagonal2"></div>
+                        <div className="radar-label top">창의성</div>
+                        <div className="radar-label right">리더십</div>
+                        <div className="radar-label bottom-right">결단력</div>
+                        <div className="radar-label bottom-left">인내력</div>
+                        <div className="radar-label left">협동성</div>
+                        <div className="radar-label top-left">감수성</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="analysis-summary">
+                    <h4>종합 분석</h4>
+                    <p>열정적이고 적극적인 성격으로, 창의력이 뛰어나고 새로운 도전을 즐깁니다. 리더십이 강하며 목표를 향해 끊임없이 노력하는 추진력이 있습니다. 감정 표현이 자유롭고 타인과의 관계에서 영향력을 발휘하는 성향이 있으며, 자신의 비전을 실현시키는 능력이 탁월합니다. 다만 때로는 급한 성격으로 인해 세부 사항을 놓치거나 인내심이 부족할 수 있습니다.</p>
+                    <div className="analysis-fade"></div>
+                  </div>
+                  
+                  <div className="fortune-preview">
+                    <div className="fortune-section">
+                      <h4>2023년 운세 흐름</h4>
+                      <div className="fortune-graph">
+                        <div className="month-bars">
+                          <div className="month-bar" style={{height: '65%'}}><span>1월</span></div>
+                          <div className="month-bar" style={{height: '50%'}}><span>2월</span></div>
+                          <div className="month-bar" style={{height: '75%'}}><span>3월</span></div>
+                          <div className="month-bar" style={{height: '85%'}}><span>4월</span></div>
+                          <div className="month-bar accent" style={{height: '90%'}}><span>5월</span></div>
+                          <div className="month-bar" style={{height: '70%'}}><span>6월</span></div>
+                          <div className="blur-overlay"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="sample-blur-overlay"></div>
+                </div>
+                
+                <div className="sample-footer">
+                  <div className="sample-tags">
+                    <span className="sample-tag">성격분석</span>
+                    <span className="sample-tag">직업적성</span>
+                    <span className="sample-tag">인간관계</span>
+                    <span className="sample-tag">재물운</span>
+                  </div>
+                  <div className="btn-container">
+                    <button className="analyze-my-saju-btn" onClick={handleSampleAnalyzeClick}>나도 분석 받기</button>
                   </div>
                 </div>
               </div>
               
-              <div className="result-preview">
-                <div className="result-preview-header">
-                  <h3>20대 여성 - 수(水) 주요 오행</h3>
-                  <span className="element-tag water">수(水)</span>
-                </div>
-                <div className="result-preview-content">
-                  <div className="result-charts">
-                    <div className="sample-chart pie-chart"></div>
-                    <div className="sample-chart bar-chart"></div>
+              <div className="result-sample-card">
+                <div className="sample-header">
+                  <div className="sample-title">
+                    <h3>20대 여성 - 수(水) 주요 오행</h3>
+                    <span className="element-badge water">수(水)</span>
                   </div>
-                  <div className="preview-text-container">
-                    <p className="preview-text">
-                      지혜롭고 통찰력이 뛰어나며, 상황을 객관적으로 파악하는 능력이 있습니다. 
-                      적응력이 좋고 유연한 사고방식으로 어려운 상황에서도 해결책을 찾아냅니다. 
-                      직관력이 발달하여 예술적 감각과 창의성이 돋보입니다.
-                    </p>
-                    <div className="text-fade-out"></div>
+                  <div className="sample-user">
+                    <div className="user-avatar">이</div>
+                    <div className="birth-info">1996년 11월 24일 오후 9시</div>
+                  </div>
+                </div>
+                
+                <div className="sample-content">
+                  <div className="element-chart">
+                    <div className="chart-title">오행 분석</div>
+                    <div className="chart-container">
+                      <div className="pie-visual">
+                        <div className="pie-slice water" style={{transform: 'rotate(0deg)', clipPath: 'polygon(50% 50%, 50% 0%, 100% 0%, 100% 70%, 50% 50%)'}}></div>
+                        <div className="pie-slice metal" style={{transform: 'rotate(150deg)', clipPath: 'polygon(50% 50%, 50% 0%, 90% 0%, 85% 60%, 50% 50%)'}}></div>
+                        <div className="pie-slice earth" style={{transform: 'rotate(215deg)', clipPath: 'polygon(50% 50%, 50% 0%, 70% 0%, 60% 60%, 50% 50%)'}}></div>
+                        <div className="pie-slice fire" style={{transform: 'rotate(270deg)', clipPath: 'polygon(50% 50%, 50% 0%, 60% 0%, 60% 40%, 50% 50%)'}}></div>
+                        <div className="pie-slice wood" style={{transform: 'rotate(315deg)', clipPath: 'polygon(50% 50%, 50% 0%, 80% 0%, 60% 30%, 50% 50%)'}}></div>
+                      </div>
+                      <div className="element-distribution">
+                        <div className="element-row">
+                          <span className="element-name">수(水)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar water" style={{width: '38%'}}></div>
+                          </div>
+                          <span className="element-percent">38%</span>
+                        </div>
+                        <div className="element-row">
+                          <span className="element-name">금(金)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar metal" style={{width: '27%'}}></div>
+                          </div>
+                          <span className="element-percent">27%</span>
+                        </div>
+                        <div className="element-row">
+                          <span className="element-name">토(土)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar earth" style={{width: '18%'}}></div>
+                          </div>
+                          <span className="element-percent">18%</span>
+                        </div>
+                        <div className="element-row">
+                          <span className="element-name">화(火)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar fire" style={{width: '10%'}}></div>
+                          </div>
+                          <span className="element-percent">10%</span>
+                        </div>
+                        <div className="element-row">
+                          <span className="element-name">목(木)</span>
+                          <div className="element-bar-container">
+                            <div className="element-bar wood" style={{width: '7%'}}></div>
+                          </div>
+                          <span className="element-percent">7%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="personality-traits">
+                    <div className="traits-title">성격 특성</div>
+                    <div className="traits-radar">
+                      <div className="radar-chart">
+                        <div className="radar-area" style={{clipPath: 'polygon(50% 25%, 70% 35%, 75% 70%, 50% 85%, 20% 75%, 30% 30%)'}}></div>
+                        <div className="radar-axis vertical"></div>
+                        <div className="radar-axis horizontal"></div>
+                        <div className="radar-axis diagonal1"></div>
+                        <div className="radar-axis diagonal2"></div>
+                        <div className="radar-label top">창의성</div>
+                        <div className="radar-label right">적응력</div>
+                        <div className="radar-label bottom-right">자기표현</div>
+                        <div className="radar-label bottom-left">안정성</div>
+                        <div className="radar-label left">공감능력</div>
+                        <div className="radar-label top-left">직관력</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="analysis-summary">
+                    <h4>종합 분석</h4>
+                    <p>직관력과 공감 능력이 뛰어나며, 주변 환경에 유연하게 적응하는 능력이 탁월합니다. 감성이 풍부하고 타인의 감정을 잘 이해하며, 조화로운 관계를 중요시합니다. 깊은 사고력과 통찰력으로 복잡한 문제를 해결하는 능력이 있으며, 창의적인 접근 방식으로 독특한 아이디어를 제시합니다. 다만 때로는 지나치게 감정적이거나 우유부단한 면이 있을 수 있습니다.</p>
+                    <div className="analysis-fade"></div>
+                  </div>
+                  
+                  <div className="fortune-preview">
+                    <div className="fortune-section">
+                      <h4>2023년 운세 흐름</h4>
+                      <div className="fortune-graph">
+                        <div className="month-bars">
+                          <div className="month-bar" style={{height: '55%'}}><span>1월</span></div>
+                          <div className="month-bar" style={{height: '60%'}}><span>2월</span></div>
+                          <div className="month-bar" style={{height: '50%'}}><span>3월</span></div>
+                          <div className="month-bar" style={{height: '75%'}}><span>4월</span></div>
+                          <div className="month-bar" style={{height: '80%'}}><span>5월</span></div>
+                          <div className="month-bar accent" style={{height: '95%'}}><span>6월</span></div>
+                          <div className="blur-overlay"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="sample-blur-overlay"></div>
+                </div>
+                
+                <div className="sample-footer">
+                  <div className="sample-tags">
+                    <span className="sample-tag">성격분석</span>
+                    <span className="sample-tag">인간관계</span>
+                    <span className="sample-tag">감정패턴</span>
+                    <span className="sample-tag">연애운</span>
+                  </div>
+                  <div className="btn-container">
+                    <button className="analyze-my-saju-btn" onClick={handleSampleAnalyzeClick}>나도 분석 받기</button>
                   </div>
                 </div>
               </div>
-              
-              <div className="result-preview">
-                <div className="result-preview-header">
-                  <h3>40대 남성 - 목(木) 주요 오행</h3>
-                  <span className="element-tag wood">목(木)</span>
-                </div>
-                <div className="result-preview-content">
-                  <div className="result-charts">
-                    <div className="sample-chart pie-chart"></div>
-                    <div className="sample-chart bar-chart"></div>
-                  </div>
-                  <div className="preview-text-container">
-                    <p className="preview-text">
-                      성장과 발전을 추구하는 진취적인 성격입니다. 
-                      계획적이고 체계적으로 일을 추진하며, 목표를 향해 꾸준히 나아갑니다. 
-                      정의감이 강하고 원칙을 중요시하며, 가족과 공동체에 대한 책임감이 강합니다.
-                    </p>
-                    <div className="text-fade-out"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="cta-center">
-              <button onClick={() => scrollToSection('saju-form')} className="btn-primary">나도 분석 받기</button>
             </div>
           </div>
         </section>
@@ -282,52 +499,39 @@ function App() {
             <div className="testimonial-grid">
               <div className="testimonial-card">
                 <div className="testimonial-content">
-                  <p>"정말 놀라웠어요. 제 성격과 특성을 너무 정확하게 분석해주셨고, 진로에 대한 조언이 특히 도움이 되었습니다. 이제 더 자신감을 갖고 결정을 내릴 수 있게 되었어요."</p>
-                </div>
-                <div className="testimonial-author">
-                  <div className="author-avatar">김</div>
-                  <div className="author-info">
-                    <h4>김민지</h4>
-                    <p>27세, 회사원</p>
+                  <p className="testimonial-text">"정말 놀라웠어요. 제 성격과 특성을 너무 정확하게 분석해주셨고, 진로에 대한 조언이 특히 도움이 되었습니다. 이제 더 자신감을 갖고 결정을 내릴 수 있게 되었어요."</p>
+                  <div className="testimonial-author">
+                    <div className="author-avatar">김</div>
+                    <div className="author-info">
+                      <h4>김민지</h4>
+                      <p>27세, 회사원</p>
+                    </div>
                   </div>
                 </div>
               </div>
               
               <div className="testimonial-card">
                 <div className="testimonial-content">
-                  <p>"사주 분석을 통해 제 강점과 약점을 명확히 알게 되었고, 어떤 방향으로 나아가야 할지 감이 잡혔어요. 특히 월별 운세 예측이 실제로 맞아떨어져서 더 신뢰하게 되었습니다."</p>
-                </div>
-                <div className="testimonial-author">
-                  <div className="author-avatar">이</div>
-                  <div className="author-info">
-                    <h4>이준호</h4>
-                    <p>35세, 자영업</p>
+                  <p className="testimonial-text">"사주 분석을 통해 제 강점과 약점을 명확히 알게 되었고, 어떤 방향으로 나아가야 할지 깨닫게 되었어요. 특히 월별 운세 예측이 실제로 맞아떨어져서 더 신뢰하게 되었습니다."</p>
+                  <div className="testimonial-author">
+                    <div className="author-avatar">이</div>
+                    <div className="author-info">
+                      <h4>이준호</h4>
+                      <p>35세, 자영업</p>
+                    </div>
                   </div>
                 </div>
               </div>
               
               <div className="testimonial-card">
                 <div className="testimonial-content">
-                  <p>"인간관계에서 겪고 있던 어려움에 대한 조언이 매우 실질적이었습니다. 제안해주신 방법을 실천했더니 정말 관계가 개선되는 것을 느꼈어요. 다른 친구들에게도 추천했습니다."</p>
-                </div>
-                <div className="testimonial-author">
-                  <div className="author-avatar">박</div>
-                  <div className="author-info">
-                    <h4>박서연</h4>
-                    <p>31세, 디자이너</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="testimonial-card">
-                <div className="testimonial-content">
-                  <p>"사업 운을 알고 싶어서 분석을 받았는데, 정말 유용한 정보를 얻었습니다. 좋은 시기와 주의해야 할 시기를 파악해 계획을 세울 수 있어서 큰 도움이 되었어요."</p>
-                </div>
-                <div className="testimonial-author">
-                  <div className="author-avatar">최</div>
-                  <div className="author-info">
-                    <h4>최재현</h4>
-                    <p>42세, 사업가</p>
+                  <p className="testimonial-text">"인간관계에서 겪고 있던 어려움에 대한 조언이 매우 실질적이었습니다. 제안해주신 방법을 실천했더니 정말 관계가 개선되는 것을 느껴요. 다른 친구들에게도 추천했습니다."</p>
+                  <div className="testimonial-author">
+                    <div className="author-avatar">박</div>
+                    <div className="author-info">
+                      <h4>박서연</h4>
+                      <p>31세, 디자이너</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -490,29 +694,44 @@ function App() {
             <div className="footer-logo">
               <h3>사주포춘</h3>
               <p>AI 기반 사주 분석 서비스</p>
+              <p>당신의 운명을 밝혀주는 미래 예측 플랫폼</p>
+              <div className="social-icons">
+                <a href="#" className="social-icon"><i className="fab fa-facebook-f"></i></a>
+                <a href="#" className="social-icon"><i className="fab fa-instagram"></i></a>
+                <a href="#" className="social-icon"><i className="fab fa-youtube"></i></a>
+                <a href="#" className="social-icon"><i className="fab fa-twitter"></i></a>
+              </div>
             </div>
+            
             <div className="footer-links">
               <h4>바로가기</h4>
               <ul>
                 <li><a href="/">홈</a></li>
                 <li><a href="/about">소개</a></li>
                 <li><button onClick={() => scrollToSection('saju-form')} className="footer-btn">사주 분석</button></li>
+                <li><a href="/blog">블로그</a></li>
               </ul>
             </div>
+            
             <div className="footer-contact">
               <h4>문의하기</h4>
-              <p>이메일: vmeandbeme@gmail.com</p>
+              <p><i className="far fa-envelope"></i> 이메일: vmeandbeme@gmail.com</p>
+              <p><i className="fas fa-phone-alt"></i> 전화: 070-1234-5678</p>
+              <p><i className="fas fa-map-marker-alt"></i> 주소: 서울시 강남구</p>
             </div>
+            
             <div className="footer-company">
               <h4>회사 정보</h4>
-              <p>상호명: 사주포춘</p>
-              <p>대표: 김우진</p>
-              <p>사업자등록번호: 426-62-00632</p>
+              <p><i className="far fa-building"></i> 상호명: 사주포춘</p>
+              <p><i className="far fa-user"></i> 대표: 김우진</p>
+              <p><i className="fas fa-registered"></i> 사업자등록번호: 426-62-00632</p>
+              <p><i className="far fa-calendar-alt"></i> 설립일: 2022년 7월</p>
             </div>
           </div>
+          
           <div className="footer-bottom">
             <p>&copy; 2023 사주포춘. All rights reserved.</p>
-            <p><a href="/privacy">개인정보처리방침</a> | <a href="/terms">이용약관</a></p>
+            <p><a href="/privacy">개인정보처리방침</a> | <a href="/terms">이용약관</a> | <a href="/refund">환불정책</a></p>
           </div>
         </div>
       </footer>

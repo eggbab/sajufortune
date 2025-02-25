@@ -36,24 +36,25 @@ function HomePage() {
     setError('');
     
     try {
-      const response = await fetch('/api/saju/analyze', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      if (!response.ok) {
-        throw new Error('서버 오류가 발생했습니다.');
-      }
-      
-      const data = await response.json();
+      // 서버 API 호출 대신 임시 데이터 사용
+      const mockData = {
+        dominantElement: "화",
+        personality: "열정적이고 활동적인 성격입니다. 창의력이 뛰어나며 새로운 아이디어를 내는 것을 좋아합니다.",
+        career: "창의적인 분야나 리더십을 발휘할 수 있는 직업이 적합합니다.",
+        relationship: "열정적인 연애 스타일을 가지고 있으며, 파트너에게 헌신적입니다.",
+        wealth: "재물운은 양호하나 충동적인 소비에 주의해야 합니다.",
+        health: "심장과 혈액순환에 관련된 건강 문제에 주의가 필요합니다.",
+        yearPillar: "갑진",
+        monthPillar: "병오",
+        dayPillar: "정해",
+        hourPillar: "무자",
+        advice: "균형 잡힌 생활과 감정 조절이 중요합니다."
+      };
       
       // 결과 페이지로 이동
       history.push('/result', {
         userData: formData,
-        sajuResult: data
+        sajuResult: mockData
       });
       
     } catch (error) {
@@ -79,7 +80,7 @@ function HomePage() {
                 AI 기반 사주 분석으로 당신의 타고난 기질과 운명의 흐름을 파악하세요
               </p>
               <div className="hero-cta">
-                <button className="cta-button">무료로 사주 보기</button>
+                <a href="#saju-form" className="cta-button">무료로 사주 보기</a>
               </div>
             </div>
           </div>

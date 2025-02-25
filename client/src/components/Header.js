@@ -5,24 +5,28 @@ import '../styles/Header.css';
 function Header() {
   return (
     <header className="header">
-      <div className="container header-container">
-        <Link to="/" className="logo">
-          <span className="logo-text">사주<span className="gradient-text">포춘</span></span>
-        </Link>
-        
-        <nav className="nav">
-          <ul className="nav-list">
-            <li className="nav-item">
-              <Link to="/" className="nav-link">홈</Link>
-            </li>
-            <li className="nav-item">
-              <a href="#features" className="nav-link">서비스 소개</a>
-            </li>
-            <li className="nav-item">
-              <a href="#testimonials" className="nav-link">후기</a>
-            </li>
-          </ul>
-        </nav>
+      <div className="container">
+        <div className="header-content">
+          <div className="logo">
+            <Link to="/">
+              <h1>사주포춘</h1>
+            </Link>
+          </div>
+          
+          <nav className="main-nav">
+            <ul className="nav-list">
+              <li className="nav-item">
+                <Link to="/" className="nav-link">홈</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/about" className="nav-link">서비스 소개</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/terms" className="nav-link">이용약관</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );

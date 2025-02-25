@@ -8,35 +8,34 @@ function Footer() {
       <div className="container">
         <div className="footer-content">
           <div className="footer-logo">
-            <h3>사주포춘</h3>
-            <p>동양의 지혜로 당신의 미래를 밝혀드립니다</p>
+            <h2>사주포춘</h2>
+            <p>당신의 운명을 해석합니다</p>
           </div>
           
           <div className="footer-links">
-            <div className="footer-links-column">
-              <h4>서비스</h4>
+            <div className="footer-section">
+              <h3>서비스</h3>
               <ul>
-                <li><Link to="/">사주 해석</Link></li>
-                <li><Link to="/talisman">부적 구매</Link></li>
-                <li><Link to="/faq">자주 묻는 질문</Link></li>
+                <li><Link to="/">무료 사주 분석</Link></li>
+                <li><Link to="/about">서비스 소개</Link></li>
               </ul>
             </div>
             
-            <div className="footer-links-column">
-              <h4>회사 정보</h4>
+            <div className="footer-section">
+              <h3>고객지원</h3>
               <ul>
-                <li><Link to="/about">회사 소개</Link></li>
                 <li><Link to="/terms">이용약관</Link></li>
                 <li><Link to="/privacy">개인정보처리방침</Link></li>
               </ul>
             </div>
             
-            <div className="footer-links-column">
-              <h4>고객 지원</h4>
+            <div className="footer-section">
+              <h3>회사정보</h3>
               <ul>
-                <li><Link to="/contact">문의하기</Link></li>
-                <li><a href="mailto:support@sajufortune.com">이메일</a></li>
-                <li><a href="tel:+8201012345678">전화: 010-1234-5678</a></li>
+                <li>사주포춘</li>
+                <li>대표: 김우진</li>
+                <li>사업자등록번호: 426-62-00632</li>
+                <li>이메일: contact@sajufortune.com</li>
               </ul>
             </div>
           </div>
@@ -44,8 +43,6 @@ function Footer() {
         
         <div className="footer-bottom">
           <p>&copy; 2024 사주포춘 (주). 모든 권리 보유.</p>
-          <p>사업자등록번호: 123-45-67890 | 대표: 김사주</p>
-          <p>서울특별시 강남구 테헤란로 123, 사주빌딩 4층</p>
         </div>
       </div>
     </footer>

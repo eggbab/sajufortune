@@ -13,6 +13,7 @@ function App() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [activeSection, setActiveSection] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -110,6 +111,16 @@ function App() {
     }
   ];
 
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (sectionId === 'saju-form') {
+      setActiveSection('saju-form');
+    }
+  };
+
   return (
     <div className="home-page">
       {/* 헤더 섹션 */}
@@ -123,6 +134,7 @@ function App() {
               <ul>
                 <li><a href="/">홈</a></li>
                 <li><a href="/about">소개</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('saju-form'); }}>무료분석</a></li>
               </ul>
             </nav>
           </div>
@@ -134,9 +146,9 @@ function App() {
         <section className="hero">
           <div className="container">
             <div className="hero-content">
-              <h1>당신의 운명을 AI가 분석합니다</h1>
-              <p>사주팔자를 기반으로 한 정확한 운세 분석, 지금 바로 무료로 체험해보세요.</p>
-              <a href="#saju-form" className="btn-primary">무료 사주 분석 받기</a>
+              <h1>당신의 운명을<br />AI가 분석합니다</h1>
+              <p>사주팔자를 기반으로 한 정확한 운세 분석,<br />지금 바로 무료로 체험해보세요.</p>
+              <button onClick={() => scrollToSection('saju-form')} className="btn-primary">무료 사주 분석 받기</button>
             </div>
             <div className="hero-image">
               <div className="image-placeholder"></div>
@@ -230,7 +242,7 @@ function App() {
                     <div className="blur-overlay"></div>
                   </div>
                   <div className="result-cta">
-                    <a href="#saju-form" className="btn-secondary">나도 분석받기</a>
+                    <button onClick={() => scrollToSection('saju-form')} className="btn-secondary">나도 분석받기</button>
                   </div>
                 </div>
               ))}
@@ -308,7 +320,7 @@ function App() {
         </section>
 
         {/* 사주 입력 폼 섹션 */}
-        <section id="saju-form" className="saju-form">
+        <section id="saju-form" className={`saju-form ${activeSection === 'saju-form' ? 'active' : ''}`}>
           <div className="container">
             <h2>무료 사주 분석</h2>
             <p className="section-subtitle">아래 정보를 입력하시면 AI가 당신의 사주를 분석해드립니다</p>
@@ -341,7 +353,7 @@ function App() {
                 </div>
                 
                 <div className="form-group">
-                  <label htmlFor="birthTime">태어난 시간 (선택사항)</label>
+                  <label htmlFor="birthTime">시주(時柱)</label>
                   <input
                     type="time"
                     id="birthTime"
@@ -349,6 +361,7 @@ function App() {
                     value={formData.birthTime}
                     onChange={handleChange}
                   />
+                  <small className="form-help">태어난 시간을 아는 경우 더 정확한 분석이 가능합니다</small>
                 </div>
                 
                 <div className="form-group">
@@ -436,8 +449,8 @@ function App() {
         <section className="cta">
           <div className="container">
             <h2>지금 바로 무료로 사주 분석을 받아보세요</h2>
-            <p>당신의 운명을 알아보는 첫 걸음, 사주포춘과 함께하세요. 단 5분 만에 당신의 타고난 기질과 운명의 흐름을 파악할 수 있습니다.</p>
-            <a href="#saju-form" className="btn-primary">무료 사주 분석 받기</a>
+            <p>당신의 운명을 알아보는 첫 걸음, 사주포춘과 함께하세요.<br />단 5분 만에 당신의 타고난 기질과 운명의 흐름을 파악할 수 있습니다.</p>
+            <button onClick={() => scrollToSection('saju-form')} className="btn-primary">무료 사주 분석 받기</button>
           </div>
         </section>
       </main>
@@ -455,7 +468,7 @@ function App() {
               <ul>
                 <li><a href="/">홈</a></li>
                 <li><a href="/about">소개</a></li>
-                <li><a href="#saju-form">사주 분석</a></li>
+                <li><button onClick={() => scrollToSection('saju-form')} className="footer-btn">사주 분석</button></li>
               </ul>
             </div>
             <div className="footer-contact">

@@ -54,6 +54,7 @@ button {
   border: none;
   outline: none;
   font-family: inherit;
+  background: none;
 }
 
 /* 기본 입력 필드 스타일 */
@@ -195,6 +196,18 @@ input, select, textarea {
   text-align: center;
 }
 
+.ai-intro {
+  max-width: 800px;
+  margin: 0 auto 50px;
+  text-align: left;
+}
+
+.ai-description, .ai-advantage {
+  margin-bottom: 20px;
+  line-height: 1.8;
+  color: var(--gray-text);
+}
+
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -208,6 +221,7 @@ input, select, textarea {
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
+  text-align: left;
 }
 
 .feature-card:hover {
@@ -225,11 +239,185 @@ input, select, textarea {
   color: var(--dark);
 }
 
+/* 다른 사용자 결과 미리보기 섹션 */
+.sample-results {
+  padding: 100px 0;
+  background-color: #f8f9fa;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.result-card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.result-card:hover {
+  transform: translateY(-10px);
+}
+
+.result-header {
+  padding: 20px;
+  background: linear-gradient(135deg, var(--primary), var(--accent1));
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.dominant-element {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.result-preview {
+  padding: 20px;
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.result-preview p {
+  color: var(--gray-text);
+  line-height: 1.7;
+}
+
+.blur-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, #fff);
+}
+
+.result-cta {
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid var(--light-gray);
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--light-gray);
+  color: var(--dark-text);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent2);
+  color: var(--dark);
+}
+
+/* 서비스 장점 섹션 스타일 */
+.service-benefits {
+  padding: 100px 0;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.benefit-item {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.benefit-item:hover {
+  transform: translateY(-10px);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.benefit-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: var(--dark);
+}
+
+/* 사용자 후기 섹션 */
+.testimonials {
+  padding: 100px 0;
+  background-color: #fff;
+}
+
+.testimonials-slider {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.testimonial-card {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial-rating {
+  color: var(--warning);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.testimonial-content {
+  font-style: italic;
+  margin-bottom: 20px;
+  color: var(--gray-text);
+  line-height: 1.7;
+}
+
+.testimonial-author {
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
 /* 사주 입력 폼 */
 .saju-form {
   padding: 100px 0;
   background-color: #f8f9fa;
   text-align: center;
+  transition: all 0.5s ease;
+}
+
+.saju-form.active {
+  background-color: rgba(163, 155, 254, 0.1);
+  box-shadow: 0 0 50px rgba(108, 92, 231, 0.2);
 }
 
 .form-container {
@@ -267,6 +455,13 @@ input, select, textarea {
 .form-group select:focus {
   border-color: var(--primary);
   outline: none;
+}
+
+.form-help {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--gray-text);
+  margin-top: 5px;
 }
 
 .error-message {
@@ -332,6 +527,7 @@ input, select, textarea {
 }
 
 .cta h2 {
+  color: #fff;
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
@@ -362,7 +558,7 @@ input, select, textarea {
 
 .footer-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 40px;
   margin-bottom: 40px;
 }
@@ -381,7 +577,8 @@ input, select, textarea {
 }
 
 .footer-links h4, 
-.footer-contact h4 {
+.footer-contact h4,
+.footer-company h4 {
   font-size: 1.2rem;
   margin-bottom: 15px;
   color: #fff;
@@ -395,17 +592,24 @@ input, select, textarea {
   margin-bottom: 10px;
 }
 
-.footer-links a {
+.footer-links a, .footer-btn {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   transition: color 0.3s ease;
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  border: none;
+  cursor: pointer;
+  text-align: left;
 }
 
-.footer-links a:hover {
+.footer-links a:hover, .footer-btn:hover {
   color: var(--secondary);
 }
 
-.footer-contact p {
+.footer-contact p,
+.footer-company p {
   margin-bottom: 10px;
   color: rgba(255, 255, 255, 0.7);
 }
@@ -501,4 +705,4 @@ h2 {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-} 
+}

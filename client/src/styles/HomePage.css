@@ -2,122 +2,100 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--background);
+  color: var(--text);
 }
 
 .main-content {
   flex: 1;
-  padding: 2rem 0;
+  padding-top: 80px; /* 헤더 높이만큼 여백 */
 }
 
-.hero-section {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0 1rem;
 }
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-.hero-stars {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url('/images/stars.png');
-  background-size: cover;
-  opacity: 0.7;
-  animation: twinkle 10s infinite linear;
-}
-
-.hero-planets {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url('/images/planets.png');
-  background-size: cover;
-  opacity: 0.5;
-  animation: float 30s infinite ease-in-out;
-}
-
-.hero-content {
-  max-width: 800px;
-  z-index: 1;
+/* 히어로 섹션 */
+.hero-section {
+  padding: 5rem 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9));
+  border-radius: 0 0 50% 50% / 15%;
+  margin-bottom: 3rem;
 }
 
 .hero-title {
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
-  animation: fadeInUp 1s ease-out;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--light);
+  font-family: var(--font-heading);
 }
 
 .hero-subtitle {
-  font-size: 1.5rem;
-  margin-bottom: 2.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
   color: var(--light-text);
-  animation: fadeInUp 1.2s ease-out;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cta-button {
-  font-size: 1.2rem;
-  padding: 1rem 2.5rem;
-  margin-top: 1rem;
-  animation: fadeInUp 1.4s ease-out;
-  position: relative;
-  overflow: hidden;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
 }
 
-.cta-button::before {
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+}
+
+/* 서비스 소개 섹션 */
+.features-section {
+  padding: 4rem 1rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  color: var(--light);
+  position: relative;
+}
+
+.section-title::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: 0.5s;
-}
-
-.cta-button:hover::before {
-  left: 100%;
-}
-
-.features-section {
-  padding: 5rem 1rem;
-  background-color: var(--card-bg);
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--accent1), var(--secondary));
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .feature-card {
-  padding: 2rem;
+  background: rgba(22, 33, 62, 0.7);
   border-radius: 16px;
-  background: rgba(26, 26, 46, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
   text-align: center;
   transition: transform var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .feature-card:hover {
@@ -125,41 +103,41 @@
 }
 
 .feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: var(--primary);
-}
-
-.feature-title {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
-.feature-description {
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--accent1);
+}
+
+.feature-card p {
   color: var(--light-text);
 }
 
+/* 폼 섹션 */
 .form-section {
-  padding: 5rem 1rem;
-  display: none; /* 초기에는 숨김 */
+  padding: 4rem 1rem;
+  background: rgba(26, 26, 46, 0.5);
+  margin-bottom: 3rem;
 }
 
 .form-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 2.5rem;
-  border-radius: 16px;
   background: rgba(22, 33, 62, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.5s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.form-title {
+.form-container h2 {
   text-align: center;
   margin-bottom: 2rem;
-  font-size: 2rem;
+  color: var(--light);
 }
 
 .form-group {
@@ -169,136 +147,106 @@
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  color: var(--light);
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--light);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary);
 }
 
 .form-privacy {
+  margin-bottom: 1.5rem;
   font-size: 0.85rem;
   color: var(--light-text);
-  margin-bottom: 1.5rem;
-  text-align: center;
 }
 
 .submit-button {
   width: 100%;
   padding: 1rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   font-size: 1.1rem;
-  margin-top: 1rem;
+  transition: background-color var(--transition-fast);
 }
 
+.submit-button:hover {
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+}
+
+.submit-button:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background: rgba(214, 48, 49, 0.2);
+  color: #ff6b6b;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #ff6b6b;
+}
+
+/* 이용후기 섹션 */
 .testimonials-section {
-  padding: 5rem 1rem;
-  text-align: center;
-}
-
-.testimonials-title {
-  margin-bottom: 3rem;
-  font-size: 2.5rem;
+  padding: 4rem 1rem;
 }
 
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .testimonial-card {
-  padding: 2rem;
-  border-radius: 16px;
   background: rgba(22, 33, 62, 0.7);
-  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .testimonial-text {
   font-style: italic;
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-
-.testimonial-text::before,
-.testimonial-text::after {
-  content: '"';
-  font-size: 2rem;
-  color: var(--primary);
-  position: absolute;
-  opacity: 0.5;
-}
-
-.testimonial-text::before {
-  top: -10px;
-  left: -10px;
-}
-
-.testimonial-text::after {
-  bottom: -30px;
-  right: -10px;
+  margin-bottom: 1rem;
+  color: var(--light);
 }
 
 .testimonial-author {
-  font-weight: 600;
+  text-align: right;
   color: var(--accent1);
+  font-weight: 600;
 }
 
-/* 애니메이션 */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes twinkle {
-  0%, 100% {
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 0.9;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
-  }
-  25% {
-    transform: translateY(-10px) translateX(5px);
-  }
-  50% {
-    transform: translateY(0) translateX(10px);
-  }
-  75% {
-    transform: translateY(10px) translateX(5px);
-  }
-}
-
+/* 반응형 */
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
   
   .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   
-  .features-grid,
-  .testimonials-grid {
-    grid-template-columns: 1fr;
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .form-container {
+    padding: 1.5rem;
   }
 }

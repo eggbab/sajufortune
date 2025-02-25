@@ -75,10 +75,11 @@ function HomePage() {
       
       <main className="main-content">
         <section className="hero-section">
-          <div className="hero-content">
-            <h1 className="hero-title">사주포춘</h1>
+          <div className="container">
+            <h1 className="hero-title">당신의 운명을 밝혀드립니다</h1>
             <p className="hero-subtitle">
-              한국 전통 사주팔자(四柱八字)의 지혜로 당신의 운명을 알아보세요
+              한국 전통 사주팔자(四柱八字)의 지혜와 현대 AI 기술을 결합하여 
+              당신의 타고난 기질과 미래의 운세를 분석해 드립니다.
             </p>
             <button className="cta-button" onClick={toggleForm}>
               무료 사주 해석 받기
@@ -86,26 +87,32 @@ function HomePage() {
           </div>
         </section>
         
-        <section className="features-section" id="about">
+        <section className="features-section" id="features">
           <div className="container">
-            <h2 className="section-title">서비스 소개</h2>
+            <h2 className="section-title">서비스 특징</h2>
             <div className="features-grid">
               <div className="feature-card">
+                <div className="feature-icon">🔮</div>
+                <h3 className="feature-title">정확한 사주 분석</h3>
+                <p className="feature-description">
+                  생년월일과 태어난 시간을 바탕으로 정확한 사주팔자를 분석합니다.
+                </p>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">🤖</div>
+                <h3 className="feature-title">AI 기반 해석</h3>
+                <p className="feature-description">
+                  최신 AI 기술로 개인 맞춤형 운세와 조언을 제공합니다.
+                </p>
+              </div>
+              
+              <div className="feature-card">
                 <div className="feature-icon">✨</div>
-                <h3>정확한 사주 분석</h3>
-                <p>수천 년의 동양 철학과 최신 AI 기술을 결합한 정확한 사주 해석을 제공합니다.</p>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">⚡</div>
-                <h3>즉각적인 결과</h3>
-                <p>몇 초 만에 당신의 사주를 분석하고 상세한 해석을 제공합니다.</p>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon">🔒</div>
-                <h3>개인정보 보호</h3>
-                <p>귀하의 정보는 사주 해석에만 사용되며 저장되지 않습니다.</p>
+                <h3 className="feature-title">맞춤형 부적</h3>
+                <p className="feature-description">
+                  당신의 사주에 맞는 특별한 부적으로 행운을 끌어당기세요.
+                </p>
               </div>
             </div>
           </div>
@@ -115,7 +122,7 @@ function HomePage() {
           <section className="form-section">
             <div className="container">
               <div className="form-container">
-                <h2>당신의 사주 정보를 입력하세요</h2>
+                <h2 className="form-title">당신의 사주 정보를 입력하세요</h2>
                 
                 {error && <div className="error-message">{error}</div>}
                 

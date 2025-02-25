@@ -92,14 +92,9 @@ function App() {
           ]
         };
         
-        // 결과 페이지로 데이터와 함께 이동
-        history.push({
-          pathname: '/result',
-          state: { 
-            userData: formData,
-            sajuResult: mockData
-          }
-        });
+        localStorage.setItem('userData', JSON.stringify(formData));
+        localStorage.setItem('sajuResult', JSON.stringify(mockData));
+        history.push('/result');
         
         setLoading(false);
       }, 2000); // 2초 후 결과로 이동

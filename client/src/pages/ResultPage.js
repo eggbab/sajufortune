@@ -9,7 +9,8 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Toolti
 function ResultPage() {
   const location = useLocation();
   const history = useHistory();
-  const { userData, sajuResult } = location.state || {};
+  const [userData, setUserData] = useState(null);
+  const [sajuResult, setSajuResult] = useState(null);
   const [showTalismanInfo, setShowTalismanInfo] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [premium, setPremium] = useState(false);
@@ -17,26 +18,31 @@ function ResultPage() {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    // 전달된 state 확인
-    if (location.state && location.state.userData && location.state.sajuResult) {
-      setUserData(location.state.userData);
-      setSajuResult(location.state.sajuResult);
+    const storedUserData = localStorage.getItem('userData');
+    const storedSajuResult = localStorage.getItem('sajuResult');
+    
+    if (storedUserData && storedSajuResult) {
+      setUserData(JSON.parse(storedUserData));
+      setSajuResult(JSON.parse(storedSajuResult));
       setLoading(false);
     } else {
-      // state가 없으면 홈으로 리다이렉트
+      // 데이터가 없으면 홈으로 리다이렉트
       history.replace('/');
     }
-  }, [location, history]);
+  }, [history]);
   
-  // 로딩 애니메이션 표시 - 요구사항 8 반영
+  // 로딩 효과 유지를 위한 추가 로딩 시간
   useEffect(() => {
-    setLoading(true);
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
     
     return () => clearTimeout(timer);
   }, []);
+  
+  const goHome = () => {
+    history.push('/');
+  };
   
   // 결과 데이터가 없으면 로딩 표시
   if (!userData || !sajuResult) {
@@ -130,10 +136,6 @@ function ResultPage() {
     } else {
       alert('공유 기능은 해당 브라우저에서 지원하지 않습니다.');
     }
-  };
-  
-  const goHome = () => {
-    history.push('/');
   };
   
   return (

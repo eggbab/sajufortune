@@ -4,17 +4,14 @@ import '../styles/Header.css';
 
 function Header() {
   return (
-    <header className="site-header">
+    <header className="result-header">
       <div className="container">
         <div className="header-content">
           <div className="logo">
             <Link to="/">사주포춘</Link>
           </div>
-          <nav className="main-nav">
-            <ul>
-              <li><Link to="/">홈</Link></li>
-              <li><Link to="/about">소개</Link></li>
-            </ul>
+          <nav className="result-nav">
+            <Link to="/" className="btn-outline">홈으로 돌아가기</Link>
           </nav>
         </div>
       </div>

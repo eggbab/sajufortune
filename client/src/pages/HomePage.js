@@ -136,14 +136,12 @@ function HomePage() {
         </section>
         
         {/* 사주 입력 폼 섹션 */}
-        <section className="saju-form-section" id="saju-form">
+        <section id="saju-form" className="saju-form">
           <div className="container">
+            <h2>무료 사주 분석</h2>
+            <p className="section-subtitle">아래 정보를 입력하시면 AI가 당신의 사주를 분석해드립니다</p>
+            
             <div className="form-container">
-              <h2>무료 사주 분석 받기</h2>
-              <p>정확한 분석을 위해 아래 정보를 입력해주세요.</p>
-              
-              {error && <div className="error-message">{error}</div>}
-              
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="name">이름</label>
@@ -171,7 +169,7 @@ function HomePage() {
                 </div>
                 
                 <div className="form-group">
-                  <label htmlFor="birthTime">태어난 시간 (선택)</label>
+                  <label htmlFor="birthTime">태어난 시간 (선택사항)</label>
                   <input
                     type="time"
                     id="birthTime"
@@ -179,7 +177,6 @@ function HomePage() {
                     value={formData.birthTime}
                     onChange={handleChange}
                   />
-                  <small>정확한 시간을 모르시면 비워두셔도 됩니다.</small>
                 </div>
                 
                 <div className="form-group">
@@ -196,7 +193,7 @@ function HomePage() {
                 </div>
                 
                 <div className="form-group">
-                  <label htmlFor="concern">가장 알고 싶은 것</label>
+                  <label htmlFor="concern">주요 관심사</label>
                   <select
                     id="concern"
                     name="concern"
@@ -205,22 +202,19 @@ function HomePage() {
                   >
                     <option value="연애/결혼">연애/결혼</option>
                     <option value="직업/진로">직업/진로</option>
-                    <option value="재물/사업">재물/사업</option>
+                    <option value="재물/투자">재물/투자</option>
                     <option value="건강">건강</option>
                     <option value="대인관계">대인관계</option>
-                    <option value="종합운세">종합운세</option>
                   </select>
                 </div>
                 
-                <button 
-                  type="submit" 
-                  className="btn-submit"
-                  disabled={loading}
-                >
+                {error && <div className="error-message">{error}</div>}
+                
+                <button type="submit" className="btn-primary" disabled={loading}>
                   {loading ? (
                     <div className="loading-container">
                       <div className="loading-spinner"></div>
-                      <span>사주 분석 중...</span>
+                      <span>분석 중...</span>
                     </div>
                   ) : (
                     '무료 사주 분석 받기'

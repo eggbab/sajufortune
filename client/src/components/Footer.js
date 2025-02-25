@@ -12,18 +12,18 @@ function Footer() {
           </div>
           
           <div className="footer-section">
-            <h3>연락처</h3>
-            <p>이메일: info@sajufortune.kr</p>
-            <p>전화: 02-123-4567</p>
+            <h3>바로가기</h3>
+            <ul>
+              <li><a href="/">홈</a></li>
+              <li><a href="/#about">서비스 소개</a></li>
+              <li><a href="/#testimonials">이용후기</a></li>
+            </ul>
           </div>
           
           <div className="footer-section">
-            <h3>링크</h3>
-            <ul>
-              <li><a href="/privacy">개인정보처리방침</a></li>
-              <li><a href="/terms">이용약관</a></li>
-              <li><a href="/about">회사소개</a></li>
-            </ul>
+            <h3>문의하기</h3>
+            <p>이메일: contact@sajufortune.kr</p>
+            <p>운영시간: 평일 10:00 - 18:00</p>
           </div>
         </div>
         

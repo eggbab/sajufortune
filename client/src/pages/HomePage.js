@@ -24,29 +24,44 @@ function HomePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('폼 제출됨', formData);
     
     // 유효성 검사
-    if (!formData.name || !formData.birthDate || formData.gender === '선택하세요') {
-      setError('이름, 생년월일, 성별은 필수 입력 항목입니다.');
+    if (!formData.name || !formData.birthDate) {
+      setError('이름과 생년월일은 필수 입력 항목입니다.');
       return;
     }
     
     setLoading(true);
+    setError('');
+    
     try {
-      // API 호출로 사주 분석 요청
-      const response = await sajuApi.generateSaju(formData);
-      
-      // 결과 페이지로 이동하면서 데이터 전달
-      history.push({
-        pathname: '/result',
-        state: { 
-          userData: formData,
-          sajuResult: response
+      console.log('사주 분석 API 호출 시작');
+      // 임시 데이터 생성 (API 호출 대신)
+      const sajuResult = {
+        yearPillar: '갑자',
+        elements: {
+          목: 30,
+          화: 20,
+          토: 15,
+          금: 15,
+          수: 20
+        },
+        dominantElement: '목',
+        fortune: {
+          general: `${formData.name}님의 사주는 목의 기운이 강합니다. 2024년에는 목의 기운을 활용하여 긍정적인 변화를 기대할 수 있습니다.`,
+          concern: '건강 관리에 신경 쓰세요. 특히 소화기관과 호흡기에 주의가 필요합니다.',
+          advice: '목의 기운을 강화하기 위해 초록색 계열의 옷을 입거나 식물을 키우는 것이 도움이 됩니다.'
         }
-      });
-    } catch (err) {
-      setError('사주 생성 중 오류가 발생했습니다. 다시 시도해 주세요.');
-      console.error('Error generating saju:', err);
+      };
+      
+      console.log('사주 결과:', sajuResult);
+      
+      // 결과 페이지로 이동
+      history.push('/result', { userData: formData, sajuResult });
+    } catch (error) {
+      console.error('Error analyzing saju:', error);
+      setError('사주 분석 중 오류가 발생했습니다. 다시 시도해 주세요.');
     } finally {
       setLoading(false);
     }

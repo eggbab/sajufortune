@@ -1,0 +1,716 @@
+// SajuFortune 한국어 버전 구현 코드
+// 1. 프론트엔드 (React.js)
+
+// index.js - 애플리케이션 진입점
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ResultPage from './pages/ResultPage';
+import PaymentPage from './pages/PaymentPage';
+import ThankYouPage from './pages/ThankYouPage';
+import './styles/globals.css';
+
+ReactDOM.render(
+  <Router>
+    <Switch>
+      <Route exact path="/" component={HomePage} />
+      <Route path="/result" component={ResultPage} />
+      <Route path="/payment" component={PaymentPage} />
+      <Route path="/thank-you" component={ThankYouPage} />
+    </Switch>
+  </Router>,
+  document.getElementById('root')
+);
+
+// HomePage.js - 홈페이지 및 입력 양식
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import '../styles/HomePage.css';
+
+function HomePage() {
+  const history = useHistory();
+  const [formData, setFormData] = useState({
+    name: '',
+    birthDate: '',
+    birthTime: '',
+    gender: '선택하세요',
+    concern: '선택하세요'
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // 유효성 검사
+    if (!formData.name || !formData.birthDate || formData.gender === '선택하세요') {
+      setError('이름, 생년월일, 성별은 필수 입력 항목입니다.');
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      // API 호출로 사주 분석 요청
+      const response = await axios.post('/api/generate-saju', formData);
+      
+      // 결과 페이지로 이동하면서 데이터 전달
+      history.push({
+        pathname: '/result',
+        state: { 
+          userData: formData,
+          sajuResult: response.data
+        }
+      });
+    } catch (err) {
+      setError('사주 생성 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      console.error('Error generating saju:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="homepage-container">
+      <Header />
+      
+      <main className="main-content">
+        <section className="hero-section">
+          <h1>무료 AI 사주 해석 받기</h1>
+          <p>한국 사주팔자(四柱八字)의 지혜로 당신의 운명을 알아보세요</p>
+        </section>
+        
+        <section className="form-section">
+          <div className="form-container">
+            <h2>당신의 사주 정보를 입력하세요</h2>
+            
+            {error && <div className="error-message">{error}</div>}
+            
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">이름</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="이름을 입력하세요"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="birthDate">생년월일</label>
+                <input
+                  type="date"
+                  id="birthDate"
+                  name="birthDate"
+                  value={formData.birthDate}
+                  onChange={handleChange}
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="birthTime">태어난 시간 (선택사항)</label>
+                <input
+                  type="time"
+                  id="birthTime"
+                  name="birthTime"
+                  value={formData.birthTime}
+                  onChange={handleChange}
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="gender">성별</label>
+                <select
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                >
+                  <option value="선택하세요" disabled>선택하세요</option>
+                  <option value="남성">남성</option>
+                  <option value="여성">여성</option>
+                  <option value="기타">기타</option>
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="concern">주요 관심사</label>
+                <select
+                  id="concern"
+                  name="concern"
+                  value={formData.concern}
+                  onChange={handleChange}
+                >
+                  <option value="선택하세요" disabled>선택하세요</option>
+                  <option value="연애">연애/결혼</option>
+                  <option value="직업">직업/경력</option>
+                  <option value="건강">건강</option>
+                  <option value="재물">재물/금전</option>
+                  <option value="일반">일반 운세</option>
+                </select>
+              </div>
+              
+              <div className="form-privacy">
+                <p>* 귀하의 정보는 사주 해석 생성에만 사용되며, 저장되지 않습니다.</p>
+              </div>
+              
+              <button 
+                type="submit" 
+                className="submit-button"
+                disabled={loading}
+              >
+                {loading ? '사주 분석 중...' : '내 사주 받기'}
+              </button>
+            </form>
+          </div>
+        </section>
+      </main>
+      
+      <Footer />
+    </div>
+  );
+}
+
+export default HomePage;
+
+// ResultPage.js - 사주 결과 및 부적 업셀
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import ElementChart from '../components/ElementChart';
+import '../styles/ResultPage.css';
+
+function ResultPage() {
+  const history = useHistory();
+  const location = useLocation();
+  const [copied, setCopied] = useState(false);
+  
+  // location.state에서 데이터 추출
+  const userData = location.state?.userData || null;
+  const sajuResult = location.state?.sajuResult || null;
+  
+  // 데이터가 없으면 홈페이지로 리디렉션
+  useEffect(() => {
+    if (!userData || !sajuResult) {
+      history.replace('/');
+    }
+  }, [userData, sajuResult, history]);
+  
+  if (!userData || !sajuResult) {
+    return <div>로딩 중...</div>;
+  }
+  
+  const handleBuyTalisman = () => {
+    history.push({
+      pathname: '/payment',
+      state: { 
+        userData,
+        sajuResult,
+        talisman: {
+          type: sajuResult.dominantElement,
+          price: 5000
+        }
+      }
+    });
+  };
+  
+  const handleShareResult = () => {
+    navigator.clipboard.writeText(
+      `SajuFortune에서 받은 나의 사주 해석!\n` +
+      `주요 원소: ${sajuResult.dominantElement}\n` +
+      `오늘의 조언: ${sajuResult.todayAdvice}\n` +
+      `당신도 무료로 받아보세요: https://sajufortune.kr`
+    );
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="result-page-container">
+      <Header />
+      
+      <main className="result-content">
+        <h1>{userData.name}님의 사주 해석 결과</h1>
+        
+        <div className="result-grid">
+          <div className="saju-reading">
+            <div className="element-chart">
+              <h3>당신의 오행 구성</h3>
+              <ElementChart elementData={sajuResult.elements} />
+            </div>
+            
+            <div className="reading-content">
+              <div className="reading-section">
+                <h3>기본 사주 해석</h3>
+                <p>{sajuResult.introduction}</p>
+              </div>
+              
+              <div className="reading-section">
+                <h3>2025년 운세 분석</h3>
+                <p>{sajuResult.analysis}</p>
+              </div>
+              
+              <div className="reading-section">
+                <h3>{userData.concern} 관련 조언</h3>
+                <p>{sajuResult.concernAdvice}</p>
+              </div>
+              
+              <div className="today-advice">
+                <h3>오늘의 조언</h3>
+                <p>{sajuResult.todayAdvice}</p>
+              </div>
+              
+              <button 
+                className="share-button" 
+                onClick={handleShareResult}
+              >
+                {copied ? '복사됨!' : '결과 공유하기'}
+              </button>
+            </div>
+          </div>
+          
+          <div className="talisman-upsell">
+            <h2>나만의 맞춤형 부적</h2>
+            <div className="talisman-preview">
+              <div className="blurred-image">
+                <img src={`/images/talismans/${sajuResult.dominantElement}_preview.png`} alt="부적 미리보기" />
+                <div className="blur-overlay"></div>
+              </div>
+            </div>
+            
+            <h3>{sajuResult.dominantElement} 행운 부적</h3>
+            <p>
+              이 맞춤형 {sajuResult.dominantElement} 부적은 귀하의 사주에 맞춰 특별히 설계되었습니다. 
+              {userData.concern} 운을 향상시키고 긍정적인 에너지를 끌어당깁니다.
+            </p>
+            
+            <ul className="talisman-benefits">
+              <li>개인 사주에 맞춘 맞춤형 디자인</li>
+              <li>2025년 운세를 개선하는 특별한 기운</li>
+              <li>고해상도 디지털 이미지로 제공</li>
+              <li>인쇄하여 지갑이나 방에 보관 가능</li>
+            </ul>
+            
+            <div className="price-tag">5,000원</div>
+            
+            <button 
+              className="buy-button"
+              onClick={handleBuyTalisman}
+            >
+              부적 구매하기
+            </button>
+            
+            <div className="testimonials">
+              <div className="testimonial">
+                "부적을 받은 후 면접에 합격했어요! 정말 효과가 있네요." - 김OO님
+              </div>
+              <div className="testimonial">
+                "매일 휴대폰 배경화면으로 사용하고 있어요. 마음이 편안해집니다." - 이OO님
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <Footer />
+    </div>
+  );
+}
+
+export default ResultPage;
+
+// 2. 백엔드 (Node.js/Express)
+
+// server.js - API 서버
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const { OpenAI } = require('openai');
+const path = require('path');
+const { calculateSaju } = require('./utils/saju-calculator');
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+// 미들웨어 설정
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'build')));
+
+// OpenAI API 설정
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+// 사주 생성 API 엔드포인트
+app.post('/api/generate-saju', async (req, res) => {
+  try {
+    const { name, birthDate, birthTime, gender, concern } = req.body;
+    
+    // 사주 계산 (오행, 십이지, 등)
+    const sajuData = calculateSaju(birthDate, birthTime);
+    
+    // AI를 사용한 사주 해석 생성
+    const prompt = `
+      당신은 전문 사주 해석가입니다. 다음 정보를 바탕으로 한국식 사주팔자(사주) 해석을 생성해주세요.
+      
+      이름: ${name}
+      생년월일: ${birthDate}
+      태어난 시간: ${birthTime || '알 수 없음'}
+      성별: ${gender}
+      관심사: ${concern}
+      
+      사주 데이터:
+      천간: ${sajuData.heavenlyStem}
+      지지: ${sajuData.earthlyBranch}
+      오행 분석: ${JSON.stringify(sajuData.elements)}
+      주요 오행: ${sajuData.dominantElement}
+      
+      다음 형식으로 사주 해석을 제공해주세요:
+      1. 기본 사주 소개 (1-2 문단)
+      2. 2025년 운세 분석 (1-2 문단)
+      3. ${concern}에 관한 구체적인 조언 (1 문단)
+      4. 오늘의 조언 (1-2 문장)
+      
+      반드시 한국어로, 친근하고 긍정적인 톤으로 작성해주세요. 운명론적이거나 지나치게 부정적인 표현은 피해주세요.
+      JSON 형식으로 반환해주세요.
+    `;
+    
+    const aiResponse = await openai.chat.completions.create({
+      model: "gpt-4", // 또는 다른 사용 가능한 모델
+      messages: [
+        { role: "system", content: "당신은 전문 사주 해석가입니다." },
+        { role: "user", content: prompt }
+      ],
+      temperature: 0.7,
+    });
+    
+    // AI 응답 파싱
+    const sajuReading = JSON.parse(aiResponse.choices[0].message.content);
+    
+    // 응답에 추가 정보 포함
+    const fullResponse = {
+      ...sajuReading,
+      elements: sajuData.elements,
+      dominantElement: sajuData.dominantElement,
+      createdAt: new Date().toISOString()
+    };
+    
+    res.json(fullResponse);
+  } catch (error) {
+    console.error('Error generating saju:', error);
+    res.status(500).json({ error: '사주 생성 중 오류가 발생했습니다.' });
+  }
+});
+
+// 결제 처리 API 엔드포인트
+app.post('/api/process-payment', async (req, res) => {
+  try {
+    const { paymentData, userData, sajuResult, talismanType } = req.body;
+    
+    // 여기에 실제 결제 처리 로직 구현 (토스페이먼츠, 아임포트 등)
+    // 예시로만 성공 응답 반환
+    
+    // 부적 생성 로직
+    const talismanUrl = await generateTalisman(userData, sajuResult, talismanType);
+    
+    res.json({
+      success: true,
+      message: '결제가 성공적으로 처리되었습니다.',
+      downloadUrl: talismanUrl,
+      orderId: `ORDER-${Date.now()}`
+    });
+  } catch (error) {
+    console.error('Payment processing error:', error);
+    res.status(500).json({ error: '결제 처리 중 오류가 발생했습니다.' });
+  }
+});
+
+// 사주 계산 유틸리티 (utils/saju-calculator.js)
+function calculateSaju(birthDate, birthTime) {
+  // 실제 구현에서는 한국 음력 변환 및 사주 계산 로직 구현
+  // 여기서는 간단한 예시만 제공
+  
+  const date = new Date(birthDate);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  
+  // 간지 계산 (실제로는 더 복잡한 계산이 필요)
+  const heavenlyStemIndex = (year - 4) % 10;
+  const earthlyBranchIndex = (year - 4) % 12;
+  
+  const heavenlyStems = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+  const earthlyBranches = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+  
+  // 오행 계산 (간단한 예시)
+  let elements = {
+    목: Math.floor(Math.random() * 30) + 10, // 10-40%
+    화: Math.floor(Math.random() * 30) + 10,
+    토: Math.floor(Math.random() * 30) + 5,  // 5-35%
+    금: Math.floor(Math.random() * 30) + 5,
+    수: Math.floor(Math.random() * 30) + 5
+  };
+  
+  // 합이 100%가 되도록 조정
+  const total = Object.values(elements).reduce((sum, val) => sum + val, 0);
+  
+  Object.keys(elements).forEach(key => {
+    elements[key] = Math.round(elements[key] * 100 / total);
+  });
+  
+  // 주요 오행 결정
+  const dominantElement = Object.entries(elements).reduce(
+    (max, [element, value]) => value > max.value ? {element, value} : max,
+    {element: '', value: 0}
+  ).element;
+  
+  return {
+    heavenlyStem: heavenlyStems[heavenlyStemIndex],
+    earthlyBranch: earthlyBranches[earthlyBranchIndex],
+    elements,
+    dominantElement
+  };
+}
+
+// 부적 생성 함수
+async function generateTalisman(userData, sajuResult, talismanType) {
+  // 실제 구현에서는 이미지 생성 또는 템플릿 선택 로직 구현
+  // 여기서는 간단한 예시만 제공
+  return `/talismans/${talismanType}_${userData.concern}_${Date.now()}.png`;
+}
+
+// 서버 시작
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+// 3. 스타일 (CSS) - globals.css
+/**
+ * 전역 스타일 - globals.css
+ */
+:root {
+  --primary: #4d6a4f;  /* 초록색 (목) */
+  --secondary: #a83232; /* 빨간색 (화) */
+  --tertiary: #daa520;  /* 황금색 (토) */
+  --accent1: #7d7d7d;   /* 회색 (금) */
+  --accent2: #2c5282;   /* 파란색 (수) */
+  --background: #f5f5f5;
+  --text: #333333;
+  --light-text: #666666;
+  --border: #dddddd;
+  --success: #4caf50;
+  --error: #f44336;
+  --warning: #ff9800;
+  
+  --font-main: 'Noto Sans KR', sans-serif;
+  --font-heading: 'Nanum Myeongjo', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-main);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.error-message {
+  color: var(--error);
+  background-color: rgba(244, 67, 54, 0.1);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  color: var(--success);
+  background-color: rgba(76, 175, 80, 0.1);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  button {
+    width: 100%;
+  }
+}
+
+// 4. 컴포넌트 예시 - ElementChart.js (사주 원소 차트)
+import React, { useEffect, useRef } from 'react';
+import Chart from 'chart.js/auto';
+
+function ElementChart({ elementData }) {
+  const chartRef = useRef(null);
+  const chartInstance = useRef(null);
+  
+  useEffect(() => {
+    if (!elementData) return;
+    
+    // 이전 차트 인스턴스 제거
+    if (chartInstance.current) {
+      chartInstance.current.destroy();
+    }
+    
+    const ctx = chartRef.current.getContext('2d');
+    
+    const labels = Object.keys(elementData);
+    const data = Object.values(elementData);
+    
+    // 오행에 따른 색상 매핑
+    const colors = {
+      '목': '#4d6a4f', // 녹색
+      '화': '#a83232', // 적색
+      '토': '#daa520', // 황금색
+      '금': '#7d7d7d', // 회색
+      '수': '#2c5282'  // 청색
+    };
+    
+    chartInstance.current = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: labels.map(label => colors[label]),
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: {
+                family: "'Noto Sans KR', sans-serif",
+                size: 14
+              }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const label = context.label || '';
+                const value = context.parsed || 0;
+                return `${label}: ${value}%`;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    return () => {
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
+    };
+  }, [elementData]);
+
+  return (
+    <div className="element-chart-container">
+      <canvas ref={chartRef} height={200}></canvas>
+    </div>
+  );
+}
+
+export default ElementChart;
+
+// 5. Bubble.io 구현 참고사항
+/**
+ * Bubble.io 구현 가이드
+ * 
+ * 1. 데이터베이스 구조:
+ *    - User: name, birthDate, birthTime, gender, concern, email
+ *    - SajuReading: userId, introduction, analysis, concernAdvice, todayAdvice, 
+ *                   dominantElement, elements (목, 화, 토, 금, 수), createdAt
+ *    - Talisman: type, concern, imageUrl, price
+ *    - Order: userId, readingId, talismanType, amount, status, paymentId, createdAt
+ * 
+ * 2. 워크플로우:
+ *    - Homepage 입력 폼 제출 → OpenAI API 호출 → 결과 저장 → Result 페이지로 이동
+ *    - Buy Talisman 버튼 클릭 → Payment 페이지로 이동 → 결제 처리 → Thank You 페이지로 이동
+ * 
+ * 3. API 연동:
+ *    - OpenAI API: 사주 해석 생성 (Plugin: "API Connector")
+ *    - 토스페이먼츠/아임포트: 결제 처리 (Plugin: "Payments")
+ *    - SendGrid: 이메일 발송 (Plugin: "Email")
+ * 
+ * 4. 페이지 구성:
+ *    - Homepage: 사용자 입력 폼
+ *    - Result: 사주 해석 및 부적 업셀
+ *    - Payment: 결제 처리
+ *    - Thank You: 다운로드 링크 및 감사 메시지
+ * 
+ * 5. Privacy & Legal:
+ *    - 개인정보처리방침 및 이용약관 페이지 추가
+ *    - 데이터 저장 및 사용에 관한 동의 체크박스 추가
+ */

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import '../styles/Footer.css';
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+  
   return (
     <footer className="footer">
       <div className="container">
@@ -35,14 +37,14 @@ function Footer() {
                 <li>사주포춘</li>
                 <li>대표: 김우진</li>
                 <li>사업자등록번호: 426-62-00632</li>
-                <li>이메일: contact@sajufortune.com</li>
+                <li>이메일: vmeandbeme@gmail.com</li>
               </ul>
             </div>
           </div>
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 사주포춘 (주). 모든 권리 보유.</p>
+          <p>&copy; {currentYear} SajuFortune Inc. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

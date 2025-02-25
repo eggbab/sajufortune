@@ -295,3 +295,288 @@
     padding: 1rem;
   }
 }
+
+.result-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+section {
+  padding: 60px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 결과 히어로 섹션 */
+.result-hero {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  text-align: center;
+  padding: 80px 0;
+}
+
+.result-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.result-date {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* 결과 개요 섹션 */
+.result-overview {
+  background-color: #f8f9fa;
+}
+
+.result-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.result-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  color: #333;
+  text-align: center;
+}
+
+.pillars-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.pillar {
+  flex: 1;
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  margin: 0 10px;
+}
+
+.pillar-title {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.pillar-value {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.dominant-element {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dominant-element h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.element-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.element-badge.water {
+  background-color: #0984e3;
+}
+
+.element-badge.fire {
+  background-color: #e17055;
+}
+
+.element-badge.earth {
+  background-color: #fdcb6e;
+  color: #333;
+}
+
+.element-badge.metal {
+  background-color: #b2bec3;
+}
+
+.element-badge.wood {
+  background-color: #00b894;
+}
+
+/* 결과 상세 섹션 */
+.result-details {
+  background-color: #fff;
+}
+
+.result-tabs {
+  margin-top: 20px;
+}
+
+.result-section {
+  margin-bottom: 40px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.result-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #333;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.result-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #6c5ce7, #00cec9);
+}
+
+.result-section p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.advice-section {
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(0, 206, 201, 0.1));
+  border: 1px solid rgba(108, 92, 231, 0.2);
+}
+
+/* CTA 섹션 */
+.result-cta {
+  background: linear-gradient(135deg, #6c5ce7, #00cec9);
+  color: #fff;
+  text-align: center;
+  padding: 60px 0;
+}
+
+.result-cta h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.result-cta p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-primary {
+  display: inline-block;
+  background-color: #fff;
+  color: #6c5ce7;
+  padding: 12px 25px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-3px);
+}
+
+.btn-outline {
+  display: inline-block;
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+
+/* 로딩 컨테이너 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(108, 92, 231, 0.3);
+  border-radius: 50%;
+  border-top-color: #6c5ce7;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .result-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .pillars-container {
+    flex-wrap: wrap;
+  }
+  
+  .pillar {
+    flex: 0 0 calc(50% - 20px);
+    margin-bottom: 15px;
+  }
+  
+  .result-section {
+    padding: 20px;
+  }
+  
+  .result-section h2 {
+    font-size: 1.4rem;
+  }
+  
+  .result-section p {
+    font-size: 1rem;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

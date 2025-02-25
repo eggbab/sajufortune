@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { FaShoppingCart, FaLock, FaInfoCircle, FaChartPie, FaChartLine, FaChartBar, FaCheck } from 'react-icons/fa';
+import { FaShoppingCart, FaLock, FaInfoCircle, FaChartPie, FaChartLine, FaChartBar, FaCheck, FaStar, FaArrowRight, FaRegCreditCard } from 'react-icons/fa';
 import '../styles/ResultPage.css';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend } from 'recharts';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, LineChart, Line } from 'recharts';
 
 function ResultPage() {
   const location = useLocation();
@@ -14,6 +14,7 @@ function ResultPage() {
   const [activeTab, setActiveTab] = useState('overview');
   const [premium, setPremium] = useState(false);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   useEffect(() => {
     // 결과 데이터가 없으면 홈페이지로 리다이렉트
@@ -25,6 +26,16 @@ function ResultPage() {
     window.scrollTo(0, 0);
   }, [userData, sajuResult, history]);
   
+  // 로딩 애니메이션 표시 - 요구사항 8 반영
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
   // 결과 데이터가 없으면 로딩 표시
   if (!userData || !sajuResult) {
     return (
@@ -35,66 +46,77 @@ function ResultPage() {
     );
   }
   
-  // 오행 데이터 (그래프용)
-  const elementData = {
-    labels: ['목(木)', '화(火)', '토(土)', '금(金)', '수(水)'],
-    values: [25, 40, 15, 10, 10], // 예시 데이터
-    colors: ['#00b894', '#e17055', '#fdcb6e', '#b2bec3', '#0984e3']
-  };
+  // 로딩 중이면 로딩 화면 표시
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <h2>사주 분석 중...</h2>
+        <p className="loading-text">당신의 운명을 분석하고 있습니다.</p>
+        <div className="loading-progress">
+          <div className="progress-bar"></div>
+        </div>
+        <p className="loading-detail">생년월일과 시간을 바탕으로 사주팔자를 계산하고<br />당신의 운세를 심층 분석하고 있습니다.</p>
+      </div>
+    );
+  }
   
-  // 운세 흐름 데이터 (그래프용)
-  const fortuneFlowData = {
-    labels: ['2023', '2024', '2025', '2026', '2027'],
-    values: [65, 80, 75, 90, 85], // 예시 데이터
-  };
+  // 오행 데이터 (파이 차트용)
+  const elementData = [
+    { name: '목(木)', value: sajuResult.elementChart.wood, color: '#00b894' },
+    { name: '화(火)', value: sajuResult.elementChart.fire, color: '#e17055' },
+    { name: '토(土)', value: sajuResult.elementChart.earth, color: '#fdcb6e' },
+    { name: '금(金)', value: sajuResult.elementChart.metal, color: '#b2bec3' },
+    { name: '수(水)', value: sajuResult.elementChart.water, color: '#0984e3' }
+  ];
+  
+  // 행운 흐름 데이터 (라인 차트용)
+  const fortuneData = [
+    { year: '2023', 운세지수: 65 },
+    { year: '2024', 운세지수: 80 },
+    { year: '2025', 운세지수: 75 },
+    { year: '2026', 운세지수: 90 },
+    { year: '2027', 운세지수: 85 }
+  ];
+  
+  // 성격 특성 데이터 (레이더 차트용)
+  const personalityData = [
+    { subject: '활동성', A: 70, fullMark: 100 },
+    { subject: '사교성', A: 85, fullMark: 100 },
+    { subject: '논리력', A: 60, fullMark: 100 },
+    { subject: '창의성', A: 90, fullMark: 100 },
+    { subject: '안정성', A: 75, fullMark: 100 },
+    { subject: '리더십', A: 80, fullMark: 100 },
+  ];
+  
+  // 월별 운세 데이터 (바 차트용)
+  const monthlyData = sajuResult.monthlyForecast.map(item => ({
+    name: item.month,
+    운세지수: item.rating * 20, // 5점 만점을 백분율로 변환
+  }));
   
   // 부적 정보 토글
   const toggleTalismanInfo = () => {
     setShowTalismanInfo(!showTalismanInfo);
   };
   
-  // 종합 분석 데이터 (레이더 차트용)
-  const radarData = [
-    {
-      subject: '성격',
-      A: 85,
-      fullMark: 100,
-    },
-    {
-      subject: '직업',
-      A: 70,
-      fullMark: 100,
-    },
-    {
-      subject: '연애',
-      A: 90,
-      fullMark: 100,
-    },
-    {
-      subject: '재물',
-      A: 65,
-      fullMark: 100,
-    },
-    {
-      subject: '건강',
-      A: 80,
-      fullMark: 100,
-    },
-  ];
-
-  // 월별 운세 데이터 (바 차트용)
-  const monthlyData = sajuResult.monthlyForecast.map(item => ({
-    name: item.month,
-    운세지수: item.rating * 20, // 5점 만점을 백분율로 변환
-  }));
-
   // 프리미엄 결제 처리
   const handlePremiumPurchase = () => {
-    alert('결제 시스템은 아직 구현되지 않았습니다. 실제 서비스에서는 결제 페이지로 이동합니다.');
-    setPremium(true);
-    setShowPremiumModal(false);
+    setLoading(true);
+    
+    setTimeout(() => {
+      setLoading(false);
+      setPremium(true);
+      setShowPremiumModal(false);
+      window.scrollTo(0, 0);
+    }, 2000);
   };
-
+  
+  // 프리미엄 모달 토글
+  const togglePremiumModal = () => {
+    setShowPremiumModal(!showPremiumModal);
+  };
+  
   // 결과 공유 처리
   const handleShareResult = () => {
     if (navigator.share) {
@@ -112,499 +134,679 @@ function ResultPage() {
     <div className="result-page">
       <Header />
       
-      <main>
+      <main className="result-main">
         <section className="result-hero">
           <div className="container">
             <h1>{userData.name}님의 사주 분석 결과</h1>
             <p className="result-date">분석일: {new Date().toLocaleDateString()}</p>
-            <div className="result-summary">
-              <div className="summary-item">
-                <span className="summary-label">생년월일</span>
-                <span className="summary-value">{userData.birthDate}</span>
+            
+            {/* 기본/프리미엄 상태 표시 */}
+            <div className="result-type">
+              {premium ? (
+                <span className="premium-badge">프리미엄 분석</span>
+              ) : (
+                <span className="basic-badge">기본 분석</span>
+              )}
+            </div>
+            
+            {/* 사주 정보 요약 */}
+            <div className="saju-summary">
+              <div className="pillar-container">
+                <div className="pillar">
+                  <span className="pillar-label">년주(年柱)</span>
+                  <span className="pillar-value">{sajuResult.yearPillar}</span>
+                </div>
+                <div className="pillar">
+                  <span className="pillar-label">월주(月柱)</span>
+                  <span className="pillar-value">{sajuResult.monthPillar}</span>
+                </div>
+                <div className="pillar">
+                  <span className="pillar-label">일주(日柱)</span>
+                  <span className="pillar-value">{sajuResult.dayPillar}</span>
+                </div>
+                <div className="pillar">
+                  <span className="pillar-label">시주(時柱)</span>
+                  <span className="pillar-value">{sajuResult.hourPillar}</span>
+                </div>
               </div>
-              {userData.birthTime && (
-                <div className="summary-item">
-                  <span className="summary-label">태어난 시간</span>
-                  <span className="summary-value">{userData.birthTime}</span>
+            </div>
+            
+            {/* 결과 액션 버튼 */}
+            <div className="result-actions">
+              <button className="action-btn" onClick={handleShareResult}>
+                <i className="fas fa-share-alt"></i> 결과 공유하기
+              </button>
+              {!premium && (
+                <button className="action-btn premium" onClick={togglePremiumModal}>
+                  <i className="fas fa-crown"></i> 프리미엄 분석 받기
+                </button>
+              )}
+            </div>
+          </div>
+        </section>
+        
+        {/* 종합 분석 섹션 */}
+        <section className="analysis-section">
+          <div className="container">
+            <div className="section-header">
+              <h2>종합 분석</h2>
+              <p>당신의 사주팔자를 바탕으로 한 종합적인 분석 결과입니다.</p>
+            </div>
+            
+            <div className="overview-content">
+              <div className="overview-text">
+                <h3>당신의 주요 특성</h3>
+                <p className="personality-description">
+                  {sajuResult.personality}
+                </p>
+                
+                <div className="element-tags">
+                  <div className="element-tag">
+                    <span className={`tag-icon ${sajuResult.dominantElement === '화' ? 'fire' : 
+                                            sajuResult.dominantElement === '수' ? 'water' : 
+                                            sajuResult.dominantElement === '목' ? 'wood' : 
+                                            sajuResult.dominantElement === '금' ? 'metal' : 
+                                            sajuResult.dominantElement === '토' ? 'earth' : ''}`}>
+                      {sajuResult.dominantElement}
+                    </span>
+                    <span className="tag-label">주요 오행</span>
+                  </div>
+                </div>
+                
+                <div className="advice-box">
+                  <h4>조언</h4>
+                  <p>{sajuResult.advice}</p>
+                </div>
+              </div>
+              
+              <div className="overview-charts">
+                <div className="chart-container">
+                  <h4>오행 분석</h4>
+                  <ResponsiveContainer width="100%" height={250}>
+                    <PieChart>
+                      <Pie
+                        data={elementData}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="value"
+                        label={({name, percent}) => `${name} ${(percent * 100).toFixed(0)}%`}
+                      >
+                        {elementData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+                
+                <div className="chart-container">
+                  <h4>성격 특성</h4>
+                  <ResponsiveContainer width="100%" height={250}>
+                    <RadarChart outerRadius={90} data={personalityData}>
+                      <PolarGrid />
+                      <PolarAngleAxis dataKey="subject" />
+                      <PolarRadiusAxis domain={[0, 100]} />
+                      <Radar name="능력치" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                      <Legend />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
+            
+            {/* 탭 네비게이션 */}
+            <div className="result-tabs">
+              <button 
+                className={`tab-btn ${activeTab === 'personality' ? 'active' : ''}`}
+                onClick={() => setActiveTab('personality')}
+              >
+                성격 및 기질
+              </button>
+              <button 
+                className={`tab-btn ${activeTab === 'career' ? 'active' : ''}`}
+                onClick={() => setActiveTab('career')}
+              >
+                직업 적성
+              </button>
+              <button 
+                className={`tab-btn ${activeTab === 'relationship' ? 'active' : ''}`}
+                onClick={() => setActiveTab('relationship')}
+              >
+                대인관계
+              </button>
+              <button 
+                className={`tab-btn ${activeTab === 'wealth' ? 'active' : ''}`}
+                onClick={() => setActiveTab('wealth')}
+              >
+                재물운
+              </button>
+              <button 
+                className={`tab-btn ${activeTab === 'health' ? 'active' : ''}`}
+                onClick={() => setActiveTab('health')}
+              >
+                건강
+              </button>
+              <button 
+                className={`tab-btn ${activeTab === 'monthly' ? 'active' : ''}`}
+                onClick={() => setActiveTab('monthly')}
+              >
+                월별 운세
+              </button>
+            </div>
+            
+            {/* 탭 컨텐츠 */}
+            <div className="tab-content">
+              {/* 성격 탭 */}
+              {activeTab === 'personality' && (
+                <div className="personality-content">
+                  <div className="content-grid">
+                    <div className="grid-item">
+                      <h3>성격 특성</h3>
+                      <div className="characteristics">
+                        <p>{sajuResult.personality}</p>
+                        <p>당신은 창의적이고 활동적인 성향을 가지고 있으며, 새로운 도전을 좋아합니다. 다양한 분야에 관심을 가지고 있어 여러 방면에서 재능을 발휘할 수 있습니다.</p>
+                        <p>또한 직관력이 뛰어나 문제 해결 능력이 우수하며, 자신의 의견을 명확하게 표현할 수 있습니다.</p>
+                      </div>
+                      
+                      <div className="advice-box">
+                        <h4>자기계발 조언</h4>
+                        <p>때로는 너무 많은 것을 동시에 시도하려는 경향이 있으니, 우선순위를 정하고 집중하는 연습이 필요합니다. 또한 감정적 균형을 유지하기 위한 명상이나 휴식을 통해 더 나은 결정을 내릴 수 있습니다.</p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid-item">
+                      <h3>성격 분석 차트</h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <RadarChart outerRadius={90} data={personalityData}>
+                          <PolarGrid />
+                          <PolarAngleAxis dataKey="subject" />
+                          <PolarRadiusAxis domain={[0, 100]} />
+                          <Radar name="능력치" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                          <Legend />
+                          <Tooltip />
+                        </RadarChart>
+                      </ResponsiveContainer>
+                      
+                      <div className="chart-description">
+                        <p>위 차트는 여섯 가지 주요 성격 특성에 대한 분석을 보여줍니다. 특히 창의성과 사교성이 높은 편으로, 예술적인 활동이나 다양한 사람들과의 교류를 통해 에너지를 얻을 수 있습니다.</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
-              <div className="summary-item">
-                <span className="summary-label">성별</span>
-                <span className="summary-value">{userData.gender}</span>
-              </div>
-              <div className="summary-item">
-                <span className="summary-label">주요 관심사</span>
-                <span className="summary-value">{userData.concern}</span>
-              </div>
+              
+              {/* 직업 적성 탭 */}
+              {activeTab === 'career' && (
+                <div className="career-content">
+                  <div className="content-grid">
+                    <div className="grid-item">
+                      <h3>직업 적성 분석</h3>
+                      <div className="characteristics">
+                        <p>{sajuResult.career}</p>
+                        <p>당신은 리더십과 창의성이 결합된 역할이 적합합니다. 기획, 디자인, 마케팅, 교육 분야에서 두각을 나타낼 수 있으며, 자신의 아이디어를 실현시키는 일에 큰 만족감을 느낍니다.</p>
+                      </div>
+                      
+                      <h3>추천 직업군</h3>
+                      <div className="career-recommendations">
+                        <div className="career-group">
+                          <h4>창의적 분야</h4>
+                          <ul>
+                            <li>디자이너 (그래픽, UI/UX, 제품)</li>
+                            <li>작가/콘텐츠 크리에이터</li>
+                            <li>마케팅 기획자</li>
+                            <li>예술 감독</li>
+                          </ul>
+                        </div>
+                        
+                        <div className="career-group">
+                          <h4>리더십 분야</h4>
+                          <ul>
+                            <li>프로젝트 매니저</li>
+                            <li>교육자/트레이너</li>
+                            <li>창업가</li>
+                            <li>비영리 단체 리더</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid-item">
+                      <h3>직업 적성 차트</h3>
+                      <div className="career-chart">
+                        <ResponsiveContainer width="100%" height={300}>
+                          <BarChart data={[
+                            {category: '창의성', value: 85},
+                            {category: '리더십', value: 80},
+                            {category: '분석력', value: 70},
+                            {category: '소통능력', value: 75},
+                            {category: '실행력', value: 65}
+                          ]}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="category" />
+                            <YAxis domain={[0, 100]} />
+                            <Tooltip />
+                            <Bar dataKey="value" fill="#8884d8" />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                      
+                      <div className="advice-box">
+                        <h4>경력 개발 조언</h4>
+                        <p>당신의 창의력과 리더십을 활용할 수 있는 프로젝트 중심의 업무 환경을 찾는 것이 좋습니다. 실행력을 더 키우기 위해 구체적인 목표 설정과 시간 관리 기술을 향상시키는 것이 도움이 될 것입니다.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* 대인관계 탭 */}
+              {activeTab === 'relationship' && (
+                <div className="relationship-content">
+                  <div className="content-grid">
+                    <div className="grid-item">
+                      <h3>대인관계 특성</h3>
+                      <div className="characteristics">
+                        <p>{sajuResult.relationship}</p>
+                        <p>대화를 통해 깊은 유대감을 형성하는 능력이 있으며, 타인의 감정을 잘 이해하고 공감하는 능력이 뛰어납니다. 다만 때로는 너무 많은 사람들의 요구에 맞추려다 자신의 에너지를 소진할 수 있으니 주의가 필요합니다.</p>
+                      </div>
+                      
+                      <h3>상성이 좋은 유형</h3>
+                      <div className="compatibility">
+                        <p>안정적이고 신뢰할 수 있는 성격의 사람들과 좋은 관계를 형성할 수 있습니다. 특히 {sajuResult.dominantElement === '화' ? '금(金)' : 
+                        sajuResult.dominantElement === '수' ? '토(土)' : 
+                        sajuResult.dominantElement === '목' ? '수(水)' : 
+                        sajuResult.dominantElement === '금' ? '토(土)' : 
+                        sajuResult.dominantElement === '토' ? '금(金)' : ''} 기운이 강한 사람과 균형 잡힌 관계를 형성할 수 있습니다.</p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid-item">
+                      <h3>인간관계 스타일</h3>
+                      <div className="relationship-chart">
+                        <ResponsiveContainer width="100%" height={300}>
+                          <RadarChart outerRadius={90} data={[
+                            {subject: '친밀도', A: 85, fullMark: 100},
+                            {subject: '신뢰성', A: 80, fullMark: 100},
+                            {subject: '의사소통', A: 75, fullMark: 100},
+                            {subject: '갈등해결', A: 65, fullMark: 100},
+                            {subject: '경계설정', A: 60, fullMark: 100}
+                          ]}>
+                            <PolarGrid />
+                            <PolarAngleAxis dataKey="subject" />
+                            <PolarRadiusAxis domain={[0, 100]} />
+                            <Radar name="능력" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+                            <Legend />
+                            <Tooltip />
+                          </RadarChart>
+                        </ResponsiveContainer>
+                      </div>
+                      
+                      <div className="advice-box">
+                        <h4>인간관계 조언</h4>
+                        <p>당신은 친밀한 관계를 맺는 데 능숙하지만, 때로는 자신의 경계를 명확히 설정하는 것이 필요합니다. "아니오"라고 말하는 연습을 통해 자신의 에너지를 보존하고, 갈등 상황에서 감정을 조절하는 기술을 향상시키면 더욱 건강한 관계를 형성할 수 있습니다.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* 재물운 탭 */}
+              {activeTab === 'wealth' && (
+                <div className="wealth-content">
+                  <div className="content-grid">
+                    <div className="grid-item">
+                      <h3>재물운 분석</h3>
+                      <div className="characteristics">
+                        <p>{sajuResult.wealth}</p>
+                        <p>창의적인 아이디어를 통해 수입을 창출할 수 있는 능력이 있으며, 다양한 분야에서 기회를 포착하는 안목이 있습니다. 다만 즉흥적인 소비 패턴을 조절하는 것이 재정적 안정에 중요합니다.</p>
+                      </div>
+                      
+                      <h3>재물 관리 팁</h3>
+                      <ul className="wealth-tips">
+                        <li>월별 예산 계획을 세우고 지출 추적 앱을 활용하세요.</li>
+                        <li>충동구매를 줄이기 위해 "24시간 규칙"을 적용해보세요.</li>
+                        <li>다양한 분야에 소액으로 투자하는 포트폴리오 전략이 효과적입니다.</li>
+                        <li>창의적 재능을 부수입원으로 활용하는 방법을 고려해보세요.</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="grid-item">
+                      <h3>5년 재물운 흐름</h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={fortuneData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="year" />
+                          <YAxis domain={[0, 100]} />
+                          <Tooltip />
+                          <Legend />
+                          <Line type="monotone" dataKey="운세지수" stroke="#8884d8" activeDot={{ r: 8 }} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                      
+                      <div className="wealth-forecast">
+                        <h4>연도별 재물운 전망</h4>
+                        <div className="year-forecast">
+                          <span className="year">2023:</span>
+                          <p>기반을 다지는 시기로, 안정적인 수입원을 확보하는 데 집중하세요.</p>
+                        </div>
+                        <div className="year-forecast">
+                          <span className="year">2024:</span>
+                          <p>투자와 성장의 기회가 있는 해입니다. 새로운 분야에 도전해보세요.</p>
+                        </div>
+                        <div className="year-forecast">
+                          <span className="year">2025:</span>
+                          <p>안정적인 성장세를 유지하되, 지출 관리에 주의하세요.</p>
+                        </div>
+                        <div className="year-forecast">
+                          <span className="year">2026:</span>
+                          <p>재물운이 크게 상승하는 해로, 대규모 프로젝트나 투자에 유리합니다.</p>
+                        </div>
+                        <div className="year-forecast">
+                          <span className="year">2027:</span>
+                          <p>안정적인 수익 구조가 형성되며, 자산 관리에 집중할 때입니다.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* 건강 탭 */}
+              {activeTab === 'health' && (
+                <div className="health-content">
+                  <div className="content-grid">
+                    <div className="grid-item">
+                      <h3>건강 특성</h3>
+                      <div className="characteristics">
+                        <p>{sajuResult.health}</p>
+                        <p>전반적인 체력은 양호하지만, 스트레스에 민감하게 반응하는 편입니다. 규칙적인 운동과 충분한 휴식이 건강 유지에 필수적입니다.</p>
+                      </div>
+                      
+                      <h3>건강 관리 팁</h3>
+                      <ul className="health-tips">
+                        <li>스트레스 관리를 위한 명상이나 요가를 실천하세요.</li>
+                        <li>규칙적인 심장 강화 운동을 일주일에 3-4회 실시하세요.</li>
+                        <li>충분한 수분 섭취와 균형 잡힌 식단을 유지하세요.</li>
+                        <li>6-8시간의 충분한 수면 시간을 확보하세요.</li>
+                        <li>정기적인 건강 검진을 통해 예방 관리하세요.</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="grid-item">
+                      <h3>신체 에너지 밸런스</h3>
+                      <div className="energy-balance">
+                        <ResponsiveContainer width="100%" height={300}>
+                          <BarChart layout="vertical" data={[
+                            {system: '심장/혈관', level: 70},
+                            {system: '소화기관', level: 85},
+                            {system: '호흡기', level: 75},
+                            {system: '근골격계', level: 80},
+                            {system: '면역체계', level: 65}
+                          ]}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis type="number" domain={[0, 100]} />
+                            <YAxis dataKey="system" type="category" />
+                            <Tooltip />
+                            <Bar dataKey="level" fill="#8884d8" />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                      
+                      <div className="advice-box">
+                        <h4>특별 관리 부위</h4>
+                        <p>심장과 면역 체계에 더 많은 관심이 필요합니다. 심장 건강을 위해 오메가-3가 풍부한 음식을 섭취하고, 면역력 강화를 위해 충분한 비타민 C와 D를 섭취하세요. 또한 과도한 카페인과 자극적인 음식을 줄이는 것이 좋습니다.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* 월별 운세 탭 */}
+              {activeTab === 'monthly' && (
+                <div className="monthly-content">
+                  <h3>2023년 월별 운세</h3>
+                  <div className="monthly-chart">
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={monthlyData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis domain={[0, 100]} />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="운세지수" fill="#8884d8" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  
+                  <div className="monthly-details">
+                    {sajuResult.monthlyForecast.map((item, index) => (
+                      <div key={index} className="month-item">
+                        <div className="month-header">
+                          <span className="month-name">{item.month}</span>
+                          <span className="month-rating">
+                            {Array(item.rating).fill().map((_, i) => (
+                              <FaStar key={i} className="star-icon" />
+                            ))}
+                          </span>
+                        </div>
+                        <p className="month-content">{item.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </section>
-        
-        <section className="result-overview">
-          <div className="container">
-            <div className="result-card">
-              <h2>사주 기본 구성</h2>
-              <div className="pillars-container">
-                <div className="pillar">
-                  <div className="pillar-title">년주(年柱)</div>
-                  <div className="pillar-value">{sajuResult.yearPillar}</div>
-                </div>
-                <div className="pillar">
-                  <div className="pillar-title">월주(月柱)</div>
-                  <div className="pillar-value">{sajuResult.monthPillar}</div>
-                </div>
-                <div className="pillar">
-                  <div className="pillar-title">일주(日柱)</div>
-                  <div className="pillar-value">{sajuResult.dayPillar}</div>
-                </div>
-                <div className="pillar">
-                  <div className="pillar-title">시주(時柱)</div>
-                  <div className="pillar-value">{sajuResult.hourPillar || '미상'}</div>
-                </div>
-              </div>
-              
-              <div className="dominant-element">
-                <h3>주요 오행</h3>
-                <div className={`element-badge ${sajuResult.dominantElement === '화' ? 'fire' : 
-                                              sajuResult.dominantElement === '수' ? 'water' : 
-                                              sajuResult.dominantElement === '목' ? 'wood' : 
-                                              sajuResult.dominantElement === '금' ? 'metal' : 
-                                              sajuResult.dominantElement === '토' ? 'earth' : ''}`}>
-                  {sajuResult.dominantElement}({
-                    sajuResult.dominantElement === '화' ? '火' : 
-                    sajuResult.dominantElement === '수' ? '水' : 
-                    sajuResult.dominantElement === '목' ? '木' : 
-                    sajuResult.dominantElement === '금' ? '金' : 
-                    sajuResult.dominantElement === '토' ? '土' : ''
-                  })
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        <section className="element-analysis">
-          <div className="container">
-            <h2>오행 분석</h2>
-            <p className="section-subtitle">당신의 사주에 나타난 오행의 균형과 특성을 분석합니다</p>
-            
-            <div className="element-chart-container">
-              <div className="pie-chart-wrapper">
-                <div className="pie-chart">
-                  {elementData.values.map((value, index) => (
-                    <div 
-                      key={index} 
-                      className="pie-segment" 
-                      style={{
-                        backgroundColor: elementData.colors[index],
-                        transform: `rotate(${index > 0 ? 
-                          elementData.values.slice(0, index).reduce((acc, curr) => acc + curr, 0) * 3.6 : 0}deg)`,
-                        clipPath: `polygon(50% 50%, 50% 0%, ${value > 25 ? '100% 0%' : ''}, ${value > 50 ? '100% 100%' : ''}, ${value > 75 ? '0% 100%' : ''}, ${value > 12.5 && value <= 25 ? '100% 100%' : ''}, 50% 50%)`
-                      }}
-                    ></div>
-                  ))}
-                  <div className="pie-center">
-                    <span>{sajuResult.dominantElement}</span>
+          
+          {/* 프리미엄 업그레이드 배너 */}
+          {!premium && (
+            <div className="premium-banner">
+              <div className="container">
+                <div className="premium-banner-content">
+                  <div className="premium-text">
+                    <h3>더 자세한 분석이 필요하신가요?</h3>
+                    <p>프리미엄 분석을 통해 더 심층적인 사주 해석과 맞춤형 디지털 부적을 받아보세요.</p>
                   </div>
-                </div>
-              </div>
-              
-              <div className="element-legend">
-                {elementData.labels.map((label, index) => (
-                  <div key={index} className="legend-item">
-                    <div className="legend-color" style={{ backgroundColor: elementData.colors[index] }}></div>
-                    <div className="legend-label">{label}</div>
-                    <div className="legend-value">{elementData.values[index]}%</div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="element-description">
-                <p>
-                  {userData.name}님의 사주에서는 <strong>{sajuResult.dominantElement}({
-                    sajuResult.dominantElement === '화' ? '火' : 
-                    sajuResult.dominantElement === '수' ? '水' : 
-                    sajuResult.dominantElement === '목' ? '木' : 
-                    sajuResult.dominantElement === '금' ? '金' : 
-                    sajuResult.dominantElement === '토' ? '土' : ''
-                  })</strong> 기운이 가장 강하게 나타납니다. 
-                  {sajuResult.dominantElement === '화' && '화(火)는 열정, 창의성, 활동성을 상징하며, 리더십과 표현력이 뛰어난 특성을 보입니다.'}
-                  {sajuResult.dominantElement === '수' && '수(水)는 지혜, 통찰력, 적응력을 상징하며, 깊은 사고와 유연한 대처 능력이 뛰어난 특성을 보입니다.'}
-                  {sajuResult.dominantElement === '목' && '목(木)은 성장, 창의성, 진취성을 상징하며, 도전 정신과 발전 가능성이 큰 특성을 보입니다.'}
-                  {sajuResult.dominantElement === '금' && '금(金)은 결단력, 정확성, 완벽함을 상징하며, 원칙을 중시하고 체계적인 특성을 보입니다.'}
-                  {sajuResult.dominantElement === '토' && '토(土)는 안정, 신뢰, 실용성을 상징하며, 책임감과 인내심이 강한 특성을 보입니다.'}
-                </p>
-                <p>
-                  반면, {
-                    sajuResult.dominantElement === '화' ? '수(水)' : 
-                    sajuResult.dominantElement === '수' ? '토(土)' : 
-                    sajuResult.dominantElement === '목' ? '금(金)' : 
-                    sajuResult.dominantElement === '금' ? '화(火)' : 
-                    sajuResult.dominantElement === '토' ? '목(木)' : ''
-                  } 기운이 부족한 편으로, 이를 보완하는 것이 중요합니다. 
-                  {sajuResult.dominantElement === '화' && '수(水)의 부족은 감정 조절과 깊은 사고에 어려움을 줄 수 있으므로, 차분함과 인내심을 기르는 것이 도움이 됩니다.'}
-                  {sajuResult.dominantElement === '수' && '토(土)의 부족은 안정감과 현실적 판단에 어려움을 줄 수 있으므로, 실용적인 접근과 책임감을 기르는 것이 도움이 됩니다.'}
-                  {sajuResult.dominantElement === '목' && '금(金)의 부족은 체계적인 판단과 완벽함에 어려움을 줄 수 있으므로, 원칙과 정확성을 기르는 것이 도움이 됩니다.'}
-                  {sajuResult.dominantElement === '금' && '화(火)의 부족은 열정과 창의성에 어려움을 줄 수 있으므로, 표현력과 도전 정신을 기르는 것이 도움이 됩니다.'}
-                  {sajuResult.dominantElement === '토' && '목(木)의 부족은 성장과 변화에 어려움을 줄 수 있으므로, 유연성과 창의성을 기르는 것이 도움이 됩니다.'}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        <section className="fortune-flow">
-          <div className="container">
-            <h2>운세 흐름</h2>
-            <p className="section-subtitle">향후 5년간의 운세 흐름을 예측합니다</p>
-            
-            <div className="flow-chart">
-              <div className="line-chart">
-                <div className="chart-grid">
-                  <div className="grid-line"></div>
-                  <div className="grid-line"></div>
-                  <div className="grid-line"></div>
-                  <div className="grid-line"></div>
-                  <div className="grid-line"></div>
-                </div>
-                
-                <div className="chart-line" style={{
-                  clipPath: `polygon(
-                    0% ${100 - fortuneFlowData.values[0]}%, 
-                    25% ${100 - fortuneFlowData.values[1]}%, 
-                    50% ${100 - fortuneFlowData.values[2]}%, 
-                    75% ${100 - fortuneFlowData.values[3]}%, 
-                    100% ${100 - fortuneFlowData.values[4]}%, 
-                    100% 100%, 
-                    0% 100%
-                  )`
-                }}></div>
-                
-                <div className="chart-points">
-                  {fortuneFlowData.values.map((value, index) => (
-                    <div 
-                      key={index} 
-                      className="chart-point" 
-                      style={{
-                        left: `${index * 25}%`,
-                        bottom: `${value}%`
-                      }}
-                    ></div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="chart-labels">
-                {fortuneFlowData.labels.map((label, index) => (
-                  <div key={index} className="chart-label">{label}</div>
-                ))}
-              </div>
-              
-              <div className="flow-description">
-                <p>
-                  {userData.name}님의 운세는 향후 5년간 전반적으로 상승세를 보일 것으로 예측됩니다. 
-                  특히 2026년에 가장 좋은 운세가 예상되며, 이 시기에 중요한 결정이나 도전을 시도하는 것이 유리할 수 있습니다.
-                </p>
-                <p>
-                  2024년부터 2025년까지는 약간의 변동이 있을 수 있으나, 전체적으로는 안정적인 흐름을 유지할 것입니다. 
-                  이 기간 동안에는 기존의 것을 유지하고 발전시키는 데 집중하는 것이 좋습니다.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        <section className="detailed-reading">
-          <div className="container">
-            <h2>상세 분석</h2>
-            <p className="section-subtitle">당신의 사주가 보여주는 다양한 측면을 분석합니다</p>
-            
-            <div className="reading-tabs">
-              <div className="reading-content">
-                <div className="result-section personality">
-                  <h2>성격 및 기질</h2>
-                  <p>{sajuResult.personality}</p>
-                  
-                  <div className="personality-traits">
-                    <div className="trait">열정적</div>
-                    <div className="trait">창의적</div>
-                    <div className="trait">활동적</div>
-                    <div className="trait">리더십</div>
-                    <div className="trait">표현력</div>
-                    <div className="trait">사교성</div>
-                  </div>
-                </div>
-                
-                <div className="result-section career">
-                  <h2>적성 및 직업</h2>
-                  <p>{sajuResult.career}</p>
-                  
-                  <h3>적합한 직업군</h3>
-                  <div className="career-matches">
-                    <div className="career-match">
-                      <div className="career-icon">
-                        <i className="fa fa-briefcase"></i>
-                      </div>
-                      <div className="career-name">창의적 분야</div>
-                      <div className="career-fit">적합도: 90%</div>
-                    </div>
-                    <div className="career-match">
-                      <div className="career-icon">
-                        <i className="fa fa-users"></i>
-                      </div>
-                      <div className="career-name">리더십 분야</div>
-                      <div className="career-fit">적합도: 85%</div>
-                    </div>
-                    <div className="career-match">
-                      <div className="career-icon">
-                        <i className="fa fa-comments"></i>
-                      </div>
-                      <div className="career-name">커뮤니케이션 분야</div>
-                      <div className="career-fit">적합도: 80%</div>
-                    </div>
-                    <div className="career-match">
-                      <div className="career-icon">
-                        <i className="fa fa-paint-brush"></i>
-                      </div>
-                      <div className="career-name">예술 분야</div>
-                      <div className="career-fit">적합도: 75%</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="result-section relationship">
-                  <h2>대인관계 및 연애</h2>
-                  <p>{sajuResult.relationship}</p>
-                  
-                  <h3>상성이 좋은 오행</h3>
-                  <div className="compatibility-items">
-                    <div className="compatibility-item">
-                      <div className={`compatibility-element wood ${sajuResult.dominantElement === '목' ? 'active' : ''}`}>목(木)</div>
-                      <div className="compatibility-description">
-                        창의적이고 성장 지향적인 성향을 가진 사람과 좋은 관계를 형성할 수 있습니다.
-                      </div>
-                    </div>
-                    <div className="compatibility-item">
-                      <div className={`compatibility-element fire ${sajuResult.dominantElement === '화' ? 'active' : ''}`}>화(火)</div>
-                      <div className="compatibility-description">
-                        열정적이고 활동적인 성향을 가진 사람과 서로 에너지를 북돋울 수 있습니다.
-                      </div>
-                    </div>
-                    <div className="compatibility-item">
-                      <div className={`compatibility-element earth ${sajuResult.dominantElement === '토' ? 'active' : ''}`}>토(土)</div>
-                      <div className="compatibility-description">
-                        안정적이고 신뢰감 있는 성향을 가진 사람과 균형 잡힌 관계를 형성할 수 있습니다.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="result-section wealth">
-                  <h2>재물운</h2>
-                  <p>{sajuResult.wealth}</p>
-                  
-                  <div className="wealth-tips">
-                    <h3>재물 관리 조언</h3>
-                    <ul>
-                      <li>충동적인 소비를 자제하고 계획적인 지출 습관을 기르세요.</li>
-                      <li>장기적인 투자 계획을 세우고 꾸준히 실행하세요.</li>
-                      <li>재물을 모으는 것보다 가치 있게 사용하는 방법을 고민하세요.</li>
-                      <li>정기적인 저축 습관을 통해 안정적인 자산을 형성하세요.</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="result-section health">
-                  <h2>건강</h2>
-                  <p>{sajuResult.health}</p>
-                  
-                  <div className="health-focus">
-                    <h3>주의해야 할 건강 부위</h3>
-                    <div className="body-chart">
-                      <div className="body-part heart active">
-                        <div className="part-name">심장</div>
-                      </div>
-                      <div className="body-part blood active">
-                        <div className="part-name">혈액순환</div>
-                      </div>
-                      <div className="body-part head">
-                        <div className="part-name">두뇌</div>
-                      </div>
-                      <div className="body-part stomach">
-                        <div className="part-name">소화기</div>
-                      </div>
-                      <div className="body-part liver">
-                        <div className="part-name">간</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="result-section advice">
-                  <h2>종합 조언</h2>
-                  <p>{sajuResult.advice}</p>
-                  
-                  <div className="advice-highlights">
-                    <div className="advice-highlight">
-                      <div className="highlight-icon">
-                        <i className="fa fa-balance-scale"></i>
-                      </div>
-                      <div className="highlight-text">균형 잡힌 생활 습관을 유지하세요.</div>
-                    </div>
-                    <div className="advice-highlight">
-                      <div className="highlight-icon">
-                        <i className="fa fa-heart"></i>
-                      </div>
-                      <div className="highlight-text">감정 조절에 주의를 기울이세요.</div>
-                    </div>
-                    <div className="advice-highlight">
-                      <div className="highlight-icon">
-                        <i className="fa fa-users"></i>
-                      </div>
-                      <div className="highlight-text">신뢰할 수 있는 인간관계를 구축하세요.</div>
-                    </div>
-                  </div>
+                  <button className="premium-btn" onClick={togglePremiumModal}>
+                    프리미엄 분석 받기 <FaArrowRight />
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </section>
         
+        {/* 맞춤형 디지털 부적 섹션 - UI 개선 */}
         <section className="talisman-section">
           <div className="container">
-            <h2>맞춤형 행운 부적</h2>
-            <p className="section-subtitle">{userData.name}님의 사주에 맞춰 특별히 설계된 행운 부적</p>
+            <div className="section-header">
+              <h2>맞춤형 디지털 부적</h2>
+              <p>AI가 당신의 사주에 맞게 특별히 설계한 디지털 부적</p>
+            </div>
             
-            <div className="talisman-container">
-              <div className="talisman-preview">
-                <div className="talisman-image-container">
-                  <div className="talisman-image blurred">
-                    {/* 이미지 태그 제거 또는 수정 */}
-                    {/* <img src={`/images/talismans/${sajuResult.dominantElement.toLowerCase()}_talisman.jpg`} alt="맞춤형 행운 부적" /> */}
-                    <div className="talisman-placeholder"></div>
-                    <div className="talisman-lock">
-                      <FaLock />
-                      <p>구매 후 확인 가능</p>
-                    </div>
-                  </div>
-                  <div className="talisman-energy-aura"></div>
-                </div>
-                
-                <div className="talisman-elements">
-                  <div className="talisman-element-tag">
-                    <span className={`element-icon ${sajuResult.dominantElement === '화' ? 'fire' : 
-                                                  sajuResult.dominantElement === '수' ? 'water' : 
-                                                  sajuResult.dominantElement === '목' ? 'wood' : 
-                                                  sajuResult.dominantElement === '금' ? 'metal' : 
-                                                  sajuResult.dominantElement === '토' ? 'earth' : ''}`}>
-                      {sajuResult.dominantElement}({
-                        sajuResult.dominantElement === '화' ? '火' : 
-                        sajuResult.dominantElement === '수' ? '水' : 
-                        sajuResult.dominantElement === '목' ? '木' : 
-                        sajuResult.dominantElement === '금' ? '金' : 
-                        sajuResult.dominantElement === '토' ? '土' : ''
-                      })
-                    </span>
-                    <span className="element-description">주요 오행</span>
-                  </div>
-                  
-                  <div className="talisman-element-tag">
-                    <span className={`element-icon ${sajuResult.dominantElement === '화' ? 'water' : 
-                                                  sajuResult.dominantElement === '수' ? 'earth' : 
-                                                  sajuResult.dominantElement === '목' ? 'metal' : 
-                                                  sajuResult.dominantElement === '금' ? 'fire' : 
-                                                  sajuResult.dominantElement === '토' ? 'wood' : ''}`}>
-                      {sajuResult.dominantElement === '화' ? '수(水)' : 
-                      sajuResult.dominantElement === '수' ? '토(土)' : 
-                      sajuResult.dominantElement === '목' ? '금(金)' : 
-                      sajuResult.dominantElement === '금' ? '화(火)' : 
-                      sajuResult.dominantElement === '토' ? '목(木)' : ''}
-                    </span>
-                    <span className="element-description">보완 오행</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="talisman-details">
-                <div className="talisman-info-toggle" onClick={toggleTalismanInfo}>
-                  <FaInfoCircle /> 부적에 대한 자세한 정보
-                </div>
-                
-                <div className={`talisman-info ${showTalismanInfo ? 'show' : ''}`}>
-                  <h3>맞춤형 행운 부적이란?</h3>
+            <div className="talisman-content">
+              <div className="talisman-info">
+                <div className="talisman-description">
                   <p>
-                    맞춤형 행운 부적은 {userData.name}님의 사주 분석을 바탕으로 AI가 설계한 특별한 부적입니다. 
-                    전통적인 부적의 원리와 현대적인 에너지 이론을 결합하여 만들어진 이 부적은 
-                    {userData.name}님의 부족한 기운을 보충하고 과잉된 기운을 조절하는 데 도움을 줍니다.
+                    맞춤형 디지털 부적은 {userData.name}님의 사주 기반으로 <strong>AI가 특별히 디자인</strong>한 
+                    개인화된 행운의 상징입니다. 전통적인 부적의 원리와 현대적인 에너지 이론을 결합하여 
+                    당신에게 부족한 기운을 보충하고 과잉된 기운을 조절합니다.
                   </p>
                   
-                  <h3>이 부적이 도움이 되는 이유</h3>
                   <ul className="talisman-benefits">
                     <li>
-                      <FaCheck className="benefit-icon" />
-                      <div className="benefit-content">
-                        <strong>맞춤형 설계:</strong> {userData.name}님의 사주에 맞춰 특별히 설계되어 개인적인 에너지 균형을 맞춥니다.
+                      <div className="benefit-icon"><FaCheck /></div>
+                      <div className="benefit-text">
+                        <strong>개인 맞춤 디자인:</strong> 당신의 사주팔자에 맞춤 설계
                       </div>
                     </li>
                     <li>
-                      <FaCheck className="benefit-icon" />
-                      <div className="benefit-content">
-                        <strong>에너지 조화:</strong> 부족한 {sajuResult.dominantElement === '화' ? '수(水)' : 
-                                                  sajuResult.dominantElement === '수' ? '토(土)' : 
-                                                  sajuResult.dominantElement === '목' ? '금(金)' : 
-                                                  sajuResult.dominantElement === '금' ? '화(火)' : 
-                                                  sajuResult.dominantElement === '토' ? '목(木)' : ''} 기운을 보충합니다.
+                      <div className="benefit-icon"><FaCheck /></div>
+                      <div className="benefit-text">
+                        <strong>에너지 균형:</strong> 부족한 기운 보충, 과잉 기운 조절
                       </div>
                     </li>
                     <li>
-                      <FaCheck className="benefit-icon" />
-                      <div className="benefit-content">
-                        <strong>운세 개선:</strong> 불리한 운세를 완화하고 유리한 운세를 강화하는 데 도움을 줍니다.
+                      <div className="benefit-icon"><FaCheck /></div>
+                      <div className="benefit-text">
+                        <strong>행운 증진:</strong> 개인의 행운과 기회를 향상
                       </div>
                     </li>
                     <li>
-                      <FaCheck className="benefit-icon" />
-                      <div className="benefit-content">
-                        <strong>심리적 안정:</strong> 부적을 소지함으로써 심리적 안정감과 자신감을 얻을 수 있습니다.
-                      </div>
-                    </li>
-                    <li>
-                      <FaCheck className="benefit-icon" />
-                      <div className="benefit-content">
-                        <strong>목표 달성:</strong> 당신의 목표와 꿈을 이루는 데 필요한 에너지를 지원합니다.
+                      <div className="benefit-icon"><FaCheck /></div>
+                      <div className="benefit-text">
+                        <strong>부정적 에너지 차단:</strong> 불운과 부정적 에너지로부터 보호
                       </div>
                     </li>
                   </ul>
-                  
-                  <h3>부적 사용법</h3>
-                  <ol className="talisman-usage">
-                    <li>부적을 받으면 먼저 자신의 이름을 세 번 부르며 부적과 교감합니다.</li>
-                    <li>부적은 지갑, 핸드폰 케이스, 침실 등 자주 접하는 곳에 보관하세요.</li>
-                    <li>부적을 물에 닿게 하거나 접거나 훼손하지 않도록 주의하세요.</li>
-                    <li>매달 보름날에 햇빛이나 달빛에 30분간 노출시켜 에너지를 재충전하세요.</li>
-                  </ol>
                 </div>
                 
-                <div className="talisman-purchase">
+                <div className="talisman-visual">
+                  <div className="talisman-preview blurred">
+                    <div className="talisman-placeholder">
+                      <div className="talisman-gradient"></div>
+                      <div className="talisman-symbols"></div>
+                    </div>
+                    <div className="talisman-lock">
+                      <FaLock />
+                      <p>프리미엄 분석 결제 후 확인 가능</p>
+                    </div>
+                  </div>
+                  
+                  <div className="talisman-caption">
+                    <p>
+                      <strong>{userData.name}님을 위한 맞춤형 디지털 부적</strong><br />
+                      <span className="dominant-element">주요 기운: {sajuResult.dominantElement}(火)</span>
+                    </p>
+                    <button className="info-button" onClick={toggleTalismanInfo}>
+                      <FaInfoCircle /> 부적에 대해 더 알아보기
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              {showTalismanInfo && (
+                <div className="talisman-details">
+                  <h3>맞춤형 디지털 부적이란?</h3>
+                  <p>
+                    맞춤형 디지털 부적은 수천 년 동안 전해져 온 동양의 부적 제작 원리와 현대 에너지 이론을 
+                    AI 기술로 결합한 혁신적인 디지털 아티팩트입니다. 각 부적은 개인의 사주팔자를 면밀히 분석하여 
+                    그 사람에게 가장 필요한 기운과 보호를 제공하도록 특별히 설계됩니다.
+                  </p>
+                  
+                  <h4>디지털 부적 사용법</h4>
+                  <ol className="usage-steps">
+                    <li>스마트폰 배경화면이나 컴퓨터 바탕화면으로 설정하여 매일 에너지를 받으세요.</li>
+                    <li>중요한 결정을 내리기 전에 부적을 잠시 응시하며 명상하세요.</li>
+                    <li>출력하여 지갑이나 중요 서류 보관함에 보관할 수 있습니다.</li>
+                    <li>매달 보름날 부적 이미지를 열어보며 재충전하세요.</li>
+                  </ol>
+                  
+                  <div className="scientific-note">
+                    <h4>과학적 근거</h4>
+                    <p>
+                      디지털 부적의 효과는 심리학적 앵커링(anchoring)과 자기암시(self-suggestion) 효과에 기반합니다. 
+                      부적을 통한 시각적 상기와 긍정적 의도 설정은 무의식적 행동 패턴과 의사결정에 
+                      긍정적 영향을 미칠 수 있습니다.
+                    </p>
+                  </div>
+                </div>
+              )}
+              
+              {!premium && (
+                <div className="talisman-cta">
                   <div className="price-container">
                     <div className="original-price">50,000원</div>
                     <div className="discount-price">29,000원</div>
                     <div className="discount-tag">42% 할인</div>
                   </div>
                   
-                  <button className="purchase-button">
-                    <FaShoppingCart /> 맞춤형 부적 구매하기
+                  <button className="purchase-button" onClick={togglePremiumModal}>
+                    <FaShoppingCart /> 프리미엄 분석 & 맞춤형 부적 받기
                   </button>
                   
                   <div className="guarantee">
-                    <p>✓ 100% 만족 보장 | ✓ 안전한 결제 | ✓ 빠른 배송</p>
+                    <p>✓ 맞춤형 디지털 부적 포함 | ✓ 안전한 결제 | ✓ 즉시 이용 가능</p>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </section>
       </main>
+      
+      {/* 프리미엄 결제 모달 */}
+      {showPremiumModal && (
+        <div className="modal-overlay">
+          <div className="premium-modal">
+            <button className="close-modal" onClick={togglePremiumModal}>×</button>
+            
+            <div className="modal-header">
+              <h2>프리미엄 사주 분석</h2>
+              <p>더 자세한 분석과 맞춤형 디지털 부적을 받아보세요</p>
+            </div>
+            
+            <div className="premium-features">
+              <div className="feature-item">
+                <div className="feature-icon"><FaChartPie /></div>
+                <div className="feature-text">
+                  <h4>심층 사주 분석</h4>
+                  <p>10가지 추가 분석 영역과 상세한 해석</p>
+                </div>
+              </div>
+              
+              <div className="feature-item">
+                <div className="feature-icon"><FaChartLine /></div>
+                <div className="feature-text">
+                  <h4>10년 운세 예측</h4>
+                  <p>장기적인 운세 흐름과 중요 시기 분석</p>
+                </div>
+              </div>
+              
+              <div className="feature-item">
+                <div className="feature-icon"><FaChartBar /></div>
+                <div className="feature-text">
+                  <h4>상세 성격 분석</h4>
+                  <p>세부적인 성격 특성과 잠재력 분석</p>
+                </div>
+              </div>
+              
+              <div className="feature-item highlight">
+                <div className="feature-icon special"><FaShoppingCart /></div>
+                <div className="feature-text">
+                  <h4>맞춤형 디지털 부적</h4>
+                  <p>당신의 사주에 맞게 AI가 특별 설계한 디지털 부적</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="price-section">
+              <div className="price-comparison">
+                <div className="original">
+                  <span className="label">정상가</span>
+                  <span className="price">50,000원</span>
+                </div>
+                <div className="discount">
+                  <span className="label">할인가</span>
+                  <span className="price">29,000원</span>
+                  <span className="discount-rate">42% 할인</span>
+                </div>
+              </div>
+              
+              <button className="purchase-btn" onClick={handlePremiumPurchase}>
+                <FaRegCreditCard /> 결제하고 프리미엄 분석 받기
+              </button>
+              
+              <p className="payment-security">
+                <small>✓ 안전한 결제 | ✓ 즉시 이용 가능</small>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
       
       <Footer />
     </div>

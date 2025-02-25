@@ -1,9 +1,13 @@
 const { OpenAI } = require('openai');
+const axios = require('axios');
+require('dotenv').config();
 
 // OpenAI 클라이언트 초기화
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY // 환경 변수에서 API 키 가져오기
 });
+
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 // 부적 생성 함수
 const generateTalisman = async (userData, sajuResult) => {
@@ -75,7 +79,6 @@ const downloadAndSaveImage = async (url, path) => {
   // fs 모듈을 사용하여 서버에 저장하는 로직
   
   // 예시 코드:
-  const axios = require('axios');
   const fs = require('fs');
   const { promisify } = require('util');
   const writeFileAsync = promisify(fs.writeFile);
@@ -103,6 +106,69 @@ const downloadAndSaveImage = async (url, path) => {
     throw error;
   }
 };
+
+async function analyzeSaju(userData) {
+  try {
+    const { name, birthDate, birthTime, gender, concern } = userData;
+    
+    // OpenAI API 요청 데이터
+    const prompt = `
+      사용자 정보:
+      - 이름: ${name}
+      - 생년월일: ${birthDate}
+      - 태어난 시간: ${birthTime || '모름'}
+      - 성별: ${gender}
+      - 관심사: ${concern}
+      
+      위 정보를 바탕으로 사주팔자를 분석하고, 다음 형식으로 결과를 JSON 형태로 제공해주세요:
+      {
+        "dominantElement": "오행 중 가장 강한 기운 (목/화/토/금/수)",
+        "personality": "성격 특성에 대한 상세 설명",
+        "career": "직업 및 진로에 대한 조언",
+        "relationship": "대인관계 및 연애/결혼 운에 대한 분석",
+        "wealth": "재물운에 대한 분석",
+        "health": "건강 관련 조언",
+        "yearPillar": "년주 (갑자, 을축 등)",
+        "monthPillar": "월주",
+        "dayPillar": "일주",
+        "hourPillar": "시주 (시간을 알 경우)",
+        "advice": "종합적인 조언"
+      }
+    `;
+    
+    const response = await axios.post(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          { role: 'system', content: '당신은 사주와 운세에 정통한 전문가입니다. 사용자의 생년월일과 시간을 바탕으로 사주팔자를 분석하고 상세한 운세 정보를 제공합니다.' },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.7,
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    
+    // API 응답에서 JSON 추출
+    const content = response.data.choices[0].message.content;
+    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    } else {
+      throw new Error('API 응답에서 JSON을 추출할 수 없습니다.');
+    }
+    
+  } catch (error) {
+    console.error('사주 분석 오류:', error);
+    throw error;
+  }
+}
 
 module.exports = {
   analyzeSaju,

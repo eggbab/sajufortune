@@ -479,8 +479,9 @@ function ResultPage() {
               <div className="talisman-preview">
                 <div className="talisman-image-container">
                   <div className="talisman-image blurred">
-                    {/* 부적 이미지 - 흐릿하게 처리됨 */}
-                    <img src={`/images/talismans/${sajuResult.dominantElement.toLowerCase()}_talisman.jpg`} alt="맞춤형 행운 부적" />
+                    {/* 이미지 태그 제거 또는 수정 */}
+                    {/* <img src={`/images/talismans/${sajuResult.dominantElement.toLowerCase()}_talisman.jpg`} alt="맞춤형 행운 부적" /> */}
+                    <div className="talisman-placeholder"></div>
                     <div className="talisman-lock">
                       <FaLock />
                       <p>구매 후 확인 가능</p>

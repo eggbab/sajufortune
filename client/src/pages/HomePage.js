@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { FaChevronRight, FaUserAlt, FaCalendarAlt, FaChartLine } from 'react-icons/fa';
 import '../styles/HomePage.css';
 
 function HomePage() {
@@ -130,232 +131,19 @@ function HomePage() {
                   </p>
                 </div>
               </div>
-              
-              <div className="intro-quote">
-                <p>"현대 기술로 재해석한 동양 철학의 지혜, 사주포춘과 함께 당신의 잠재력을 발견하세요."</p>
-              </div>
             </div>
           </div>
         </section>
         
-        {/* 사용자 결과 미리보기 섹션 */}
-        <section className="results-preview">
-          <div className="container">
-            <h2>다른 사용자들의 사주 분석 결과</h2>
-            <p className="section-subtitle">실제 사용자들의 사주 분석 결과를 살짝 엿보세요</p>
-            
-            <div className="results-grid">
-              <div className="result-card">
-                <div className="result-header">
-                  <div className="result-user">
-                    <span className="user-initial">L</span>
-                    <div className="user-info">
-                      <h3>이OO님의 사주 분석</h3>
-                      <p>1988년 5월 생, 여성</p>
-                    </div>
-                  </div>
-                  <div className="result-element">
-                    <span className="element-badge water">수(水)</span>
-                  </div>
-                </div>
-                <div className="result-content">
-                  <p>차분하고 지혜로운 성격의 소유자로, 깊은 통찰력과 분석력이 뛰어납니다. 감정 기복이 적고 안정적인 성향을 가지고 있어 주변 사람들에게 신뢰를 줍니다.</p>
-                  <p>직업적으로는 연구, 분석, 전략 기획과 같은 분야에서 두각을 나타낼 수 있으며, 꾸준한 노력으로 성과를 이루는 스타일입니다.</p>
-                  <p>대인관계에서는 신중하고 깊이 있는 관계를 선호하며, 소수의 친밀한 관계를 유지하는 경향이 있습니다. 신뢰를 바탕으로 한 관계에서 진정한 가치를 발견합니다.</p>
-                  <div className="result-fade"></div>
-                </div>
-              </div>
-              
-              <div className="result-card">
-                <div className="result-header">
-                  <div className="result-user">
-                    <span className="user-initial">K</span>
-                    <div className="user-info">
-                      <h3>김OO님의 사주 분석</h3>
-                      <p>1992년 8월 생, 남성</p>
-                    </div>
-                  </div>
-                  <div className="result-element">
-                    <span className="element-badge fire">화(火)</span>
-                  </div>
-                </div>
-                <div className="result-content">
-                  <p>열정적이고 활동적인 성격으로, 창의력과 리더십이 돋보입니다. 새로운 도전을 두려워하지 않고 적극적으로 나아가는 추진력이 강점입니다.</p>
-                  <p>대인관계에서는 사교성이 좋고 주변에 활력을 불어넣는 역할을 합니다. 다만 때로는 감정 조절에 주의가 필요합니다.</p>
-                  <p>직업적으로는 창의성과 리더십을 발휘할 수 있는 분야에서 성공할 가능성이 높으며, 특히 마케팅, 기획, 예술 분야에서 두각을 나타낼 수 있습니다.</p>
-                  <div className="result-fade"></div>
-                </div>
-              </div>
-              
-              <div className="result-card">
-                <div className="result-header">
-                  <div className="result-user">
-                    <span className="user-initial">P</span>
-                    <div className="user-info">
-                      <h3>박OO님의 사주 분석</h3>
-                      <p>1985년 11월 생, 여성</p>
-                    </div>
-                  </div>
-                  <div className="result-element">
-                    <span className="element-badge earth">토(土)</span>
-                  </div>
-                </div>
-                <div className="result-content">
-                  <p>안정적이고 신뢰감 있는 성격으로, 책임감과 인내심이 강합니다. 실용적인 사고방식을 가지고 있어 현실적인 문제 해결에 뛰어납니다.</p>
-                  <p>직업적으로는 꾸준함과 성실함이 요구되는 분야에서 좋은 성과를 낼 수 있으며, 특히 재물운이 좋아 자산 관리에 탁월합니다.</p>
-                  <p>대인관계에서는 신뢰와 안정을 중요시하며, 오랜 시간에 걸쳐 깊은 관계를 형성합니다. 가족과 친구들에게 든든한 지원자 역할을 합니다.</p>
-                  <div className="result-fade"></div>
-                </div>
-              </div>
-              
-              <div className="result-card">
-                <div className="result-header">
-                  <div className="result-user">
-                    <span className="user-initial">J</span>
-                    <div className="user-info">
-                      <h3>정OO님의 사주 분석</h3>
-                      <p>1990년 3월 생, 남성</p>
-                    </div>
-                  </div>
-                  <div className="result-element">
-                    <span className="element-badge wood">목(木)</span>
-                  </div>
-                </div>
-                <div className="result-content">
-                  <p>성장과 발전을 추구하는 진취적인 성격으로, 유연하면서도 강인한 내면을 가지고 있습니다. 새로운 아이디어와 가능성을 탐색하는 것을 좋아합니다.</p>
-                  <p>직업적으로는 성장 가능성이 높은 분야나 창의적인 문제 해결이 필요한 직종에서 능력을 발휘합니다. 특히 교육, 컨설팅, 환경 관련 분야가 적합합니다.</p>
-                  <p>대인관계에서는 포용력이 있고 배려심이 깊어 주변 사람들에게 좋은 영향을 줍니다. 다양한 사람들과 조화롭게 지내는 능력이 뛰어납니다.</p>
-                  <div className="result-fade"></div>
-                </div>
-              </div>
-              
-              <div className="result-card">
-                <div className="result-header">
-                  <div className="result-user">
-                    <span className="user-initial">C</span>
-                    <div className="user-info">
-                      <h3>최OO님의 사주 분석</h3>
-                      <p>1983년 9월 생, 여성</p>
-                    </div>
-                  </div>
-                  <div className="result-element">
-                    <span className="element-badge metal">금(金)</span>
-                  </div>
-                </div>
-                <div className="result-content">
-                  <p>정확하고 체계적인 성격으로, 원칙과 질서를 중요시합니다. 뛰어난 판단력과 분별력으로 복잡한 상황에서도 명확한 결정을 내릴 수 있습니다.</p>
-                  <p>직업적으로는 정밀함과 체계가 요구되는 분야에서 탁월한 능력을 발휘합니다. 법률, 금융, 품질 관리 등의 분야가 적합합니다.</p>
-                  <p>대인관계에서는 신뢰와 정직을 바탕으로 한 관계를 추구하며, 약속을 중요시합니다. 때로는 완벽주의적 성향으로 자신과 타인에게 높은 기준을 요구할 수 있습니다.</p>
-                  <div className="result-fade"></div>
-                </div>
-              </div>
-              
-              <div className="result-card">
-                <div className="result-header">
-                  <div className="result-user">
-                    <span className="user-initial">S</span>
-                    <div className="user-info">
-                      <h3>송OO님의 사주 분석</h3>
-                      <p>1995년 1월 생, 남성</p>
-                    </div>
-                  </div>
-                  <div className="result-element">
-                    <span className="element-badge water">수(水)</span>
-                  </div>
-                </div>
-                <div className="result-content">
-                  <p>유연하고 적응력이 뛰어난 성격으로, 다양한 상황에 잘 대처합니다. 직관력이 발달되어 있어 흐름을 읽고 기회를 포착하는 능력이 뛰어납니다.</p>
-                  <p>직업적으로는 변화가 많고 유동적인 환경에서 능력을 발휘하며, 특히 커뮤니케이션과 관련된 분야에서 성공할 가능성이 높습니다.</p>
-                  <p>대인관계에서는 공감 능력이 뛰어나 다양한 사람들과 쉽게 어울리며, 갈등 상황에서도 중재자 역할을 할 수 있습니다.</p>
-                  <div className="result-fade"></div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="results-cta">
-              <a href="#saju-form" className="btn-primary">나도 무료로 사주 분석받기</a>
-            </div>
-          </div>
-        </section>
-        
-        <section className="features">
-          <div className="container">
-            <h2>사주포춘만의 특별함</h2>
-            <div className="features-grid">
-              <div className="feature-card">
-                <div className="feature-icon ai-icon"></div>
-                <h3>AI 기술 활용</h3>
-                <p>최신 인공지능 기술로 정확한 사주 분석을 제공합니다. 방대한 데이터를 학습한 AI가 개인의 사주를 심층 분석하여 객관적이고 일관된 결과를 도출합니다.</p>
-                <ul class="feature-list">
-                  <li>빅데이터 기반 분석</li>
-                  <li>패턴 인식 알고리즘</li>
-                  <li>지속적인 학습과 개선</li>
-                </ul>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon personalized-icon"></div>
-                <h3>맞춤형 분석</h3>
-                <p>개인의 생년월일과 시간을 바탕으로 맞춤형 운세를 알려드립니다. 천편일률적인 해석이 아닌, 당신만의 고유한 사주 패턴을 분석합니다.</p>
-                <ul class="feature-list">
-                  <li>개인별 맞춤 해석</li>
-                  <li>다양한 삶의 영역 분석</li>
-                  <li>실용적인 조언 제공</li>
-                </ul>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon secure-icon"></div>
-                <h3>안전한 정보 관리</h3>
-                <p>개인정보는 철저히 보호되며 분석 후 안전하게 처리됩니다. 최신 보안 기술을 적용하여 사용자의 데이터를 안전하게 보호합니다.</p>
-                <ul class="feature-list">
-                  <li>암호화 기술 적용</li>
-                  <li>개인정보 보호 정책 준수</li>
-                  <li>제3자 정보 공유 없음</li>
-                </ul>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon accurate-icon"></div>
-                <h3>높은 정확도</h3>
-                <p>전통적인 사주 이론과 현대 심리학을 결합하여 높은 정확도의 분석 결과를 제공합니다. 사용자들의 피드백을 통해 지속적으로 정확도를 향상시킵니다.</p>
-                <ul class="feature-list">
-                  <li>전통 이론과 현대 기술의 결합</li>
-                  <li>지속적인 알고리즘 개선</li>
-                  <li>사용자 피드백 반영</li>
-                </ul>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon comprehensive-icon"></div>
-                <h3>종합적인 분석</h3>
-                <p>성격, 적성, 대인관계, 재물운, 건강 등 삶의 다양한 측면을 종합적으로 분석합니다. 단편적인 운세가 아닌 전체적인 삶의 패턴을 파악합니다.</p>
-                <ul class="feature-list">
-                  <li>다양한 삶의 영역 분석</li>
-                  <li>상호 연관성 파악</li>
-                  <li>균형 잡힌 해석 제공</li>
-                </ul>
-              </div>
-              
-              <div className="feature-card">
-                <div className="feature-icon modern-icon"></div>
-                <h3>현대적 해석</h3>
-                <p>고전적인 사주 이론을 현대 사회의 맥락에 맞게 재해석합니다. 현대인의 라이프스타일과 가치관을 고려한 실용적인 조언을 제공합니다.</p>
-                <ul class="feature-list">
-                  <li>현대 사회 맥락 반영</li>
-                  <li>실용적인 관점 제시</li>
-                  <li>시대 변화에 따른 유연한 해석</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        <section className="form-section" id="saju-form">
+        {/* 사주 입력 폼 섹션 */}
+        <section className="saju-form-section" id="saju-form">
           <div className="container">
             <div className="form-container">
               <h2>무료 사주 분석 받기</h2>
+              <p>정확한 분석을 위해 아래 정보를 입력해주세요.</p>
+              
               {error && <div className="error-message">{error}</div>}
+              
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="name">이름</label>
@@ -383,53 +171,28 @@ function HomePage() {
                 </div>
                 
                 <div className="form-group">
-                  <label htmlFor="birthTime">태어난 시간 (선택사항)</label>
-                  <select
+                  <label htmlFor="birthTime">태어난 시간 (선택)</label>
+                  <input
+                    type="time"
                     id="birthTime"
                     name="birthTime"
                     value={formData.birthTime}
                     onChange={handleChange}
-                  >
-                    <option value="">모름</option>
-                    <option value="23:30-01:30">자시 (23:30-01:30)</option>
-                    <option value="01:30-03:30">축시 (01:30-03:30)</option>
-                    <option value="03:30-05:30">인시 (03:30-05:30)</option>
-                    <option value="05:30-07:30">묘시 (05:30-07:30)</option>
-                    <option value="07:30-09:30">진시 (07:30-09:30)</option>
-                    <option value="09:30-11:30">사시 (09:30-11:30)</option>
-                    <option value="11:30-13:30">오시 (11:30-13:30)</option>
-                    <option value="13:30-15:30">미시 (13:30-15:30)</option>
-                    <option value="15:30-17:30">신시 (15:30-17:30)</option>
-                    <option value="17:30-19:30">유시 (17:30-19:30)</option>
-                    <option value="19:30-21:30">술시 (19:30-21:30)</option>
-                    <option value="21:30-23:30">해시 (21:30-23:30)</option>
-                  </select>
+                  />
+                  <small>정확한 시간을 모르시면 비워두셔도 됩니다.</small>
                 </div>
                 
                 <div className="form-group">
-                  <label>성별</label>
-                  <div className="radio-group">
-                    <label className="radio-label">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="남성"
-                        checked={formData.gender === '남성'}
-                        onChange={handleChange}
-                      />
-                      <span>남성</span>
-                    </label>
-                    <label className="radio-label">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="여성"
-                        checked={formData.gender === '여성'}
-                        onChange={handleChange}
-                      />
-                      <span>여성</span>
-                    </label>
-                  </div>
+                  <label htmlFor="gender">성별</label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                  >
+                    <option value="남성">남성</option>
+                    <option value="여성">여성</option>
+                  </select>
                 </div>
                 
                 <div className="form-group">
@@ -464,6 +227,226 @@ function HomePage() {
                   )}
                 </button>
               </form>
+            </div>
+          </div>
+        </section>
+        
+        {/* 사용자 결과 미리보기 섹션 */}
+        <section className="results-preview">
+          <div className="container">
+            <h2>다른 사용자들의 사주 분석 결과</h2>
+            <p className="section-subtitle">실제 사용자들의 사주 분석 결과를 살짝 엿보세요</p>
+            
+            <div className="results-grid">
+              <div className="preview-card">
+                <div className="preview-header">
+                  <div className="user-info">
+                    <div className="user-avatar">
+                      <FaUserAlt />
+                    </div>
+                    <div className="user-details">
+                      <h3>이OO님 (여성)</h3>
+                      <div className="birth-info">
+                        <FaCalendarAlt /> 1988년 5월 생
+                      </div>
+                    </div>
+                  </div>
+                  <div className="element-tag water">수(水)</div>
+                </div>
+                
+                <div className="preview-content">
+                  <div className="preview-chart">
+                    <div className="chart-visual water-chart">
+                      <div className="chart-bar"></div>
+                      <div className="chart-label">수(水) 우세</div>
+                    </div>
+                  </div>
+                  
+                  <div className="preview-text">
+                    <p>차분하고 지혜로운 성격의 소유자로, 깊은 통찰력과 분석력이 뛰어납니다. 감정 기복이 적고 안정적인 성향을 가지고 있어 주변 사람들에게 신뢰를 줍니다.</p>
+                    <p>직업적으로는 연구, 분석, 전략 기획과 같은 분야에서 두각을 나타낼 수 있으며, 꾸준한 노력으로 성과를 이루는 스타일입니다.</p>
+                    <div className="preview-fade"></div>
+                  </div>
+                </div>
+                
+                <div className="preview-footer">
+                  <div className="fortune-trend">
+                    <FaChartLine /> 2024년 상승세
+                  </div>
+                  <a href="#saju-form" className="preview-button">나도 분석받기</a>
+                </div>
+              </div>
+              
+              <div className="preview-card">
+                <div className="preview-header">
+                  <div className="user-info">
+                    <div className="user-avatar">
+                      <FaUserAlt />
+                    </div>
+                    <div className="user-details">
+                      <h3>김OO님 (남성)</h3>
+                      <div className="birth-info">
+                        <FaCalendarAlt /> 1992년 8월 생
+                      </div>
+                    </div>
+                  </div>
+                  <div className="element-tag fire">화(火)</div>
+                </div>
+                
+                <div className="preview-content">
+                  <div className="preview-chart">
+                    <div className="chart-visual fire-chart">
+                      <div className="chart-bar"></div>
+                      <div className="chart-label">화(火) 우세</div>
+                    </div>
+                  </div>
+                  
+                  <div className="preview-text">
+                    <p>열정적이고 활동적인 성격으로, 창의력과 리더십이 돋보입니다. 새로운 도전을 두려워하지 않고 적극적으로 나아가는 추진력이 강점입니다.</p>
+                    <p>대인관계에서는 사교성이 좋고 주변에 활력을 불어넣는 역할을 합니다. 다만 때로는 감정 조절에 주의가 필요합니다.</p>
+                    <div className="preview-fade"></div>
+                  </div>
+                </div>
+                
+                <div className="preview-footer">
+                  <div className="fortune-trend">
+                    <FaChartLine /> 2024년 변동성 높음
+                  </div>
+                  <a href="#saju-form" className="preview-button">나도 분석받기</a>
+                </div>
+              </div>
+              
+              <div className="preview-card">
+                <div className="preview-header">
+                  <div className="user-info">
+                    <div className="user-avatar">
+                      <FaUserAlt />
+                    </div>
+                    <div className="user-details">
+                      <h3>박OO님 (여성)</h3>
+                      <div className="birth-info">
+                        <FaCalendarAlt /> 1985년 11월 생
+                      </div>
+                    </div>
+                  </div>
+                  <div className="element-tag earth">토(土)</div>
+                </div>
+                
+                <div className="preview-content">
+                  <div className="preview-chart">
+                    <div className="chart-visual earth-chart">
+                      <div className="chart-bar"></div>
+                      <div className="chart-label">토(土) 우세</div>
+                    </div>
+                  </div>
+                  
+                  <div className="preview-text">
+                    <p>안정적이고 신뢰감 있는 성격으로, 책임감과 인내심이 강합니다. 실용적인 사고방식을 가지고 있어 현실적인 문제 해결에 뛰어납니다.</p>
+                    <p>직업적으로는 꾸준함과 성실함이 요구되는 분야에서 좋은 성과를 낼 수 있으며, 특히 재물운이 좋아 자산 관리에 탁월합니다.</p>
+                    <div className="preview-fade"></div>
+                  </div>
+                </div>
+                
+                <div className="preview-footer">
+                  <div className="fortune-trend">
+                    <FaChartLine /> 2024년 안정세
+                  </div>
+                  <a href="#saju-form" className="preview-button">나도 분석받기</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <section className="features">
+          <div className="container">
+            <h2>사주포춘만의 특별함</h2>
+            <p className="section-subtitle">왜 사주포춘이 다른 사주 분석과 다른지 알아보세요</p>
+            
+            <div className="features-grid">
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <i className="icon-ai"></i>
+                </div>
+                <h3>AI 기반 정밀 분석</h3>
+                <p>수만 건의 사주 데이터를 학습한 AI가 당신의 사주를 분석합니다. 주관적 해석이 아닌 데이터 기반의 객관적 분석을 제공합니다.</p>
+                <ul className="feature-list">
+                  <li>빅데이터 기반 패턴 인식</li>
+                  <li>머신러닝 알고리즘 활용</li>
+                  <li>지속적인 학습과 정확도 향상</li>
+                  <li>복잡한 사주 구성 요소 간 상호작용 분석</li>
+                </ul>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <i className="icon-personalized"></i>
+                </div>
+                <h3>개인 맞춤형 해석</h3>
+                <p>천편일률적인 운세가 아닌, 당신만의 고유한 사주를 분석합니다. 개인의 특성과 상황에 맞는 맞춤형 조언을 제공합니다.</p>
+                <ul className="feature-list">
+                  <li>개인별 오행 균형 분석</li>
+                  <li>생년월일시 기반 정밀 계산</li>
+                  <li>관심 분야별 맞춤형 조언</li>
+                  <li>시기별 운세 변화 추적</li>
+                </ul>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <i className="icon-modern"></i>
+                </div>
+                <h3>현대적 해석과 실용적 조언</h3>
+                <p>전통 사주 이론을 현대적 맥락에서 재해석하여 실생활에 적용 가능한 실용적인 조언을 제공합니다.</p>
+                <ul className="feature-list">
+                  <li>현대 심리학 이론 접목</li>
+                  <li>직업, 관계, 건강 등 실용적 영역 분석</li>
+                  <li>구체적인 행동 가이드 제시</li>
+                  <li>현대 생활 패턴 반영</li>
+                </ul>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <i className="icon-visual"></i>
+                </div>
+                <h3>시각적 데이터 표현</h3>
+                <p>복잡한 사주 정보를 직관적인 그래프와 차트로 시각화하여 이해하기 쉽게 제공합니다.</p>
+                <ul className="feature-list">
+                  <li>오행 균형 차트</li>
+                  <li>시기별 운세 흐름 그래프</li>
+                  <li>적성 및 재능 레이더 차트</li>
+                  <li>상호작용 시각화</li>
+                </ul>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <i className="icon-privacy"></i>
+                </div>
+                <h3>개인정보 보호</h3>
+                <p>모든 개인정보는 철저히 보호되며, 분석 목적으로만 사용됩니다. 안심하고 서비스를 이용하실 수 있습니다.</p>
+                <ul className="feature-list">
+                  <li>암호화된 데이터 저장</li>
+                  <li>분석 후 개인정보 안전 처리</li>
+                  <li>제3자 정보 공유 없음</li>
+                  <li>개인정보보호법 준수</li>
+                </ul>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <i className="icon-talisman"></i>
+                </div>
+                <h3>맞춤형 행운 부적</h3>
+                <p>당신의 사주에 맞춰 특별히 설계된 행운 부적으로 부족한 기운을 보충하고 운세를 개선하세요.</p>
+                <ul className="feature-list">
+                  <li>개인 사주 기반 맞춤 설계</li>
+                  <li>전통 부적 원리와 현대 에너지 이론 결합</li>
+                  <li>오행 균형 조절 효과</li>
+                  <li>특정 목적별 부적 제공</li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
@@ -580,6 +563,124 @@ function HomePage() {
           </div>
         </section>
         
+        {/* 다른 사용자 결과 미리보기 섹션 */}
+        <section className="results-preview">
+          <div className="container">
+            <h2>다른 사용자들의 사주 분석 결과</h2>
+            <p className="section-subtitle">실제 사용자들의 사주 분석 결과를 살짝 엿보세요</p>
+            
+            <div className="results-grid">
+              <div className="result-preview-card">
+                <div className="result-preview-header">
+                  <div className="user-info">
+                    <div className="user-avatar">김</div>
+                    <div className="user-details">
+                      <h3>김OO님의 사주 분석</h3>
+                      <p>1988년 5월 생, 여성</p>
+                    </div>
+                  </div>
+                  <div className="element-tag water">수(水)</div>
+                </div>
+                <div className="result-preview-content">
+                  <div className="preview-chart">
+                    <div className="chart-placeholder">
+                      <div className="chart-circle"></div>
+                      <div className="chart-bars">
+                        <div className="chart-bar" style={{height: '65%'}}></div>
+                        <div className="chart-bar" style={{height: '40%'}}></div>
+                        <div className="chart-bar" style={{height: '85%'}}></div>
+                        <div className="chart-bar" style={{height: '55%'}}></div>
+                        <div className="chart-bar" style={{height: '70%'}}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="preview-text">
+                    <p>차분하고 지혜로운 성격의 소유자로, 깊은 통찰력과 분석력이 뛰어납니다. 감정 기복이 적고 안정적인 성향을 가지고 있어 주변 사람들에게 신뢰를 줍니다.</p>
+                    <p>직업적으로는 연구, 분석, 전략 기획과 같은 분야에서 두각을 나타낼 수 있으며, 꾸준한 노력으로 성과를 이루는 스타일입니다.</p>
+                    <p>대인관계에서는 소수의 깊은 관계를 선호하며, 신중하게 사람을 선택하는 경향이 있습니다. 한번 신뢰를 주면 오랫동안 관계를 유지하는 충성도가 높은 사람입니다.</p>
+                  </div>
+                  <div className="preview-fade"></div>
+                </div>
+                <div className="result-preview-footer">
+                  <a href="#saju-form" className="btn-outline">나도 분석받기</a>
+                </div>
+              </div>
+              
+              <div className="result-preview-card">
+                <div className="result-preview-header">
+                  <div className="user-info">
+                    <div className="user-avatar">박</div>
+                    <div className="user-details">
+                      <h3>박OO님의 사주 분석</h3>
+                      <p>1992년 8월 생, 남성</p>
+                    </div>
+                  </div>
+                  <div className="element-tag fire">화(火)</div>
+                </div>
+                <div className="result-preview-content">
+                  <div className="preview-chart">
+                    <div className="chart-placeholder">
+                      <div className="chart-circle"></div>
+                      <div className="chart-bars">
+                        <div className="chart-bar" style={{height: '45%'}}></div>
+                        <div className="chart-bar" style={{height: '90%'}}></div>
+                        <div className="chart-bar" style={{height: '35%'}}></div>
+                        <div className="chart-bar" style={{height: '60%'}}></div>
+                        <div className="chart-bar" style={{height: '50%'}}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="preview-text">
+                    <p>열정적이고 활동적인 성격으로, 창의력과 리더십이 돋보입니다. 새로운 도전을 두려워하지 않고 적극적으로 나아가는 추진력이 강점입니다.</p>
+                    <p>직업적으로는 창의적인 분야나 리더십을 발휘할 수 있는 역할에 적합하며, 자신의 아이디어를 실현시키는 데 탁월한 능력을 보입니다.</p>
+                    <p>대인관계에서는 사교성이 좋고 주변에 활력을 불어넣는 역할을 합니다. 다만 때로는 감정 조절에 주의가 필요하며, 인내심을 기르는 것이 중요합니다.</p>
+                  </div>
+                  <div className="preview-fade"></div>
+                </div>
+                <div className="result-preview-footer">
+                  <a href="#saju-form" className="btn-outline">나도 분석받기</a>
+                </div>
+              </div>
+              
+              <div className="result-preview-card">
+                <div className="result-preview-header">
+                  <div className="user-info">
+                    <div className="user-avatar">이</div>
+                    <div className="user-details">
+                      <h3>이OO님의 사주 분석</h3>
+                      <p>1985년 11월 생, 여성</p>
+                    </div>
+                  </div>
+                  <div className="element-tag earth">토(土)</div>
+                </div>
+                <div className="result-preview-content">
+                  <div className="preview-chart">
+                    <div className="chart-placeholder">
+                      <div className="chart-circle"></div>
+                      <div className="chart-bars">
+                        <div className="chart-bar" style={{height: '50%'}}></div>
+                        <div className="chart-bar" style={{height: '45%'}}></div>
+                        <div className="chart-bar" style={{height: '85%'}}></div>
+                        <div className="chart-bar" style={{height: '65%'}}></div>
+                        <div className="chart-bar" style={{height: '40%'}}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="preview-text">
+                    <p>안정적이고 신뢰감 있는 성격으로, 책임감과 인내심이 강합니다. 실용적인 사고방식을 가지고 있어 현실적인 문제 해결에 뛰어납니다.</p>
+                    <p>직업적으로는 꾸준함과 성실함이 요구되는 분야에서 좋은 성과를 낼 수 있으며, 특히 재물운이 좋아 자산 관리에 탁월합니다.</p>
+                    <p>대인관계에서는 신뢰를 바탕으로 한 깊은 관계를 형성하며, 주변 사람들에게 안정감을 제공합니다. 다만 때로는 너무 현실적인 접근으로 인해 융통성이 부족할 수 있습니다.</p>
+                  </div>
+                  <div className="preview-fade"></div>
+                </div>
+                <div className="result-preview-footer">
+                  <a href="#saju-form" className="btn-outline">나도 분석받기</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
         <section className="faq">
           <div className="container">
             <h2>자주 묻는 질문</h2>
@@ -612,8 +713,8 @@ function HomePage() {
               </div>
               
               <div className="faq-item">
-                <h3>무료 분석과 유료 분석의 차이점은 무엇인가요?</h3>
-                <p>무료 분석은 기본적인 사주 구성과 주요 특성에 대한 개요를 제공합니다. 유료 분석은 더 상세한 내용과 특정 영역(연애, 직업, 재물 등)에 대한 심층 분석, 시기별 운세, 맞춤형 조언 등을 포함합니다. 또한 전문 상담사와의 1:1 상담 서비스도 유료 서비스에 포함됩니다.</p>
+                <h3>맞춤형 행운 부적은 어떤 효과가 있나요?</h3>
+                <p>맞춤형 행운 부적은 개인의 사주 분석을 바탕으로 부족한 기운을 보충하고 과잉된 기운을 조절하는 데 도움을 줍니다. 전통적인 부적의 원리와 현대적인 에너지 이론을 결합하여 설계되며, 운세 개선, 심리적 안정, 목표 달성 등에 도움을 줄 수 있습니다. 부적의 효과는 개인의 신념과 에너지 상태에 따라 다를 수 있습니다.</p>
               </div>
             </div>
           </div>

@@ -580,3 +580,659 @@ section {
     gap: 15px;
   }
 }
+
+.grid-line {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.grid-line:nth-child(1) { top: 0; }
+.grid-line:nth-child(2) { top: 25%; }
+.grid-line:nth-child(3) { top: 50%; }
+.grid-line:nth-child(4) { top: 75%; }
+.grid-line:nth-child(5) { top: 100%; }
+
+.chart-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #6c5ce7, #00cec9);
+  z-index: 1;
+}
+
+.chart-points {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.chart-point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #6c5ce7;
+  transform: translate(-50%, 50%);
+  z-index: 2;
+}
+
+.chart-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.chart-label {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
+/* 성격 분석 섹션 */
+.personality {
+  margin-top: 40px;
+}
+
+.personality-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.trait {
+  background-color: #f8f9fa;
+  border-radius: 30px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.trait.primary {
+  background: linear-gradient(90deg, rgba(108, 92, 231, 0.2), rgba(0, 206, 201, 0.2));
+  font-weight: 600;
+}
+
+/* 직업/진로 섹션 */
+.career {
+  margin-top: 40px;
+}
+
+.career-matches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.career-match {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.career-match:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.career-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #6c5ce7;
+}
+
+.career-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.career-fit {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+.career-fit.high {
+  color: #00b894;
+}
+
+.career-fit.medium {
+  color: #fdcb6e;
+}
+
+/* 대인관계 섹션 */
+.relationship {
+  margin-top: 40px;
+}
+
+.compatibility {
+  margin-top: 20px;
+}
+
+.compatibility-items {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.compatibility-item {
+  flex: 1;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.compatibility-item.good {
+  background-color: rgba(0, 184, 148, 0.1);
+  color: #00b894;
+  border: 1px solid rgba(0, 184, 148, 0.2);
+}
+
+.compatibility-item.neutral {
+  background-color: rgba(253, 203, 110, 0.1);
+  color: #fdcb6e;
+  border: 1px solid rgba(253, 203, 110, 0.2);
+}
+
+.compatibility-item.bad {
+  background-color: rgba(225, 112, 85, 0.1);
+  color: #e17055;
+  border: 1px solid rgba(225, 112, 85, 0.2);
+}
+
+/* 재물운 섹션 */
+.wealth {
+  margin-top: 40px;
+}
+
+.wealth-tips {
+  margin-top: 20px;
+  background-color: rgba(108, 92, 231, 0.05);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.wealth-tips h4 {
+  margin-bottom: 15px;
+  color: #6c5ce7;
+}
+
+.wealth-tips ul {
+  padding-left: 20px;
+}
+
+.wealth-tips li {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+/* 건강 섹션 */
+.health {
+  margin-top: 40px;
+}
+
+.health-focus {
+  margin-top: 20px;
+}
+
+.health-focus h4 {
+  margin-bottom: 15px;
+  color: #6c5ce7;
+}
+
+.body-map {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  margin: 0 auto;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150"><path d="M50,30 C60,30 70,25 70,15 C70,5 60,0 50,0 C40,0 30,5 30,15 C30,25 40,30 50,30 Z M30,30 C20,35 15,45 15,55 C15,65 20,75 25,85 L25,150 L40,150 L40,100 L60,100 L60,150 L75,150 L75,85 C80,75 85,65 85,55 C85,45 80,35 70,30 C65,35 55,40 50,40 C45,40 35,35 30,30 Z" fill="%23f8f9fa"/></svg>') center/contain no-repeat;
+}
+
+.body-part {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(225, 112, 85, 0.2);
+  border: 2px solid rgba(225, 112, 85, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.body-part:hover {
+  transform: scale(1.1);
+  background-color: rgba(225, 112, 85, 0.3);
+}
+
+.body-part.heart {
+  top: 80px;
+  left: 85px;
+}
+
+.body-part.liver {
+  top: 110px;
+  left: 70px;
+}
+
+.body-part.lungs {
+  top: 70px;
+  left: 115px;
+}
+
+.part-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #e17055;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.body-part:hover .part-label {
+  opacity: 1;
+}
+
+/* 종합 조언 섹션 */
+.advice {
+  margin-top: 40px;
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.05), rgba(0, 206, 201, 0.05));
+  border-radius: 15px;
+  padding: 30px;
+}
+
+.key-points {
+  margin-top: 20px;
+}
+
+.key-points h4 {
+  margin-bottom: 15px;
+  color: #6c5ce7;
+}
+
+.key-points ul {
+  padding-left: 20px;
+}
+
+.key-points li {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+/* 부적 섹션 */
+.talisman-section {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.talisman-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 50%, rgba(108, 92, 231, 0.2) 0%, transparent 50%),
+              radial-gradient(circle at 80% 30%, rgba(0, 206, 201, 0.2) 0%, transparent 50%);
+}
+
+.talisman-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.section-desc {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 50px;
+  opacity: 0.9;
+  position: relative;
+}
+
+.talisman-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.talisman-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.talisman-image {
+  width: 250px;
+  height: 350px;
+  background-color: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.talisman-image.blurred {
+  filter: blur(8px);
+}
+
+.talisman-design {
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><path d="M50,10 L90,50 L50,90 L10,50 Z" fill="none" stroke="%23e17055" stroke-width="2"/><circle cx="50" cy="50" r="30" fill="none" stroke="%236c5ce7" stroke-width="2"/><path d="M30,30 L70,70 M30,70 L70,30" stroke="%2300b894" stroke-width="2"/><text x="50" y="120" font-family="Arial" font-size="10" text-anchor="middle" fill="%23333">행운 부적</text></svg>') center/80% no-repeat;
+}
+
+.talisman-lock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.talisman-info-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.talisman-info-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.talisman-info {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 30px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.talisman-info.show {
+  max-height: 1000px;
+  padding: 30px;
+}
+
+.talisman-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.talisman-info p {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.talisman-benefits {
+  margin-bottom: 30px;
+  padding-left: 20px;
+}
+
+.talisman-benefits li {
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.talisman-benefits strong {
+  color: #fff;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.talisman-usage {
+  padding-left: 20px;
+}
+
+.talisman-usage li {
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.talisman-purchase {
+  margin-top: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+}
+
+.price-container {
+  margin-bottom: 20px;
+}
+
+.original-price {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: line-through;
+  margin-bottom: 5px;
+}
+
+.discount-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.discount-tag {
+  display: inline-block;
+  background-color: #e17055;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.purchase-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: linear-gradient(90deg, #6c5ce7, #00cec9);
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.purchase-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.guarantee {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+/* 로딩 컨테이너 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(108, 92, 231, 0.3);
+  border-radius: 50%;
+  border-top-color: #6c5ce7;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 992px) {
+  .talisman-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .talisman-preview {
+    margin-bottom: 30px;
+  }
+  
+  .talisman-image {
+    margin: 0 auto 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 40px 0;
+  }
+  
+  .result-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .result-summary {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .summary-item {
+    width: 100%;
+  }
+  
+  .result-card {
+    padding: 20px;
+  }
+  
+  .pillars-container {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .pillar {
+    flex: 0 0 calc(50% - 15px);
+    margin: 0;
+  }
+  
+  .element-chart {
+    height: auto;
+  }
+  
+  .pie-chart {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .pie-center {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .career-matches {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .compatibility-items {
+    flex-direction: column;
+  }
+  
+  .talisman-image {
+    width: 200px;
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-hero h1 {
+    font-size: 1.8rem;
+  }
+  
+  .result-card h2 {
+    font-size: 1.5rem;
+  }
+  
+  .pillar {
+    flex: 0 0 100%;
+  }
+  
+  .career-matches {
+    grid-template-columns: 1fr;
+  }
+  
+  .pie-chart {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .pie-center {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .element-badge {
+    font-size: 1rem;
+    padding: 6px 12px;
+  }
+  
+  .talisman-info h3 {
+    font-size: 1.2rem;
+  }
+  
+  .discount-price {
+    font-size: 1.8rem;
+  }
+  
+  .purchase-button {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+}

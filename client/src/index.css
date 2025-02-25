@@ -245,29 +245,28 @@ input, select, textarea {
   background-color: #f8f9fa;
 }
 
-.results-grid {
+.results-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 30px;
   margin-top: 40px;
+  margin-bottom: 60px;
 }
 
-.result-card {
+.result-preview-card {
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.result-card:hover {
+.result-preview-card:hover {
   transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
-.result-header {
+.result-preview-header {
   padding: 20px;
   background: linear-gradient(135deg, var(--primary), var(--accent1));
   color: #fff;
@@ -276,62 +275,479 @@ input, select, textarea {
   align-items: center;
 }
 
-.result-header h3 {
+.result-preview-header h3 {
   margin: 0;
   font-size: 1.3rem;
+  font-weight: 600;
 }
 
-.dominant-element {
+.element-badge {
   background-color: rgba(255, 255, 255, 0.2);
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 20px;
   font-size: 0.9rem;
 }
 
-.result-preview {
-  padding: 20px;
-  position: relative;
-  height: 200px;
-  overflow: hidden;
-  flex-grow: 1;
+.result-preview-content {
+  padding: 25px;
 }
 
-.result-preview p {
+.result-preview-content p {
   color: var(--gray-text);
-  line-height: 1.7;
+  line-height: 1.8;
+  margin-bottom: 25px;
 }
 
-.blur-overlay {
+.result-stats {
+  margin-top: 20px;
+}
+
+.stat-item {
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
+.stat-bar-container {
+  height: 8px;
+  background-color: var(--light-gray);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stat-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent1));
+  border-radius: 4px;
+}
+
+.stat-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-align: right;
+}
+
+.results-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* 프리미엄 섹션 스타일 향상 */
+.premium-section {
+  padding: 120px 0;
+  background: linear-gradient(to bottom, #f8f9fa, #fff);
+}
+
+.premium-container {
+  margin-top: 50px;
+}
+
+.premium-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.premium-features h3 {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  color: var(--dark-text);
+}
+
+.feature-list {
+  list-style: none;
+}
+
+.feature-list li {
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.feature-icon {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(108, 92, 231, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-right: 20px;
+}
+
+.feature-text h4 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: var(--dark-text);
+}
+
+.feature-text p {
+  color: var(--gray-text);
+  line-height: 1.6;
+}
+
+.price-card {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.price-card:hover {
+  transform: translateY(-10px);
+}
+
+.price-header {
+  background: linear-gradient(135deg, var(--primary), var(--accent1));
+  color: #fff;
+  padding: 30px;
+  position: relative;
+  text-align: center;
+}
+
+.price-header h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.original-price {
+  text-decoration: line-through;
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+.current-price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+.discount-badge {
   position: absolute;
-  bottom: 0;
+  top: 20px;
+  right: 20px;
+  background-color: #ff6b6b;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.price-features {
+  padding: 30px;
+  list-style: none;
+}
+
+.price-features li {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  color: var(--gray-text);
+}
+
+.btn-premium {
+  display: block;
+  background-color: var(--primary);
+  color: #fff;
+  text-align: center;
+  padding: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  margin: 0 30px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-premium:hover {
+  background-color: var(--accent1);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(108, 92, 231, 0.2);
+}
+
+.guarantee {
+  text-align: center;
+  color: var(--gray-text);
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+}
+
+/* 부적 섹션 스타일 */
+.talisman-preview {
+  margin-top: 80px;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+}
+
+.talisman-preview h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.talisman-preview > p {
+  text-align: center;
+  color: var(--gray-text);
+  margin-bottom: 40px;
+}
+
+.talisman-container {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.talisman-image-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.talisman-image {
+  width: 100%;
+  height: 100%;
+  background-image: url('https://i.imgur.com/example-talisman.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.talisman-image.blurred {
+  filter: blur(10px);
+}
+
+.talisman-blur-overlay {
+  position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 70%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8) 50%, #fff);
-}
-
-.result-cta {
-  padding: 20px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
   text-align: center;
-  border-top: 1px solid var(--light-gray);
+  padding: 20px;
 }
 
-.btn-secondary {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: var(--light-gray);
+.talisman-description h4 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
   color: var(--dark-text);
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
 }
 
-.btn-secondary:hover {
-  background-color: var(--accent2);
-  color: var(--dark);
+.talisman-description p {
+  color: var(--gray-text);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.talisman-benefits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+}
+
+.benefit-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin-right: 10px;
+}
+
+.talisman-usage {
+  font-style: italic;
+  color: var(--gray-text);
+  font-size: 0.95rem;
+}
+
+/* 폼 스타일 업그레이드 */
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--dark-text);
+}
+
+.input-field, .select-field {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field:focus, .select-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+  outline: none;
+}
+
+.form-help {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--gray-text);
+  margin-top: 5px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+}
+
+.radio-item input[type="radio"] {
+  margin-right: 8px;
+}
+
+.error-message {
+  color: var(--error);
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+}
+
+/* 로딩 애니메이션 */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 히어로 섹션에서 중앙 정렬 */
+.hero .container.centered {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero .container.centered .hero-content {
+  max-width: 800px;
+}
+
+/* 추가 반응형 조정 */
+@media (max-width: 992px) {
+  .premium-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .talisman-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .talisman-image-container {
+    max-width: 400px;
+    margin: 0 auto 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .results-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .feature-list li {
+    flex-direction: column;
+  }
+  
+  .feature-icon {
+    margin-bottom: 15px;
+    margin-right: 0;
+  }
+  
+  .talisman-benefits {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 푸터 버튼 스타일 추가 */
+.footer-btn {
+  color: rgba(255, 255, 255, 0.7);
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.footer-btn:hover {
+  color: var(--secondary);
 }
 
 /* 서비스 장점 섹션 스타일 */
@@ -418,76 +834,6 @@ input, select, textarea {
 .saju-form.active {
   background-color: rgba(163, 155, 254, 0.1);
   box-shadow: 0 0 50px rgba(108, 92, 231, 0.2);
-}
-
-.form-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 40px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-}
-
-.form-group {
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: var(--dark-text);
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  border-color: var(--primary);
-  outline: none;
-}
-
-.form-help {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--gray-text);
-  margin-top: 5px;
-}
-
-.error-message {
-  color: var(--error);
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.loading-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.loading-spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 1s ease-in-out infinite;
-  margin-right: 10px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
 }
 
 /* FAQ 섹션 */

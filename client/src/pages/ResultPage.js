@@ -4,12 +4,16 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FaShoppingCart, FaLock, FaInfoCircle, FaChartPie, FaChartLine, FaChartBar, FaCheck } from 'react-icons/fa';
 import '../styles/ResultPage.css';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend } from 'recharts';
 
 function ResultPage() {
   const location = useLocation();
   const history = useHistory();
   const { userData, sajuResult } = location.state || {};
   const [showTalismanInfo, setShowTalismanInfo] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [premium, setPremium] = useState(false);
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
   
   useEffect(() => {
     // 결과 데이터가 없으면 홈페이지로 리다이렉트
@@ -47,6 +51,61 @@ function ResultPage() {
   // 부적 정보 토글
   const toggleTalismanInfo = () => {
     setShowTalismanInfo(!showTalismanInfo);
+  };
+  
+  // 종합 분석 데이터 (레이더 차트용)
+  const radarData = [
+    {
+      subject: '성격',
+      A: 85,
+      fullMark: 100,
+    },
+    {
+      subject: '직업',
+      A: 70,
+      fullMark: 100,
+    },
+    {
+      subject: '연애',
+      A: 90,
+      fullMark: 100,
+    },
+    {
+      subject: '재물',
+      A: 65,
+      fullMark: 100,
+    },
+    {
+      subject: '건강',
+      A: 80,
+      fullMark: 100,
+    },
+  ];
+
+  // 월별 운세 데이터 (바 차트용)
+  const monthlyData = sajuResult.monthlyForecast.map(item => ({
+    name: item.month,
+    운세지수: item.rating * 20, // 5점 만점을 백분율로 변환
+  }));
+
+  // 프리미엄 결제 처리
+  const handlePremiumPurchase = () => {
+    alert('결제 시스템은 아직 구현되지 않았습니다. 실제 서비스에서는 결제 페이지로 이동합니다.');
+    setPremium(true);
+    setShowPremiumModal(false);
+  };
+
+  // 결과 공유 처리
+  const handleShareResult = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: '내 사주 분석 결과 - 사주포춘',
+        text: `${userData.name}님의 사주 분석 결과입니다. 주요 특성: ${sajuResult.personality.substring(0, 50)}...`,
+        url: window.location.href,
+      });
+    } else {
+      alert('공유 기능은 해당 브라우저에서 지원하지 않습니다.');
+    }
   };
   
   return (

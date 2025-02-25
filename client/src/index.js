@@ -1,14 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import App from './App';
-import './index.css';
+import ResultPage from './pages/ResultPage';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/result" component={ResultPage} />
+        {/* 기타 경로들... */}
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

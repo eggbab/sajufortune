@@ -2,6 +2,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--background);
 }
 
 .result-content {
@@ -9,6 +10,7 @@
   padding: 3rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding-top: 100px; /* 헤더 높이만큼 여백 */
 }
 
 .result-header {
@@ -50,14 +52,12 @@
 
 .element-chart {
   margin-bottom: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
 }
 
 .element-chart h3 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: var(--accent1);
+  margin-bottom: 1rem;
+  color: var(--light);
 }
 
 .element-chart-container {
@@ -66,53 +66,53 @@
 }
 
 .reading-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  color: var(--light-text);
 }
 
 .reading-section {
+  margin-bottom: 2rem;
   padding: 1.5rem;
-  background: rgba(26, 26, 46, 0.5);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  border-left: 4px solid var(--primary);
 }
 
 .reading-section h3 {
   color: var(--accent1);
   margin-bottom: 1rem;
-  font-size: 1.3rem;
-}
-
-.reading-section p {
-  line-height: 1.8;
+  font-size: 1.2rem;
 }
 
 .today-advice {
   padding: 1.5rem;
-  background: rgba(253, 121, 168, 0.1);
+  background: rgba(108, 92, 231, 0.1);
   border-radius: 12px;
-  border-left: 4px solid var(--secondary);
-  margin-top: 1rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--primary);
 }
 
 .today-advice h3 {
-  color: var(--secondary);
+  color: var(--accent1);
   margin-bottom: 1rem;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .share-button {
-  margin-top: 1.5rem;
-  background: linear-gradient(135deg, var(--accent2), var(--primary));
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--light);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: 100%;
 }
 
-.share-button i {
-  font-size: 1.2rem;
+.share-button:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .talisman-upsell {
@@ -122,17 +122,16 @@
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex-direction: column;
   position: sticky;
-  top: 2rem;
+  top: 100px;
   animation: fadeInRight 1s ease-out;
 }
 
 .talisman-upsell h2 {
   text-align: center;
   margin-bottom: 1.5rem;
-  color: var(--secondary);
+  color: var(--light);
+  font-size: 1.5rem;
 }
 
 .talisman-preview {
@@ -140,19 +139,17 @@
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  aspect-ratio: 1;
 }
 
 .blurred-image {
   position: relative;
-  width: 100%;
-  height: 100%;
 }
 
 .blurred-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
+  border-radius: 12px;
 }
 
 .blur-overlay {
@@ -161,32 +158,22 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(26, 26, 46, 0.7);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.blur-overlay::after {
-  content: '구매 후 확인 가능';
-  color: var(--light);
-  font-weight: 600;
-  text-align: center;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-}
-
 .talisman-upsell h3 {
   text-align: center;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
   color: var(--accent1);
 }
 
 .talisman-upsell p {
+  color: var(--light-text);
   margin-bottom: 1.5rem;
-  line-height: 1.7;
 }
 
 .talisman-benefits {
@@ -195,55 +182,62 @@
 }
 
 .talisman-benefits li {
-  margin-bottom: 0.75rem;
+  color: var(--light-text);
+  margin-bottom: 0.5rem;
   position: relative;
 }
 
 .talisman-benefits li::before {
-  content: '✨';
+  content: '✓';
+  color: var(--success);
   position: absolute;
   left: -1.5rem;
-  color: var(--tertiary);
 }
 
 .price-tag {
-  font-size: 1.8rem;
-  font-weight: 700;
   text-align: center;
-  margin: 1.5rem 0;
-  color: var(--tertiary);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--light);
+  margin-bottom: 1.5rem;
 }
 
 .buy-button {
-  background: linear-gradient(135deg, var(--secondary), var(--accent1));
+  width: 100%;
   padding: 1rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   font-size: 1.1rem;
-  margin-bottom: 1.5rem;
+  transition: all var(--transition-fast);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.buy-button i {
-  font-size: 1.2rem;
+.buy-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
 }
 
 .testimonials {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
 .testimonial {
-  padding: 1rem;
-  background: rgba(26, 26, 46, 0.5);
-  border-radius: 8px;
-  margin-bottom: 1rem;
   font-style: italic;
   font-size: 0.9rem;
   color: var(--light-text);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
 }
 
-/* 애니메이션 */
 @keyframes fadeInDown {
   from {
     opacity: 0;

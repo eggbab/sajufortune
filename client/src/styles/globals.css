@@ -1,0 +1,100 @@
+:root {
+    --primary: #4d6a4f;  /* 초록색 (목) */
+    --secondary: #a83232; /* 빨간색 (화) */
+    --tertiary: #daa520;  /* 황금색 (토) */
+    --accent1: #7d7d7d;   /* 회색 (금) */
+    --accent2: #2c5282;   /* 파란색 (수) */
+    --background: #f5f5f5;
+    --text: #333333;
+    --light-text: #666666;
+    --border: #dddddd;
+    --success: #4caf50;
+    --error: #f44336;
+    --warning: #ff9800;
+    
+    --font-main: 'Noto Sans KR', sans-serif;
+    --font-heading: 'Nanum Myeongjo', serif;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--font-main);
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    margin-bottom: 1rem;
+    color: var(--primary);
+  }
+  
+  a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  button {
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-main);
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .error-message {
+    color: var(--error);
+    background-color: rgba(244, 67, 54, 0.1);
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  .success-message {
+    color: var(--success);
+    background-color: rgba(76, 175, 80, 0.1);
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 1.75rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+    
+    button {
+      width: 100%;
+    }
+  }

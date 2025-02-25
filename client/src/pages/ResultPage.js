@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -15,7 +15,7 @@ function ResultPage() {
   const sajuResult = location.state?.sajuResult || null;
   
   // 데이터가 없으면 홈페이지로 리디렉션
-  useEffect(() => {
+  React.useEffect(() => {
     if (!userData || !sajuResult) {
       history.replace('/');
     }
@@ -55,7 +55,10 @@ function ResultPage() {
       <Header />
       
       <main className="result-content">
-        <h1>{userData.name}님의 사주 해석 결과</h1>
+        <div className="result-header">
+          <h1 className="result-title">{userData.name}님의 사주 해석 결과</h1>
+          <p className="result-subtitle">당신의 운명을 밝혀드립니다</p>
+        </div>
         
         <div className="result-grid">
           <div className="saju-reading">
@@ -89,7 +92,7 @@ function ResultPage() {
                 className="share-button" 
                 onClick={handleShareResult}
               >
-                {copied ? '복사됨!' : '결과 공유하기'}
+                <i className="fas fa-share-alt"></i> {copied ? '복사됨!' : '결과 공유하기'}
               </button>
             </div>
           </div>
@@ -122,7 +125,7 @@ function ResultPage() {
               className="buy-button"
               onClick={handleBuyTalisman}
             >
-              부적 구매하기
+              <i className="fas fa-shopping-cart"></i> 부적 구매하기
             </button>
             
             <div className="testimonials">

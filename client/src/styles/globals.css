@@ -1,22 +1,28 @@
 :root {
-    /* 색상 팔레트 업데이트 - 고급스러운 동양적 색상 */
-    --primary: #8b4513;  /* 진한 갈색 (나무) */
-    --secondary: #c53030; /* 선명한 빨간색 (불) */
-    --tertiary: #b7791f;  /* 황토색 (흙) */
-    --accent1: #718096;   /* 은회색 (금속) */
-    --accent2: #2c5282;   /* 깊은 파란색 (물) */
-    --background: #f8f4e3; /* 따뜻한 베이지 배경 */
-    --card-bg: #ffffff;    /* 카드 배경 */
-    --text: #2d3748;       /* 진한 텍스트 */
-    --light-text: #4a5568; /* 밝은 텍스트 */
-    --border: #e2e8f0;     /* 경계선 */
-    --success: #38a169;    /* 성공 */
-    --error: #e53e3e;      /* 오류 */
-    --warning: #dd6b20;    /* 경고 */
+    /* 모던한 컬러 팔레트 */
+    --primary: #6c5ce7;  /* 보라색 계열 */
+    --secondary: #fd79a8; /* 핑크색 계열 */
+    --tertiary: #ffeaa7;  /* 연한 노란색 */
+    --accent1: #00cec9;   /* 청록색 */
+    --accent2: #0984e3;   /* 파란색 */
+    --dark: #2d3436;
+    --light: #f9f9f9;
+    --background: #1a1a2e;
+    --card-bg: #16213e;
+    --text: #dff9fb;
+    --light-text: #c7ecee;
+    --border: #30336b;
+    --success: #00b894;
+    --error: #d63031;
+    --warning: #fdcb6e;
     
-    /* 폰트 업데이트 */
-    --font-main: 'Noto Sans KR', sans-serif;
-    --font-heading: 'Nanum Myeongjo', serif;
+    /* 현대적인 폰트 */
+    --font-main: 'Pretendard', 'Noto Sans KR', sans-serif;
+    --font-heading: 'GmarketSans', 'Nanum Myeongjo', serif;
+    
+    /* 애니메이션 */
+    --transition-fast: 0.3s ease;
+    --transition-slow: 0.6s ease;
     
     /* 그림자 효과 */
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
@@ -27,121 +33,165 @@
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 12px;
-  }
-  
-  * {
+}
+
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-  
-  body {
+}
+
+@font-face {
+    font-family: 'GmarketSans';
+    src: url('/fonts/GmarketSansBold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('/fonts/PretendardVariable.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
     font-family: var(--font-main);
     background-color: var(--background);
     color: var(--text);
     line-height: 1.6;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
+    overflow-x: hidden;
+    background-image: url('/images/stars-bg.png');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     margin-bottom: 1rem;
-    color: var(--primary);
-  }
-  
-  a {
-    color: var(--primary);
+    color: var(--light);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+a {
+    color: var(--accent1);
     text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  a:hover {
+    transition: all var(--transition-fast);
+}
+
+a:hover {
     color: var(--secondary);
-  }
-  
-  button {
+    text-decoration: none;
+}
+
+button {
     cursor: pointer;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     padding: 0.75rem 1.5rem;
     font-family: var(--font-main);
-    font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-  }
-  
-  button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-  
-  input, select {
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    background: linear-gradient(135deg, var(--primary), var(--accent2));
+    color: var(--light);
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(108, 92, 231, 0.6);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+input, select {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     font-family: var(--font-main);
     font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  input:focus, select:focus {
+    background-color: rgba(22, 33, 62, 0.8);
+    color: var(--light);
+    transition: all var(--transition-fast);
+}
+
+input:focus, select:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
-  }
-  
-  .container {
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.3);
+}
+
+.container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-  
-  .card {
-    background-color: var(--card-bg);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    padding: 2rem;
-    margin-bottom: 2rem;
-  }
-  
-  .error-message {
+    padding: 0 1rem;
+}
+
+.error-message {
     color: var(--error);
-    background-color: rgba(229, 62, 62, 0.1);
+    background-color: rgba(214, 48, 49, 0.1);
     padding: 0.75rem;
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     margin-bottom: 1rem;
-  }
-  
-  .success-message {
+    border-left: 4px solid var(--error);
+}
+
+.success-message {
     color: var(--success);
-    background-color: rgba(56, 161, 105, 0.1);
+    background-color: rgba(0, 184, 148, 0.1);
     padding: 0.75rem;
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     margin-bottom: 1rem;
-  }
-  
-  /* 동양적 장식 요소 */
-  .oriental-divider {
+    border-left: 4px solid var(--success);
+}
+
+.glass-card {
+    background: rgba(22, 33, 62, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glow-text {
+    text-shadow: 0 0 10px rgba(108, 92, 231, 0.7);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--accent1), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+/* 동양적 장식 요소 */
+.oriental-divider {
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--primary), transparent);
     margin: 2rem 0;
-  }
-  
-  /* 반응형 디자인 */
-  @media (max-width: 768px) {
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
     h1 {
-      font-size: 1.75rem;
+        font-size: 1.75rem;
     }
     
     h2 {
-      font-size: 1.5rem;
+        font-size: 1.5rem;
     }
     
     button {
-      width: 100%;
+        width: 100%;
     }
     
-    .card {
-      padding: 1.5rem;
+    .glass-card {
+        padding: 1.5rem;
     }
-  }
+}

@@ -1,78 +1,110 @@
 const { OpenAI } = require('openai');
-const { calculateSaju } = require('../utils/sajuCalculator');
-const config = require('../config/config');
 
+// OpenAI 클라이언트 초기화
 const openai = new OpenAI({
-  apiKey: config.openaiApiKey,
+  apiKey: process.env.OPENAI_API_KEY // 환경 변수에서 API 키 가져오기
 });
 
-exports.generateSajuReading = async (userData) => {
-  const { name, birthDate, birthTime, gender, concern } = userData;
-  
-  const sajuData = calculateSaju(birthDate, birthTime);
-  
-  const prompt = `
-    당신은 전문 사주 해석가입니다. 다음 정보를 바탕으로 한국식 사주팔자(사주) 해석을 생성해주세요.
-    
-    이름: ${name}
-    생년월일: ${birthDate}
-    태어난 시간: ${birthTime || '알 수 없음'}
-    성별: ${gender}
-    관심사: ${concern}
-    
-    사주 데이터:
-    천간: ${sajuData.heavenlyStem}
-    지지: ${sajuData.earthlyBranch}
-    오행 분석: ${JSON.stringify(sajuData.elements)}
-    주요 오행: ${sajuData.dominantElement}
-    
-    다음 형식으로 사주 해석을 제공해주세요:
-    1. 기본 사주 소개 (1-2 문단)
-    2. 2025년 운세 분석 (1-2 문단)
-    3. ${concern}에 관한 구체적인 조언 (1 문단)
-    4. 오늘의 조언 (1-2 문장)
-    
-    반드시 한국어로, 친근하고 긍정적인 톤으로 작성해주세요. 운명론적이거나 지나치게 부정적인 표현은 피해주세요.
-    JSON 형식으로 반환해주세요.
-  `;
-  
-  const aiResponse = await openai.chat.completions.create({
-    model: "gpt-4",
-    messages: [
-      { role: "system", content: "당신은 전문 사주 해석가입니다." },
-      { role: "user", content: prompt }
-    ],
-    temperature: 0.7,
-  });
-  
-  const sajuReading = JSON.parse(aiResponse.choices[0].message.content);
-  
-  return {
-    ...sajuReading,
-    elements: sajuData.elements,
-    dominantElement: sajuData.dominantElement,
-    createdAt: new Date().toISOString()
-  };
-};
-
 // 부적 생성 함수
-const generateTalisman = async (userData, sajuResult, talismanType) => {
-  // 실제 구현에서는 이미지 생성 또는 템플릿 선택 로직 구현
-  // 여기서는 간단한 예시만 제공
-  return `/talismans/${talismanType}_${userData.concern}_${Date.now()}.png`;
+const generateTalisman = async (userData, sajuResult) => {
+  try {
+    const element = sajuResult.dominantElement;
+    const concern = userData.concern;
+    
+    // 오행에 따른 부적 스타일 결정
+    const elementStyles = {
+      '목': '초록색과 파란색 계열의 나무와 식물 문양이 있는',
+      '화': '붉은색과 주황색 계열의 불꽃과 태양 문양이 있는',
+      '토': '황토색과 갈색 계열의 산과 대지 문양이 있는',
+      '금': '흰색과 금색 계열의 금속과 보석 문양이 있는',
+      '수': '검은색과 파란색 계열의 물결과 파도 문양이 있는'
+    };
+    
+    // 관심사에 따른 부적 목적 결정
+    const concernPurposes = {
+      '건강': '건강 증진과 질병 예방을 위한',
+      '재물': '재물 복과 경제적 성공을 위한',
+      '사랑': '연애 운과 인연 찾기를 위한',
+      '직장': '직장 운과 승진을 위한',
+      '학업': '학업 성취와 시험 합격을 위한',
+      '인간관계': '대인관계 개선과 인맥 확장을 위한'
+    };
+    
+    const elementStyle = elementStyles[element] || '다양한 색상의';
+    const concernPurpose = concernPurposes[concern] || '행운을 가져다주는';
+    
+    // DALL-E 프롬프트 생성
+    const prompt = `한국 전통 부적 디자인. ${elementStyle} 한국 전통 부적. ${concernPurpose} 부적. 
+    동양적인 문양과 한자가 포함된 신비로운 디자인. 배경은 어둡고 부적은 빛나는 느낌. 
+    고해상도, 상세한 디테일, 신비로운 분위기.`;
+    
+    // DALL-E API 호출
+    const response = await openai.images.generate({
+      model: "dall-e-3",
+      prompt: prompt,
+      n: 1,
+      size: "1024x1024",
+      response_format: "url"
+    });
+    
+    // 이미지 URL 반환
+    const imageUrl = response.data[0].url;
+    
+    // 이미지 저장 로직 (실제 구현 필요)
+    // 여기서는 URL만 반환하지만, 실제로는 이미지를 다운로드하여 서버에 저장하고
+    // 해당 경로를 반환하는 로직이 필요합니다.
+    const savedImagePath = `/images/talismans/${element}_${concern}_${Date.now()}.png`;
+    
+    // 이미지 다운로드 및 저장 로직 구현 필요
+    await downloadAndSaveImage(imageUrl, savedImagePath);
+    
+    return {
+      previewUrl: imageUrl,
+      fullImagePath: savedImagePath
+    };
+  } catch (error) {
+    console.error('부적 생성 중 오류 발생:', error);
+    throw new Error('부적 생성에 실패했습니다.');
+  }
 };
 
-exports.processPayment = async (paymentData) => {
-  // 결제 처리 로직...
-  const { userData, sajuResult, talismanType } = paymentData;
+// 이미지 다운로드 및 저장 함수
+const downloadAndSaveImage = async (url, path) => {
+  // 이 부분은 실제 구현이 필요합니다
+  // axios나 fetch를 사용하여 이미지를 다운로드하고
+  // fs 모듈을 사용하여 서버에 저장하는 로직
   
-  // 실제 결제 처리 구현 필요
-  const talismanUrl = await generateTalisman(userData, sajuResult, talismanType);
+  // 예시 코드:
+  const axios = require('axios');
+  const fs = require('fs');
+  const { promisify } = require('util');
+  const writeFileAsync = promisify(fs.writeFile);
+  const mkdirAsync = promisify(fs.mkdir);
+  const path = require('path');
   
-  return {
-    success: true,
-    message: '결제가 성공적으로 처리되었습니다.',
-    downloadUrl: talismanUrl,
-    orderId: `ORDER-${Date.now()}`
-  };
+  try {
+    // 디렉토리 생성 (없는 경우)
+    const dir = path.dirname(`./public${path}`);
+    await mkdirAsync(dir, { recursive: true });
+    
+    // 이미지 다운로드
+    const response = await axios({
+      url,
+      method: 'GET',
+      responseType: 'arraybuffer'
+    });
+    
+    // 이미지 저장
+    await writeFileAsync(`./public${path}`, response.data);
+    
+    return true;
+  } catch (error) {
+    console.error('이미지 다운로드 중 오류:', error);
+    throw error;
+  }
+};
+
+module.exports = {
+  analyzeSaju,
+  generateTalisman
 };

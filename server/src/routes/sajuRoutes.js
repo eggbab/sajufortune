@@ -1,24 +1,45 @@
 const express = require('express');
 const router = express.Router();
-const { generateSajuReading, processPayment } = require('../services/sajuService');
+const sajuService = require('../services/sajuService');
 
-router.post('/generate-saju', async (req, res) => {
+// 사주 분석 API
+router.post('/analyze', async (req, res) => {
   try {
-    const result = await generateSajuReading(req.body);
-    res.json(result);
+    const { name, birthDate, birthTime, gender, concern } = req.body;
+    
+    if (!name || !birthDate) {
+      return res.status(400).json({ error: '필수 정보가 누락되었습니다.' });
+    }
+    
+    const result = await sajuService.analyzeSaju(birthDate, birthTime, gender, concern);
+    
+    res.json({
+      userData: { name, birthDate, birthTime, gender, concern },
+      sajuResult: result
+    });
   } catch (error) {
-    console.error('Error generating saju:', error);
-    res.status(500).json({ error: '사주 생성 중 오류가 발생했습니다.' });
+    console.error('사주 분석 오류:', error);
+    res.status(500).json({ error: '사주 분석 중 오류가 발생했습니다.' });
   }
 });
 
-router.post('/process-payment', async (req, res) => {
+// 부적 생성 API
+router.post('/generate-talisman', async (req, res) => {
   try {
-    const result = await processPayment(req.body);
-    res.json(result);
+    const { userData, sajuResult } = req.body;
+    
+    if (!userData || !sajuResult) {
+      return res.status(400).json({ error: '필수 정보가 누락되었습니다.' });
+    }
+    
+    const talismanResult = await sajuService.generateTalisman(userData, sajuResult);
+    
+    res.json({
+      talismanResult
+    });
   } catch (error) {
-    console.error('Payment processing error:', error);
-    res.status(500).json({ error: '결제 처리 중 오류가 발생했습니다.' });
+    console.error('부적 생성 오류:', error);
+    res.status(500).json({ error: '부적 생성 중 오류가 발생했습니다.' });
   }
 });
 

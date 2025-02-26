@@ -1,0 +1,76 @@
+.element-donut {
+  background-color: #f0f3f8;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.element-donut h3 {
+  font-size: 1.3rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.donut-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.donut-canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.element-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 6px;
+}
+
+.legend-color.wood {
+  background-color: #4CAF50;
+}
+
+.legend-color.fire {
+  background-color: #E57373;
+}
+
+.legend-color.earth {
+  background-color: #FFD54F;
+}
+
+.legend-color.metal {
+  background-color: #B0BEC5;
+}
+
+.legend-color.water {
+  background-color: #42A5F5;
+}
+
+.legend-label {
+  margin-right: 5px;
+}
+
+.legend-value {
+  margin-left: auto;
+  font-weight: bold;
+} 

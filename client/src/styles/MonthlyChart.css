@@ -1,0 +1,83 @@
+.monthly-chart {
+  background-color: #f0f3f8;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  height: 100%;
+}
+
+.monthly-chart h3 {
+  font-size: 1.3rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.monthly-canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.monthly-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+
+.legend-item.good .legend-color {
+  background-color: #4CAF50;
+}
+
+.legend-item.average .legend-color {
+  background-color: #FFD54F;
+}
+
+.legend-item.caution .legend-color {
+  background-color: #E57373;
+}
+
+.peak-periods {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.peak-item {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  padding: 12px;
+  width: 45%;
+  text-align: center;
+}
+
+.peak-item h4 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.peak-item p {
+  font-size: 0.9rem;
+  color: #555;
+} 

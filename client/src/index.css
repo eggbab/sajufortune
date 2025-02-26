@@ -1399,3 +1399,82 @@ section:last-child {
   background-color: white;
   color: var(--dark);
 }
+
+/* 오행 휠 개선 - 간격 균등하게 조정 */
+.element-wheel {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.wheel-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.wheel-inner-circle {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.wheel-symbol {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* 정확히 72도 간격으로 5개 요소 배치 */
+.wheel-symbol.wood {
+  top: 0%;      /* sin(90°) = 1 */
+  left: 50%;    /* cos(90°) = 0 */
+  background-color: rgba(76, 175, 80, 0.9);
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
+.wheel-symbol.fire {
+  top: 19.1%;   /* sin(18°) = 0.309 → 50% - 30.9% = 19.1% */
+  left: 95.1%;  /* cos(18°) = 0.951 → 50% + 45.1% = 95.1% */
+  background-color: rgba(225, 112, 85, 0.9);
+  box-shadow: 0 0 20px rgba(225, 112, 85, 0.5);
+}
+
+.wheel-symbol.earth {
+  top: 80.9%;   /* sin(54°) = 0.809 → 50% + 30.9% = 80.9% */
+  left: 95.1%;  /* cos(54°) = 0.588 → 50% + 45.1% = 95.1% */
+  background-color: rgba(253, 203, 110, 0.9);
+  box-shadow: 0 0 20px rgba(253, 203, 110, 0.5);
+}
+
+.wheel-symbol.metal {
+  top: 80.9%;   /* sin(126°) = 0.809 → 50% + 30.9% = 80.9% */
+  left: 4.9%;   /* cos(126°) = -0.588 → 50% - 45.1% = 4.9% */
+  background-color: rgba(178, 190, 195, 0.9);
+  box-shadow: 0 0 20px rgba(178, 190, 195, 0.5);
+}
+
+.wheel-symbol.water {
+  top: 19.1%;   /* sin(162°) = 0.309 → 50% - 30.9% = 19.1% */
+  left: 4.9%;   /* cos(162°) = -0.951 → 50% - 45.1% = 4.9% */
+  background-color: rgba(9, 132, 227, 0.9);
+  box-shadow: 0 0 20px rgba(9, 132, 227, 0.5);
+}

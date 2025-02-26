@@ -1,83 +1,101 @@
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
-import '../styles/ElementChart.css';
+import React from 'react';
+import '../styles/ResultPage.css';
 
-function ElementChart({ elementData }) {
-  const chartRef = useRef(null);
-  const chartInstance = useRef(null);
+const ElementChart = ({ elementData }) => {
+  // 데이터가 없으면 기본값 사용
+  const data = elementData || {
+    wood: 20,
+    fire: 42, 
+    earth: 15,
+    metal: 13,
+    water: 10
+  };
   
-  useEffect(() => {
-    if (!elementData) return;
-    
-    const ctx = chartRef.current.getContext('2d');
-    
-    // 기존 차트 제거
-    if (chartInstance.current) {
-      chartInstance.current.destroy();
-    }
-    
-    // 데이터 준비
-    const labels = Object.keys(elementData);
-    const data = Object.values(elementData);
-    
-    // 오행별 색상
-    const colors = {
-      '목': 'rgba(76, 175, 80, 0.8)',  // 초록색
-      '화': 'rgba(244, 67, 54, 0.8)',  // 빨간색
-      '토': 'rgba(255, 193, 7, 0.8)',  // 노란색
-      '금': 'rgba(255, 235, 59, 0.8)', // 금색
-      '수': 'rgba(33, 150, 243, 0.8)'  // 파란색
-    };
-    
-    chartInstance.current = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: labels,
-        datasets: [{
-          data: data,
-          backgroundColor: labels.map(label => colors[label]),
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              color: '#dff9fb',
-              font: {
-                family: "'Pretendard', 'Noto Sans KR', sans-serif",
-                size: 14
-              }
-            }
-          },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                const label = context.label || '';
-                const value = context.parsed || 0;
-                return `${label}: ${value}%`;
-              }
-            }
-          }
-        }
-      }
-    });
-    
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-    };
-  }, [elementData]);
-
+  // 한글 오행 이름 매핑
+  const elementNames = {
+    wood: '목',
+    fire: '화',
+    earth: '토',
+    metal: '금',
+    water: '수'
+  };
+  
   return (
     <div className="element-chart-container">
-      <canvas ref={chartRef} height={200}></canvas>
+      <h3 className="element-chart-title">오행 분석</h3>
+      
+      <div className="donut-chart">
+        {/* SVG로 도넛 차트 구현 */}
+        <svg width="100%" height="100%" viewBox="0 0 42 42">
+          <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#1a1a2e" strokeWidth="3"></circle>
+          
+          {/* 각 오행별 원호 - 데이터에 따라 동적 계산 */}
+          <circle 
+            cx="21" 
+            cy="21" 
+            r="15.91549430918954" 
+            fill="transparent"
+            stroke="#4CAF50" 
+            strokeWidth="3"
+            strokeDasharray={`${data.wood * 0.01 * 100} ${100 - data.wood * 0.01 * 100}`}
+            strokeDashoffset="25"
+          />
+          <circle 
+            cx="21" 
+            cy="21" 
+            r="15.91549430918954" 
+            fill="transparent"
+            stroke="#F44336" 
+            strokeWidth="3"
+            strokeDasharray={`${data.fire * 0.01 * 100} ${100 - data.fire * 0.01 * 100}`}
+            strokeDashoffset={`${100 - data.wood * 0.01 * 100 + 25}`}
+          />
+          <circle 
+            cx="21" 
+            cy="21" 
+            r="15.91549430918954" 
+            fill="transparent"
+            stroke="#FFC107" 
+            strokeWidth="3"
+            strokeDasharray={`${data.earth * 0.01 * 100} ${100 - data.earth * 0.01 * 100}`}
+            strokeDashoffset={`${100 - (data.wood + data.fire) * 0.01 * 100 + 25}`}
+          />
+          <circle 
+            cx="21" 
+            cy="21" 
+            r="15.91549430918954" 
+            fill="transparent"
+            stroke="#B2BEC3" 
+            strokeWidth="3"
+            strokeDasharray={`${data.metal * 0.01 * 100} ${100 - data.metal * 0.01 * 100}`}
+            strokeDashoffset={`${100 - (data.wood + data.fire + data.earth) * 0.01 * 100 + 25}`}
+          />
+          <circle 
+            cx="21" 
+            cy="21" 
+            r="15.91549430918954" 
+            fill="transparent"
+            stroke="#0984E3" 
+            strokeWidth="3"
+            strokeDasharray={`${data.water * 0.01 * 100} ${100 - data.water * 0.01 * 100}`}
+            strokeDashoffset={`${100 - (data.wood + data.fire + data.earth + data.metal) * 0.01 * 100 + 25}`}
+          />
+          
+          {/* 중앙 텍스트 */}
+          <text x="50%" y="50%" textAnchor="middle" dy=".3em" fontSize="5" fill="white">오행 균형</text>
+        </svg>
+      </div>
+      
+      <div className="element-legend">
+        {Object.entries(data).map(([element, value]) => (
+          <div className="legend-item" key={element}>
+            <div className={`legend-color element-${element}`}></div>
+            <div className="legend-text">{elementNames[element]}: {value}%</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default ElementChart;

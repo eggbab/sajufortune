@@ -27,13 +27,24 @@
   color: transparent;
 }
 
+.main-nav {
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
 .main-nav ul {
   display: flex;
   list-style: none;
+  height: 100%;
+  align-items: center;
 }
 
 .main-nav li {
   margin-left: 30px;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .main-nav a {
@@ -42,10 +53,25 @@
   font-weight: 500;
   font-size: 1.1rem;
   transition: color 0.3s ease;
+  padding: 18px 0;
+  display: inline-block;
 }
 
 .main-nav a:hover {
   color: var(--secondary);
+}
+
+.cta-button {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 768px) {

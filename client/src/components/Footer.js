@@ -18,10 +18,10 @@ const Footer = () => {
             <div className="footer-column">
               <h3>서비스</h3>
               <ul>
-                <li><Link to="/saju">사주 분석</Link></li>
-                <li><Link to="/tarot">타로 카드</Link></li>
-                <li><Link to="/horoscope">별자리 운세</Link></li>
-                <li><Link to="/premium">프리미엄 서비스</Link></li>
+                <li><Link to="/">무료 사주 분석</Link></li>
+                <li><Link to="/products">프리미엄 서비스</Link></li>
+                <li><Link to="/premium">전문가 상담</Link></li>
+                <li><Link to="/products">커플 궁합</Link></li>
               </ul>
             </div>
             
@@ -29,9 +29,9 @@ const Footer = () => {
               <h3>고객 지원</h3>
               <ul>
                 <li><Link to="/faq">자주 묻는 질문</Link></li>
-                <li><Link to="/support">고객센터</Link></li>
-                <li><Link to="/guide">이용 가이드</Link></li>
+                <li><Link to="/support">문의하기</Link></li>
                 <li><Link to="/refund">환불 정책</Link></li>
+                <li><a href="mailto:vmeandbeme@gmail.com">이메일 문의</a></li>
               </ul>
             </div>
             
@@ -41,7 +41,7 @@ const Footer = () => {
                 <li><Link to="/about">회사 소개</Link></li>
                 <li><Link to="/terms">이용약관</Link></li>
                 <li><Link to="/privacy">개인정보처리방침</Link></li>
-                <li><a href="mailto:vmeandbeme@gmail.com">문의하기</a></li>
+                <li><a href="https://blog.sajufortune.com" target="_blank" rel="noopener noreferrer">블로그</a></li>
               </ul>
             </div>
           </div>
@@ -49,8 +49,8 @@ const Footer = () => {
         
         <div className="footer-bottom">
           <div className="footer-social">
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a>
+            <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a>
             <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></a>
             <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><i className="fab fa-youtube"></i></a>
           </div>

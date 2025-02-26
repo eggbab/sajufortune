@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage';
 import Result from './pages/Result';
 import OtherResultView from './pages/OtherResultView';
 import FAQ from './pages/FAQ';
-import NotFound from './pages/NotFound';
+import NotFound from './pages/Notfound';
 
 function App() {
   // 전역 상태로 관리하여 컴포넌트 간 데이터 공유

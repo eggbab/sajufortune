@@ -920,8 +920,9 @@ section:last-child {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('pattern.png');
-  opacity: 0.03;
+  background-image: radial-gradient(circle at 25% 25%, rgba(108, 92, 231, 0.03) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 75%, rgba(0, 206, 201, 0.03) 0%, transparent 50%);
+  opacity: 0.5;
   pointer-events: none;
 }
 

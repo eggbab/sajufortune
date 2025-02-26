@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import '../styles/HomePage.css';
 
 const CTASection = () => {
@@ -44,9 +44,9 @@ const CTASection = () => {
           </div>
         </div>
         
-        <Link to="/analysis" className="cta-button">
+        <HashLink to="/#saju-form" className="cta-button">
           무료 사주 분석 받기 <i className="fas fa-arrow-right"></i>
-        </Link>
+        </HashLink>
       </div>
     </section>
   );

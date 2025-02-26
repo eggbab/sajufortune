@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FaChevronRight, FaUserAlt, FaCalendarAlt, FaChartLine } from 'react-icons/fa';
 import '../styles/HomePage.css';
 
-function HomePage() {
-  const history = useHistory();
+function HomePage({ setResultData, setUserData }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     birthDate: '',
@@ -27,18 +27,11 @@ function HomePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!formData.name || !formData.birthDate) {
-      setError('이름과 생년월일을 입력해주세요.');
-      return;
-    }
-    
     setLoading(true);
     setError('');
     
     try {
       // 서버 API 호출 대신 임시 데이터 사용
-      // 로딩 애니메이션을 보여주기 위해 setTimeout 사용
       setTimeout(() => {
         const mockData = {
           dominantElement: "화",
@@ -54,14 +47,15 @@ function HomePage() {
           advice: "균형 잡힌 생활과 감정 조절이 중요합니다."
         };
         
+        // 상태 함수를 통해 데이터 업데이트
+        setResultData(mockData);
+        setUserData(formData);
+        
         // 결과 페이지로 이동
-        history.push('/result', {
-          userData: formData,
-          sajuResult: mockData
-        });
+        navigate('/result');
         
         setLoading(false);
-      }, 3000); // 3초 후에 결과 페이지로 이동
+      }, 3000);
       
     } catch (error) {
       console.error('사주 분석 오류:', error);

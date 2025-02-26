@@ -31,11 +31,11 @@ const Footer = () => {
               </li>
               <li>
                 <i className="fas fa-id-card"></i>
-                <span>사업자등록번호: 123-45-67890</span>
+                <span>사업자등록번호: 426-62-00632</span>
               </li>
               <li>
                 <i className="fas fa-user"></i>
-                <span>대표자: 홍길동</span>
+                <span>대표자: 김우진</span>
               </li>
             </ul>
           </div>
@@ -43,11 +43,6 @@ const Footer = () => {
         
         <div className="footer-bottom">
           <p>&copy; 2024 사주포춘. All rights reserved.</p>
-          <div className="footer-social">
-            <a href="#"><i className="fab fa-facebook"></i></a>
-            <a href="#"><i className="fab fa-instagram"></i></a>
-            <a href="#"><i className="fab fa-twitter"></i></a>
-          </div>
         </div>
       </div>
     </footer>

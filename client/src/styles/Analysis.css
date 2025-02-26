@@ -1,0 +1,184 @@
+/* Analysis 페이지 스타일 */
+.analysis-page {
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.analysis-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.analysis-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.analysis-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.analysis-header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.analysis-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #8e44ad;
+  outline: none;
+}
+
+.form-group small {
+  display: block;
+  margin-top: 5px;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.radio-group, .concerns-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.radio-label, .concern-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-label input, .concern-label input {
+  margin-right: 8px;
+}
+
+.form-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #8e44ad 0%, #673ab7 100%);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(142, 68, 173, 0.3);
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(142, 68, 173, 0.4);
+}
+
+.submit-button i {
+  margin-right: 8px;
+}
+
+.form-disclaimer {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.form-disclaimer a {
+  color: #8e44ad;
+  text-decoration: none;
+}
+
+.form-disclaimer a:hover {
+  text-decoration: underline;
+}
+
+/* 로딩 상태 스타일 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.loading-container h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.loading-container p {
+  color: #666;
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+.loading-animation {
+  margin: 20px 0;
+}
+
+.spinner {
+  width: 70px;
+  height: 70px;
+  border: 6px solid rgba(142, 68, 173, 0.1);
+  border-radius: 50%;
+  border-top-color: #8e44ad;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .analysis-header h1 {
+    font-size: 2rem;
+  }
+  
+  .analysis-form {
+    padding: 20px;
+  }
+  
+  .radio-group, .concerns-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+} 

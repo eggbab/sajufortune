@@ -1,202 +1,180 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { useHistory } from 'react-router-dom';
-import '../styles/Result.css';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import ElementCircle from '../components/ElementCircle';
-import MonthlyFortune from '../components/MonthlyFortune';
-
-// 차트 컴포넌트 지연 로딩으로 변경
-const ElementDonut = lazy(() => import('../components/ElementDonut'));
-const MonthlyChart = lazy(() => import('../components/MonthlyChart'));
-
-// 오류 경계 컴포넌트
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return this.props.fallback;
-    }
-    return this.props.children;
-  }
-}
-
-// 로딩 컴포넌트
-const LoadingFallback = () => (
-  <div className="chart-loading">
-    <div className="spinner"></div>
-    <p>차트를 불러오는 중...</p>
-  </div>
-);
-
-// 오류 발생 시 표시할 컴포넌트
-const ChartErrorFallback = () => (
-  <div className="chart-error">
-    <i className="fas fa-exclamation-circle"></i>
-    <p>차트를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.</p>
-  </div>
-);
+import '../styles/Result.css';
 
 const Result = ({ resultData, userData }) => {
   const history = useHistory();
-  const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
-  const [results, setResults] = useState(null);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [shareUrl, setShareUrl] = useState('');
+  const [copied, setCopied] = useState(false);
   
+  // 데이터가 없으면 분석 페이지로 리다이렉트
   useEffect(() => {
-    // 결과 데이터가 없는 경우 홈으로 리다이렉트
     if (!resultData || !userData) {
-      history.push('/');
-      return;
-    }
-    
-    try {
-      // 프로그레스 바 시뮬레이션
-      let currentProgress = 0;
-      const interval = setInterval(() => {
-        currentProgress += 5;
-        setProgress(currentProgress);
-        
-        if (currentProgress >= 100) {
-          clearInterval(interval);
-          
-          // 분석 결과 설정
-          setResults({
-            userName: userData.name || '게스트',
-            birthdate: userData.birthDate || '2000-01-01',
-            gender: userData.gender || '남성',
-            sajuResult: resultData
-          });
-          
-          setLoading(false);
-        }
-      }, 50);
-      
-      return () => {
-        clearInterval(interval);
-      };
-    } catch (err) {
-      console.error('Error loading results:', err);
-      setError('결과를 불러오는 중 오류가 발생했습니다.');
-      setLoading(false);
+      history.push('/analysis');
     }
   }, [resultData, userData, history]);
-
-  // 에러 UI
-  if (error) {
+  
+  // 결과가 없을 경우 로딩 표시
+  if (!resultData || !userData) {
     return (
-      <div className="result-page">
-        <Header type="result" />
-        <div className="result-content">
-          <div className="error-container">
-            <div className="error-message">
-              <i className="fas fa-exclamation-circle"></i>
-              <h2>결과를 불러올 수 없습니다</h2>
-              <p>{error}</p>
-              <button className="retry-button" onClick={() => history.push('/')}>
-                <i className="fas fa-home"></i> 홈으로 돌아가기
-              </button>
-            </div>
-          </div>
+      <div className="loading-container">
+        <div className="loading-animation">
+          <div className="spinner"></div>
         </div>
-        <Footer />
+        <p>분석 결과를 불러오는 중입니다...</p>
       </div>
     );
   }
-
-  // 로딩 UI
-  if (loading) {
-    return (
-      <div className="result-page">
-        <Header type="result" />
-        <div className="loading-container">
-          <h2>사주 분석 결과 준비 중...</h2>
-          <div className="progress-bar">
-            <div className="progress" style={{ width: `${progress}%` }}></div>
-          </div>
-          <p>{progress}% 완료</p>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
-  // 결과 UI
+  
+  // 결과 공유하기
+  const handleShare = async () => {
+    setIsLoading(true);
+    
+    try {
+      // 실제로는 API를 호출하여 결과를 저장하고 공유 URL을 받아옴
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // 더미 URL 생성
+      const dummyShareId = Math.random().toString(36).substring(2, 10);
+      const url = `${window.location.origin}/shared/${dummyShareId}`;
+      setShareUrl(url);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('공유 URL 생성 중 오류:', error);
+      alert('공유 URL을 생성하는 중 오류가 발생했습니다.');
+      setIsLoading(false);
+    }
+  };
+  
+  // URL 복사하기
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    });
+  };
+  
   return (
     <div className="result-page">
-      <Header type="result" />
-      <div className="result-content">
+      <Header />
+      
+      <div className="result-container">
         <div className="result-header">
-          <div className="user-profile">
-            <div className="user-avatar">
-              <i className="fas fa-user"></i>
-            </div>
-            <div className="user-info">
-              <h1>{results.userName}님의 사주 분석 결과</h1>
-              <p className="user-birth">
-                <i className="fas fa-calendar-alt"></i> {results.birthdate} ({results.gender})
-              </p>
-            </div>
-          </div>
+          <h1>{userData.name}님의 사주 분석 결과</h1>
+          <p>생년월일: {userData.birthDate} {userData.birthTime}</p>
         </div>
         
-        <div className="result-section main-section">
+        <div className="result-card main-result">
           <h2>종합 운세</h2>
-          <p>{results.sajuResult.mainFortune}</p>
+          <p>{resultData.mainFortune}</p>
         </div>
         
-        <div className="result-charts">
-          <div className="chart-card">
-            <ElementCircle elementData={results.sajuResult.elements} />
+        <div className="result-grid">
+          <div className="result-card">
+            <h2>오행 분석</h2>
+            <div className="elements-chart">
+              {Object.entries(resultData.elements).map(([element, value]) => (
+                <div key={element} className="element-bar">
+                  <div className="element-label">
+                    {element === 'wood' && '목(木)'}
+                    {element === 'fire' && '화(火)'}
+                    {element === 'earth' && '토(土)'}
+                    {element === 'metal' && '금(金)'}
+                    {element === 'water' && '수(水)'}
+                  </div>
+                  <div className="element-bar-outer">
+                    <div 
+                      className={`element-bar-inner ${element}`} 
+                      style={{ width: `${value}%` }}
+                    ></div>
+                  </div>
+                  <div className="element-value">{value}%</div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="chart-card">
-            <MonthlyFortune monthlyData={results.sajuResult.monthlyFortune} />
+          
+          <div className="result-card">
+            <h2>월별 운세 흐름</h2>
+            <div className="monthly-chart">
+              <div className="chart-bars">
+                {resultData.monthlyFortune.map((value, index) => (
+                  <div 
+                    key={index} 
+                    className="monthly-bar"
+                    style={{ height: `${value}%` }}
+                    title={`${index + 1}월: ${value}점`}
+                  >
+                    <div className="monthly-value">{value}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="chart-months">
+                {Array.from({ length: 12 }, (_, i) => (
+                  <div key={i} className="month-label">{i + 1}월</div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
         
-        <div className="detail-section">
-          <h2>상세 분석 결과</h2>
-          <div className="detail-categories">
-            <div className="detail-category">
-              <h3><i className="fas fa-briefcase"></i> 직업/진로</h3>
-              <p>{results.sajuResult.careerFortune}</p>
-            </div>
-            <div className="detail-category">
-              <h3><i className="fas fa-coins"></i> 재물/금전</h3>
-              <p>{results.sajuResult.wealthFortune}</p>
-            </div>
-            <div className="detail-category">
-              <h3><i className="fas fa-heartbeat"></i> 건강</h3>
-              <p>{results.sajuResult.healthFortune}</p>
-            </div>
-            <div className="detail-category">
-              <h3><i className="fas fa-users"></i> 인간관계</h3>
-              <p>{results.sajuResult.relationshipFortune}</p>
-            </div>
+        <div className="result-details">
+          <div className="result-card">
+            <h2><i className="fas fa-briefcase"></i> 직업/사업 운세</h2>
+            <p>{resultData.careerFortune}</p>
+          </div>
+          
+          <div className="result-card">
+            <h2><i className="fas fa-coins"></i> 재물/금전 운세</h2>
+            <p>{resultData.wealthFortune}</p>
+          </div>
+          
+          <div className="result-card">
+            <h2><i className="fas fa-heartbeat"></i> 건강 운세</h2>
+            <p>{resultData.healthFortune}</p>
+          </div>
+          
+          <div className="result-card">
+            <h2><i className="fas fa-user-friends"></i> 인간관계/연애 운세</h2>
+            <p>{resultData.relationshipFortune}</p>
           </div>
         </div>
         
         <div className="result-actions">
-          <button className="share-button">
-            <i className="fas fa-share-alt"></i> 결과 공유하기
-          </button>
-          <button className="save-button">
-            <i className="fas fa-download"></i> PDF로 저장하기
-          </button>
-          <button className="analyze-button" onClick={() => history.push('/')}>
-            <i className="fas fa-redo"></i> 다시 분석하기
-          </button>
+          {!shareUrl ? (
+            <button 
+              className="share-button" 
+              onClick={handleShare}
+              disabled={isLoading}
+            >
+              {isLoading ? '생성 중...' : '결과 공유하기'}
+            </button>
+          ) : (
+            <div className="share-url-container">
+              <input 
+                type="text" 
+                value={shareUrl} 
+                readOnly 
+                className="share-url-input"
+              />
+              <button 
+                className="copy-button"
+                onClick={copyToClipboard}
+              >
+                {copied ? '복사됨!' : '복사'}
+              </button>
+            </div>
+          )}
+          
+          <Link to="/premium" className="premium-link">
+            더 상세한 분석이 필요하신가요? 프리미엄 서비스 알아보기
+          </Link>
         </div>
       </div>
+      
       <Footer />
     </div>
   );

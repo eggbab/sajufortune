@@ -1,3 +1,105 @@
+/* 기본 스타일 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 버튼 스타일 */
+.primary-button, .secondary-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #8e44ad 0%, #673ab7 100%);
+  color: white;
+  box-shadow: 0 4px 10px rgba(142, 68, 173, 0.3);
+}
+
+.secondary-button {
+  background: white;
+  color: #673ab7;
+  border: 1px solid #673ab7;
+  margin-left: 15px;
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(142, 68, 173, 0.4);
+}
+
+.secondary-button:hover {
+  background: #f8f4fe;
+}
+
+.primary-button i, .secondary-button i {
+  margin-right: 8px;
+}
+
+/* 홈페이지 스타일 */
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-section {
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/assets/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.hero-buttons {
+  margin-top: 30px;
+}
+
 /* 기본 스타일 리셋 */
 * {
   margin: 0;

@@ -1,14 +1,261 @@
 /* 결과 페이지 전체 스타일 */
 .result-page {
-  background-color: #f5f7fa;
+  background-color: #f9f9f9;
   min-height: 100vh;
   padding-bottom: 60px;
 }
 
-.result-content {
-  max-width: 1100px;
+.result-container {
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 100px 20px 40px;
+  padding: 40px 20px 80px;
+}
+
+.result-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.result-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.result-header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.result-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.main-result {
+  border-left: 5px solid #8e44ad;
+}
+
+.result-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #444;
+  display: flex;
+  align-items: center;
+}
+
+.result-card h2 i {
+  margin-right: 10px;
+  color: #8e44ad;
+}
+
+.result-card p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+/* 오행 차트 스타일 */
+.elements-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.element-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.element-label {
+  width: 60px;
+  font-weight: 500;
+}
+
+.element-bar-outer {
+  flex-grow: 1;
+  height: 20px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.element-bar-inner {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.element-bar-inner.wood {
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+.element-bar-inner.fire {
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+}
+
+.element-bar-inner.earth {
+  background: linear-gradient(90deg, #f39c12, #d35400);
+}
+
+.element-bar-inner.metal {
+  background: linear-gradient(90deg, #bdc3c7, #7f8c8d);
+}
+
+.element-bar-inner.water {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.element-value {
+  width: 40px;
+  text-align: right;
+  font-weight: 500;
+}
+
+/* 월별 차트 스타일 */
+.monthly-chart {
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-bars {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 200px;
+  padding-bottom: 10px;
+}
+
+.monthly-bar {
+  width: 18px;
+  background: linear-gradient(180deg, #8e44ad 0%, #9b59b6 100%);
+  border-radius: 3px 3px 0 0;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.monthly-bar:hover {
+  background: #673ab7;
+  transform: scaleY(1.05);
+}
+
+.monthly-value {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.chart-months {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.month-label {
+  font-size: 0.8rem;
+  color: #666;
+  width: 18px;
+  text-align: center;
+}
+
+/* 결과 상세 스타일 */
+.result-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* 공유 기능 스타일 */
+.result-actions {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.share-button {
+  background: #8e44ad;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.share-button:hover {
+  background: #7d3c98;
+}
+
+.share-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.share-url-container {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto 20px;
+}
+
+.share-url-input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  font-size: 0.9rem;
+}
+
+.copy-button {
+  background: #8e44ad;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.premium-link {
+  display: block;
+  margin-top: 20px;
+  color: #8e44ad;
+  text-decoration: underline;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .result-header h1 {
+    font-size: 2rem;
+  }
+  
+  .share-url-container {
+    flex-direction: column;
+  }
+  
+  .share-url-input, .copy-button {
+    border-radius: 5px;
+  }
+  
+  .copy-button {
+    margin-top: 10px;
+  }
 }
 
 /* 로딩 상태일 때 스타일 */
@@ -98,11 +345,6 @@
 }
 
 /* 사용자 프로필 섹션 개선 */
-.result-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
 .user-profile {
   display: flex;
   align-items: center;
@@ -246,11 +488,6 @@
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
-}
-
-.share-button {
-  background-color: var(--primary);
-  color: white;
 }
 
 .save-button {

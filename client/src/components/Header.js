@@ -7,6 +7,7 @@ function Header({ type = "default" }) {
   const navItems = [
     { name: '홈', path: '/' },
     { name: '제품', path: '/products' },
+    { name: '환불 정책', path: '/refund' },
     { name: 'FAQ', path: '/faq' },
     { name: '고객 지원', path: '/support' }
   ];

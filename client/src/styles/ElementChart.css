@@ -1,88 +1,176 @@
-.element-chart {
-  background-color: #1e213a;
+/* 오행 분석 차트 컨테이너 */
+.element-chart-section {
+  background-color: white;
   border-radius: 15px;
-  padding: 20px;
-  color: white;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.element-chart-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #7c4dff, #6c5ce7);
+}
+
+.element-chart-section h3 {
+  font-size: 1.4rem;
+  color: #2d3748;
+  margin-bottom: 25px;
+  text-align: center;
+  position: relative;
+}
+
+.element-chart-section h3::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, #7c4dff, #6c5ce7);
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.element-analysis-content {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+/* 오행 차트 스타일 */
+.element-chart {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.element-chart svg {
+  width: 100%;
+  height: auto;
+}
+
+/* 설명 텍스트 */
+.element-description {
+  color: #4a5568;
+  line-height: 1.7;
+}
+
+.element-description p {
+  margin-bottom: 15px;
+}
+
+.element-description strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* 오행 요소 목록 */
+.element-list {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.element-item {
+  display: flex;
   align-items: center;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  gap: 10px;
+}
+
+.element-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.8rem;
+}
+
+.element-icon.wood { background-color: #4CAF50; }
+.element-icon.fire { background-color: #F44336; }
+.element-icon.earth { background-color: #FFC107; }
+.element-icon.metal { background-color: #9E9E9E; }
+.element-icon.water { background-color: #2196F3; }
+
+.element-name {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.element-bar {
+  flex: 2;
+  height: 6px;
+  background-color: #e2e8f0;
+  border-radius: 3px;
   overflow: hidden;
   position: relative;
 }
 
-.element-chart h3 {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-  color: white;
-  text-align: center;
+.element-fill {
+  height: 100%;
+  border-radius: 3px;
 }
 
-.chart-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+.element-fill.wood { background-color: #4CAF50; }
+.element-fill.fire { background-color: #F44336; }
+.element-fill.earth { background-color: #FFC107; }
+.element-fill.metal { background-color: #9E9E9E; }
+.element-fill.water { background-color: #2196F3; }
+
+.element-percent {
+  min-width: 35px;
+  text-align: right;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2d3748;
 }
 
-.element-canvas {
-  max-width: 100%;
-  height: auto;
+/* 도미넌트 요소 표시 */
+.element-dominant {
+  margin-top: 25px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  padding: 15px;
 }
 
-.element-legend {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 15px;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.legend-item {
+.element-dominant h4 {
+  font-size: 1rem;
+  color: #2d3748;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.9);
+  gap: 10px;
 }
 
-.legend-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 8px;
+.element-dominant p {
+  margin: 0;
+  color: #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
-.legend-color.wood {
-  background-color: #4CAF50;
-}
-
-.legend-color.fire {
-  background-color: #E57373;
-}
-
-.legend-color.earth {
-  background-color: #FFD54F;
-}
-
-.legend-color.metal {
-  background-color: #B0BEC5;
-}
-
-.legend-color.water {
-  background-color: #42A5F5;
-}
-
-.legend-label {
-  flex: 1;
-}
-
-.legend-value {
-  font-weight: bold;
-  color: white;
-}
-
-@media (max-width: 500px) {
-  .element-legend {
-    grid-template-columns: repeat(2, 1fr);
+/* 반응형 */
+@media (max-width: 768px) {
+  .element-analysis-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .element-chart {
+    margin-bottom: 20px;
   }
 }

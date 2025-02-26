@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 
 function Header() {
+  const pages = [
+    { name: '홈', path: '/' },
+    { name: '제품', path: '/products' },
+    { name: '가이드', path: '/guide' },
+    { name: '환불 정책', path: '/refund' },
+    { name: '고객 지원', path: '/support' }
+  ];
+
   return (
     <header className="result-header">
       <div className="container">

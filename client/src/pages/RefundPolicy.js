@@ -12,70 +12,63 @@ const RefundPolicy = () => {
       <div className="policy-container">
         <div className="policy-header">
           <h1>환불 정책</h1>
-          <p>사주포춘 서비스 환불 정책에 대한 안내입니다. 서비스 이용 전 꼭 확인해주세요.</p>
+          <p>마지막 업데이트: 2023년 10월 15일</p>
         </div>
         
-        <div className="policy-section">
-          <h2><i className="fas fa-exclamation-circle"></i> 환불 불가 안내</h2>
+        <div className="policy-content">
+          <section className="policy-section">
+            <h2>1. 환불 원칙</h2>
+            <p>사주풀이는 고객 만족을 최우선으로 생각합니다. 디지털 콘텐츠의 특성을 고려하여 다음과
+            같은 환불 정책을 운영하고 있습니다.</p>
+          </section>
           
-          <div className="important-notice">
-            <h4><i className="fas fa-info-circle"></i> 중요 안내사항</h4>
-            <p>
-              사주포춘의 사주 분석 서비스는 <strong>디지털 컨텐츠의 특성상 결제 후 환불이 불가능</strong>합니다. 
-              서비스 이용 전 반드시 아래 내용을 확인해 주세요.
-            </p>
-          </div>
+          <section className="policy-section">
+            <h2>2. 환불 절차 및 기준</h2>
+            <div className="highlight-box">
+              <h3>환불 가능 기간 및 비율</h3>
+              <ul className="refund-list">
+                <li><span className="refund-condition">결제 후 24시간 이내, 서비스가 제공되기 전:</span> <span className="refund-rate">100% 환불</span></li>
+                <li><span className="refund-condition">서비스 결과 제공 전 취소 요청 시:</span> <span className="refund-rate">결제 금액의 80% 환불</span></li>
+                <li><span className="refund-condition">서비스 결과 확인 후:</span> <span className="refund-rate">환불 불가</span></li>
+                <li><span className="refund-condition">서비스 오류 또는 부실한 콘텐츠 제공의 경우:</span> <span className="refund-rate">검토 후 전액 환불 가능</span></li>
+              </ul>
+            </div>
+            
+            <p>환불 요청은 <a href="mailto:vmeandbeme@gmail.com">vmeandbeme@gmail.com</a>으로 보내주시거나, 마이페이지 &gt; 주문 내역 &gt; 환불 요청 버튼을 통해 진행할 수 있습니다.</p>
+          </section>
           
-          <h3><i className="fas fa-times-circle"></i> 환불 불가 사유</h3>
-          <ul className="policy-list">
-            <li>
-              <strong>즉시 소비되는 디지털 콘텐츠:</strong> 사주 분석 결과는 고객의 개인 정보를 바탕으로 AI가 
-              즉시 생성하는 디지털 콘텐츠로, 결제 즉시 분석 작업이 시작되고 결과가 생성됩니다.
-            </li>
-            <li>
-              <strong>맞춤형 개인화 서비스:</strong> 각 고객의 생년월일시를 기반으로 제공되는 고유한 맞춤형 분석으로, 
-              다른 사용자에게 재판매하거나 재사용이 불가능합니다.
-            </li>
-            <li>
-              <strong>서버 및 AI 자원 사용:</strong> 결제 즉시 고객의 정보를 분석하기 위한 서버 자원과 AI 시스템이 
-              가동되며, 이미 사용된 컴퓨팅 자원은 회수가 불가능합니다.
-            </li>
-            <li>
-              <strong>분석 결과 열람:</strong> 사주 분석 결과를 한 번 열람한 후에는 이미 서비스가 제공된 것으로 
-              간주되어 환불이 불가능합니다.
-            </li>
-          </ul>
+          <section className="policy-section">
+            <h2>3. 환불 처리 기간</h2>
+            <p>환불 요청이 접수된 후 영업일 기준 3-5일 이내에 처리됩니다. 신용카드 결제의 경우, 카드사 정책에 따라 환불금이 실제 카드에 반영되기까지 추가 시간이 소요될 수 있습니다.</p>
+          </section>
           
-          <h3><i className="fas fa-exclamation-triangle"></i> 이용 전 주의사항</h3>
-          <p>
-            서비스 결제 전 다음 사항을 반드시 확인해 주세요:
-          </p>
-          <ul className="policy-list">
-            <li>무료 기본 분석을 통해 서비스의 품질을 미리 확인하실 수 있습니다.</li>
-            <li>결제 전 서비스 내용과 가격을 충분히 검토하신 후 구매를 결정해 주세요.</li>
-            <li>정확한 생년월일시 정보를 입력했는지 다시 한번 확인해 주세요.</li>
-            <li>결제 직후부터 분석 작업이 시작되므로 신중한 결제를 부탁드립니다.</li>
-          </ul>
+          <section className="policy-section">
+            <h2>4. 환불 제외 사항</h2>
+            <ul>
+              <li>사용자의 정보 입력 오류로 인한 분석 결과 오차가 발생한 경우</li>
+              <li>서비스 결과를 이미 열람한 경우 (디지털 콘텐츠의 특성상)</li>
+              <li>무료 서비스 및 프로모션 코드로 결제한 서비스</li>
+              <li>서비스 이용약관을 위반한 경우</li>
+            </ul>
+          </section>
           
-          <h3><i className="fas fa-check-circle"></i> 서비스 품질 보장</h3>
-          <p>
-            사주포춘은 환불은 불가능하지만, 최고 품질의 분석 결과를 제공하기 위해 다음과 같은 노력을 기울이고 있습니다:
-          </p>
-          <ul className="policy-list">
-            <li>최신 AI 기술과 전통 사주 이론을 결합한 정확한 분석</li>
-            <li>개인 맞춤형 상세 해설 제공</li>
-            <li>직관적이고 이해하기 쉬운 시각화 자료</li>
-            <li>분석 결과에 대한 궁금증은 고객센터를 통해 언제든지 문의 가능</li>
-          </ul>
+          <section className="policy-section">
+            <h2>5. 부분 환불</h2>
+            <p>종합 사주 패키지 상품의 경우, 일부 서비스만 이용한 후 나머지에 대한 부분 환불을 요청할 수 있습니다. 이 경우 이미 제공된 서비스 가치를 제외한 금액에 대해 환불이 진행됩니다.</p>
+          </section>
           
-          <h3><i className="fas fa-envelope"></i> 문의하기</h3>
-          <p>
-            서비스 이용에 관한 문의사항이 있으신 경우 아래 연락처로 문의해 주세요:
-          </p>
-          <div className="contact-info">
-            <p><strong><i className="fas fa-envelope"></i> 이메일:</strong> vmeandbeme@gmail.com</p>
-            <p><strong><i className="fas fa-id-card"></i> 사업자등록번호:</strong> 426-62-00632</p>
-            <p><strong><i className="fas fa-user"></i> 대표자:</strong> 김우진</p>
+          <section className="policy-section">
+            <h2>6. 문의 및 이의제기</h2>
+            <div className="contact-box">
+              <p>환불 정책과 관련하여 추가 문의사항이나 이의제기가 있으신 경우 아래 연락처로 문의해주세요:</p>
+              <p><i className="fas fa-envelope"></i> 이메일: <a href="mailto:vmeandbeme@gmail.com">vmeandbeme@gmail.com</a></p>
+              <p><i className="fas fa-phone-alt"></i> 고객센터: 070-1234-5678 (평일 10:00-18:00)</p>
+              <p><i className="fas fa-comment"></i> 1:1 문의: 마이페이지 &gt; 1:1 문의하기</p>
+            </div>
+          </section>
+          
+          <div className="policy-footer">
+            <p>본 환불 정책은 2023년 10월 15일부터 적용됩니다. 정책 변경 시 웹사이트를 통해 공지하며, 변경된 정책은 공지일로부터 7일 후 적용됩니다.</p>
           </div>
         </div>
         

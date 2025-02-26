@@ -71,9 +71,7 @@ a {
 }
 
 .hero-section {
-  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/assets/hero-bg.jpg');
-  background-size: cover;
-  background-position: center;
+  background: linear-gradient(135deg, #f5f0ff 0%, #e8eaff 100%);
   padding: 100px 0;
   text-align: center;
 }

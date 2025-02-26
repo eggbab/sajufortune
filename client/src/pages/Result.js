@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import '../styles/Result.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -46,7 +46,7 @@ const ChartErrorFallback = () => (
 );
 
 const Result = ({ resultData, userData }) => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [results, setResults] = useState(null);
@@ -55,7 +55,7 @@ const Result = ({ resultData, userData }) => {
   useEffect(() => {
     // 결과 데이터가 없는 경우 홈으로 리다이렉트
     if (!resultData || !userData) {
-      navigate('/');
+      history.push('/');
       return;
     }
     
@@ -89,7 +89,7 @@ const Result = ({ resultData, userData }) => {
       setError('결과를 불러오는 중 오류가 발생했습니다.');
       setLoading(false);
     }
-  }, [resultData, userData, navigate]);
+  }, [resultData, userData, history]);
 
   // 에러 UI
   if (error) {
@@ -102,7 +102,7 @@ const Result = ({ resultData, userData }) => {
               <i className="fas fa-exclamation-circle"></i>
               <h2>결과를 불러올 수 없습니다</h2>
               <p>{error}</p>
-              <button className="retry-button" onClick={() => navigate('/')}>
+              <button className="retry-button" onClick={() => history.push('/')}>
                 <i className="fas fa-home"></i> 홈으로 돌아가기
               </button>
             </div>
@@ -192,7 +192,7 @@ const Result = ({ resultData, userData }) => {
           <button className="save-button">
             <i className="fas fa-download"></i> PDF로 저장하기
           </button>
-          <button className="analyze-button" onClick={() => navigate('/analysis')}>
+          <button className="analyze-button" onClick={() => history.push('/')}>
             <i className="fas fa-redo"></i> 다시 분석하기
           </button>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import '../styles/Result.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -8,7 +8,7 @@ import MonthlyFortune from '../components/MonthlyFortune';
 
 const OtherResultView = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const history = useHistory();
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -78,7 +78,7 @@ const OtherResultView = () => {
               <i className="fas fa-exclamation-circle"></i>
               <h2>결과를 불러올 수 없습니다</h2>
               <p>{error}</p>
-              <button className="retry-button" onClick={() => navigate('/dashboard')}>
+              <button className="retry-button" onClick={() => history.push('/')}>
                 <i className="fas fa-home"></i> 홈으로 돌아가기
               </button>
             </div>
@@ -98,7 +98,7 @@ const OtherResultView = () => {
             <i className="fas fa-share-alt"></i>
             <p><strong>{sharedBy}</strong>님이 공유한 사주 분석 결과입니다</p>
           </div>
-          <button className="analyze-button" onClick={() => navigate('/analysis')}>
+          <button className="analyze-button" onClick={() => history.push('/')}>
             <i className="fas fa-magic"></i> 나의 사주 분석하기
           </button>
         </div>
@@ -154,10 +154,10 @@ const OtherResultView = () => {
         </div>
         
         <div className="result-actions">
-          <button className="analyze-button" onClick={() => navigate('/analysis')}>
-            <i className="fas fa-magic"></i> 나도 분석받기
+          <button className="analyze-button" onClick={() => history.push('/')}>
+            <i className="fas fa-magic"></i> 나의 사주 분석하기
           </button>
-          <button className="premium-button" onClick={() => navigate('/premium')}>
+          <button className="premium-button" onClick={() => history.push('/premium')}>
             <i className="fas fa-crown"></i> 프리미엄 서비스 보기
           </button>
         </div>

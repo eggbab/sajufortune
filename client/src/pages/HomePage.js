@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FaChevronRight, FaUserAlt, FaCalendarAlt, FaChartLine } from 'react-icons/fa';
 import '../styles/HomePage.css';
+import FAQSection from '../components/FAQ';
 
 function HomePage({ setResultData, setUserData }) {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [formData, setFormData] = useState({
     name: '',
     birthDate: '',
@@ -52,7 +53,7 @@ function HomePage({ setResultData, setUserData }) {
         setUserData(formData);
         
         // 결과 페이지로 이동
-        navigate('/result');
+        history.push('/result');
         
         setLoading(false);
       }, 3000);
@@ -734,6 +735,8 @@ function HomePage({ setResultData, setUserData }) {
           </div>
         </div>
       )}
+      
+      <FAQSection />
     </div>
   );
 }

@@ -1,0 +1,117 @@
+.policy-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.policy-header {
+  background-color: var(--dark);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.policy-header .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.policy-header .logo a {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.policy-content {
+  flex: 1;
+  padding: 50px 0;
+  background-color: #f8f9fa;
+}
+
+.policy-content h1 {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  color: var(--dark);
+  text-align: center;
+}
+
+.policy-section {
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.policy-section h2 {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.policy-section p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.policy-section ul, 
+.policy-section ol {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.policy-section li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.contact-info {
+  background-color: rgba(108, 92, 231, 0.05);
+  border-left: 4px solid var(--primary);
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.policy-footer {
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .policy-content {
+    padding: 30px 0;
+  }
+  
+  .policy-content h1 {
+    font-size: 1.8rem;
+  }
+  
+  .policy-section {
+    padding: 20px;
+  }
+} 

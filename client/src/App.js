@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import './index.css';
 
 function App() {
@@ -53,53 +53,79 @@ function App() {
     
     try {
       // 서버 API 호출 대신 임시 데이터 사용
+      // 실제 구현에서는 이 부분을 백엔드 API 호출로 대체
       setTimeout(() => {
         const mockData = {
           dominantElement: "화",
-          personality: "열정적이고 활동적인 성격입니다. 창의력이 뛰어나며 새로운 아이디어를 내는 것을 좋아합니다.",
-          career: "창의적인 분야나 리더십을 발휘할 수 있는 직업이 적합합니다.",
-          relationship: "열정적인 연애 스타일을 가지고 있으며, 파트너에게 헌신적입니다.",
-          wealth: "재물운은 양호하나 충동적인 소비에 주의해야 합니다.",
-          health: "심장과 혈액순환에 관련된 건강 문제에 주의가 필요합니다.",
-          yearPillar: "갑진",
-          monthPillar: "병오",
-          dayPillar: "정해",
-          hourPillar: "무자",
-          advice: "균형 잡힌 생활과 감정 조절이 중요합니다.",
+          personalityTraits: ["열정적", "창의적", "활동적", "직관적", "낙관적"],
           elementChart: {
-            wood: 30,
-            fire: 40,
+            wood: 20,
+            fire: 42,
             earth: 15,
-            metal: 10,
-            water: 5
+            metal: 13,
+            water: 10
           },
-          luckyColors: ["빨간색", "주황색", "보라색"],
-          luckyNumbers: [3, 7, 9],
-          luckyDirections: ["남쪽", "동쪽"],
+          pillars: {
+            year: "경오",
+            month: "정미",
+            day: "병인",
+            hour: "갑자"
+          },
+          radarData: [
+            { trait: "창의성", value: 85 },
+            { trait: "리더십", value: 75 },
+            { trait: "감수성", value: 90 },
+            { trait: "인내력", value: 65 },
+            { trait: "협동성", value: 70 },
+            { trait: "결단력", value: 80 }
+          ],
           monthlyForecast: [
             { month: "1월", content: "새로운 시작에 적합한 달입니다.", rating: 4 },
             { month: "2월", content: "대인관계에 주의가 필요합니다.", rating: 3 },
             { month: "3월", content: "재물운이 상승하는 시기입니다.", rating: 5 },
-            { month: "4월", content: "건강 관리에 신경 쓰세요.", rating: 2 },
-            { month: "5월", content: "창의적인 아이디어가 빛을 발합니다.", rating: 4 },
-            { month: "6월", content: "여행이나 이동에 좋은 시기입니다.", rating: 5 },
-            { month: "7월", content: "가족과의 관계가 중요해집니다.", rating: 3 },
-            { month: "8월", content: "직업적 성취가 기대됩니다.", rating: 4 },
-            { month: "9월", content: "새로운 인연이 찾아올 수 있습니다.", rating: 5 },
-            { month: "10월", content: "재정 관리에 주의하세요.", rating: 3 },
-            { month: "11월", content: "건강이 회복되는 시기입니다.", rating: 4 },
-            { month: "12월", content: "한 해를 정리하기 좋은 달입니다.", rating: 4 }
+            { month: "4월", content: "건강관리에 신경쓰세요.", rating: 4 },
+            { month: "5월", content: "중요한 결정을 내리기 좋은 시기입니다.", rating: 3 },
+            { month: "6월", content: "여행이나 이동에 좋은 기운이 있습니다.", rating: 4 },
+            { month: "7월", content: "집중력이 높아지는 시기입니다.", rating: 5 },
+            { month: "8월", content: "가족 관계가 중요해지는 달입니다.", rating: 4 },
+            { month: "9월", content: "학습과 성장에 좋은 시기입니다.", rating: 5 },
+            { month: "10월", content: "창의적인 활동에 유리합니다.", rating: 4 },
+            { month: "11월", content: "차분히 계획을 세우세요.", rating: 3 },
+            { month: "12월", content: "한 해를 정리하고 휴식하기 좋은 시기입니다.", rating: 4 }
+          ],
+          luckyColors: ["파란색", "보라색", "금색"],
+          luckyNumbers: [3, 7, 9],
+          luckyDirections: ["동쪽", "남쪽"],
+          compatibility: {
+            best: ["쥐띠", "뱀띠"],
+            good: ["원숭이띠", "닭띠"],
+            neutral: ["토끼띠", "말띠", "개띠"],
+            challenging: ["호랑이띠", "양띠"]
+          },
+          personality: "열정적이고 활동적인 성격입니다. 창의력이 뛰어나며 새로운 아이디어를 내는 것을 좋아합니다.",
+          career: "창의적인 분야나 리더십을 발휘할 수 있는 직업이 적합합니다.",
+          relationship: "열정적인 연애 스타일을 가지고 있으며, 파트너에게 헌신적입니다.",
+          wealth: "재물운은 양호하나 충동적인 소비에 주의해야 합니다.",
+          health: "활동적인 성향으로 건강한 편이나 과로에 주의하세요.",
+          yearlyForecast: [
+            { year: "2025", content: "새로운 시작과 성장의 해입니다. 특히 3~5월이 중요한 기회의 시기가 될 것입니다.", rating: 8 },
+            { year: "2026", content: "안정을 찾고 기반을 다지는 해입니다. 꾸준한 노력이 결실을 맺을 것입니다.", rating: 7 },
+            { year: "2027", content: "도약과 확장의 해로, 새로운 도전을 시도하기 좋은 시기입니다.", rating: 9 }
           ]
         };
         
+        // 로컬 스토리지에 데이터 저장
         localStorage.setItem('userData', JSON.stringify(formData));
         localStorage.setItem('sajuResult', JSON.stringify(mockData));
+        
+        // 결과 페이지로 이동
         history.push('/result');
         
         setLoading(false);
-      }, 2000); // 2초 후 결과로 이동
+      }, 3000); // 로딩 효과를 위한 지연
     } catch (error) {
-      setError('분석 중 오류가 발생했습니다. 다시 시도해주세요.');
+      console.error('분석 중 오류 발생:', error);
+      setError('분석 중 오류가 발생했습니다. 다시 시도해 주세요.');
       setLoading(false);
     }
   };
@@ -156,10 +182,6 @@ function App() {
                   <button onClick={() => scrollToSection('saju-form')} className="btn-primary">
                     <span>무료 사주 분석 받기</span>
                     <i className="fas fa-angle-right"></i>
-                  </button>
-                  <button onClick={() => scrollToSection('about')} className="btn-secondary">
-                    <span>서비스 더 알아보기</span>
-                    <i className="fas fa-info-circle"></i>
                   </button>
                 </div>
               </div>
@@ -237,249 +259,41 @@ function App() {
         <section id="sample-results" className="sample-results">
           <div className="container">
             <h2>다른 사용자들의 분석 결과</h2>
-            <p className="section-subtitle">실제 사용자들이 받은 사주 분석 결과의 일부를 미리 살펴보세요</p>
+            <p className="section-subtitle">실제 사용자들이 받은 사주 분석의 일부입니다</p>
             
-            <div className="result-samples">
-              <div className="result-sample-card">
-                <div className="sample-header">
-                  <div className="sample-title">
-                    <h3>30대 남성 - 화(火) 주요 오행</h3>
-                    <span className="element-badge fire">화(火)</span>
-                  </div>
-                  <div className="sample-user">
-                    <div className="user-avatar">김</div>
-                    <div className="birth-info">1990년 7월 18일 오전 11시</div>
-                  </div>
-                </div>
-                
-                <div className="sample-content">
-                  <div className="element-chart">
-                    <div className="chart-title">오행 분석</div>
-                    <div className="chart-container">
-                      <div className="pie-visual">
-                        <div className="pie-slice fire" style={{transform: 'rotate(0deg)', clipPath: 'polygon(50% 50%, 50% 0%, 100% 0%, 100% 60%, 50% 50%)'}}></div>
-                        <div className="pie-slice wood" style={{transform: 'rotate(130deg)', clipPath: 'polygon(50% 50%, 50% 0%, 100% 0%, 80% 60%, 50% 50%)'}}></div>
-                        <div className="pie-slice earth" style={{transform: 'rotate(190deg)', clipPath: 'polygon(50% 50%, 50% 0%, 90% 0%, 70% 70%, 50% 50%)'}}></div>
-                        <div className="pie-slice metal" style={{transform: 'rotate(270deg)', clipPath: 'polygon(50% 50%, 50% 0%, 80% 0%, 60% 60%, 50% 50%)'}}></div>
-                        <div className="pie-slice water" style={{transform: 'rotate(330deg)', clipPath: 'polygon(50% 50%, 50% 0%, 70% 0%, 60% 40%, 50% 50%)'}}></div>
-                      </div>
-                      <div className="element-distribution">
-                        <div className="element-row">
-                          <span className="element-name">화(火)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar fire" style={{width: '42%'}}></div>
-                          </div>
-                          <span className="element-percent">42%</span>
-                        </div>
-                        <div className="element-row">
-                          <span className="element-name">목(木)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar wood" style={{width: '23%'}}></div>
-                          </div>
-                          <span className="element-percent">23%</span>
-                        </div>
-                        <div className="element-row">
-                          <span className="element-name">토(土)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar earth" style={{width: '15%'}}></div>
-                          </div>
-                          <span className="element-percent">15%</span>
-                        </div>
-                        <div className="element-row">
-                          <span className="element-name">금(金)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar metal" style={{width: '12%'}}></div>
-                          </div>
-                          <span className="element-percent">12%</span>
-                        </div>
-                        <div className="element-row">
-                          <span className="element-name">수(水)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar water" style={{width: '8%'}}></div>
-                          </div>
-                          <span className="element-percent">8%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="personality-traits">
-                    <div className="traits-title">성격 특성</div>
-                    <div className="traits-radar">
-                      <div className="radar-chart">
-                        <div className="radar-area" style={{clipPath: 'polygon(50% 10%, 85% 30%, 90% 70%, 50% 90%, 15% 65%, 20% 25%)'}}></div>
-                        <div className="radar-axis vertical"></div>
-                        <div className="radar-axis horizontal"></div>
-                        <div className="radar-axis diagonal1"></div>
-                        <div className="radar-axis diagonal2"></div>
-                        <div className="radar-label top">창의성</div>
-                        <div className="radar-label right">리더십</div>
-                        <div className="radar-label bottom-right">결단력</div>
-                        <div className="radar-label bottom-left">인내력</div>
-                        <div className="radar-label left">협동성</div>
-                        <div className="radar-label top-left">감수성</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="analysis-summary">
-                    <h4>종합 분석</h4>
-                    <p>열정적이고 적극적인 성격으로, 창의력이 뛰어나고 새로운 도전을 즐깁니다. 리더십이 강하며 목표를 향해 끊임없이 노력하는 추진력이 있습니다. 감정 표현이 자유롭고 타인과의 관계에서 영향력을 발휘하는 성향이 있으며, 자신의 비전을 실현시키는 능력이 탁월합니다. 다만 때로는 급한 성격으로 인해 세부 사항을 놓치거나 인내심이 부족할 수 있습니다.</p>
-                    <div className="analysis-fade"></div>
-                  </div>
-                  
-                  <div className="fortune-preview">
-                    <div className="fortune-section">
-                      <h4>2023년 운세 흐름</h4>
-                      <div className="fortune-graph">
-                        <div className="month-bars">
-                          <div className="month-bar" style={{height: '65%'}}><span>1월</span></div>
-                          <div className="month-bar" style={{height: '50%'}}><span>2월</span></div>
-                          <div className="month-bar" style={{height: '75%'}}><span>3월</span></div>
-                          <div className="month-bar" style={{height: '85%'}}><span>4월</span></div>
-                          <div className="month-bar accent" style={{height: '90%'}}><span>5월</span></div>
-                          <div className="month-bar" style={{height: '70%'}}><span>6월</span></div>
-                          <div className="blur-overlay"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="sample-blur-overlay"></div>
-                </div>
-                
-                <div className="sample-footer">
-                  <div className="sample-tags">
-                    <span className="sample-tag">성격분석</span>
-                    <span className="sample-tag">직업적성</span>
-                    <span className="sample-tag">인간관계</span>
-                    <span className="sample-tag">재물운</span>
-                  </div>
-                  <div className="btn-container">
-                    <button className="analyze-my-saju-btn" onClick={handleSampleAnalyzeClick}>나도 분석 받기</button>
+            <div className="sample-result-card">
+              <div className="sample-header">
+                <div className="user-brief">
+                  <span className="user-icon"><i className="fas fa-user-circle"></i></span>
+                  <div className="user-info">
+                    <h3>김** (30대 남성)</h3>
+                    <p>1990년 7월 생</p>
                   </div>
                 </div>
               </div>
               
-              <div className="result-sample-card">
-                <div className="sample-header">
-                  <div className="sample-title">
-                    <h3>20대 여성 - 수(水) 주요 오행</h3>
-                    <span className="element-badge water">수(水)</span>
+              <div className="sample-content">
+                <div className="sample-charts">
+                  <div className="chart-container">
+                    <h4>오행 분석</h4>
+                    <div className="element-chart-sample"></div>
                   </div>
-                  <div className="sample-user">
-                    <div className="user-avatar">이</div>
-                    <div className="birth-info">1996년 11월 24일 오후 9시</div>
+                  <div className="chart-container">
+                    <h4>2025년 운세 흐름</h4>
+                    <div className="monthly-chart-sample"></div>
                   </div>
                 </div>
                 
-                <div className="sample-content">
-                  <div className="element-chart">
-                    <div className="chart-title">오행 분석</div>
-                    <div className="chart-container">
-                      <div className="pie-visual">
-                        <div className="pie-slice water" style={{transform: 'rotate(0deg)', clipPath: 'polygon(50% 50%, 50% 0%, 100% 0%, 100% 70%, 50% 50%)'}}></div>
-                        <div className="pie-slice metal" style={{transform: 'rotate(150deg)', clipPath: 'polygon(50% 50%, 50% 0%, 90% 0%, 85% 60%, 50% 50%)'}}></div>
-                        <div className="pie-slice earth" style={{transform: 'rotate(215deg)', clipPath: 'polygon(50% 50%, 50% 0%, 70% 0%, 60% 60%, 50% 50%)'}}></div>
-                        <div className="pie-slice fire" style={{transform: 'rotate(270deg)', clipPath: 'polygon(50% 50%, 50% 0%, 60% 0%, 60% 40%, 50% 50%)'}}></div>
-                        <div className="pie-slice wood" style={{transform: 'rotate(315deg)', clipPath: 'polygon(50% 50%, 50% 0%, 80% 0%, 60% 30%, 50% 50%)'}}></div>
-                      </div>
-                      <div className="element-distribution">
-                        <div className="element-row">
-                          <span className="element-name">수(水)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar water" style={{width: '38%'}}></div>
-                          </div>
-                          <span className="element-percent">38%</span>
-                        </div>
-                        <div className="element-row">
-                          <span className="element-name">금(金)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar metal" style={{width: '27%'}}></div>
-                          </div>
-                          <span className="element-percent">27%</span>
-                        </div>
-                        <div className="element-row">
-                          <span className="element-name">토(土)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar earth" style={{width: '18%'}}></div>
-                          </div>
-                          <span className="element-percent">18%</span>
-                        </div>
-                        <div className="element-row">
-                          <span className="element-name">화(火)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar fire" style={{width: '10%'}}></div>
-                          </div>
-                          <span className="element-percent">10%</span>
-                        </div>
-                        <div className="element-row">
-                          <span className="element-name">목(木)</span>
-                          <div className="element-bar-container">
-                            <div className="element-bar wood" style={{width: '7%'}}></div>
-                          </div>
-                          <span className="element-percent">7%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="personality-traits">
-                    <div className="traits-title">성격 특성</div>
-                    <div className="traits-radar">
-                      <div className="radar-chart">
-                        <div className="radar-area" style={{clipPath: 'polygon(50% 25%, 70% 35%, 75% 70%, 50% 85%, 20% 75%, 30% 30%)'}}></div>
-                        <div className="radar-axis vertical"></div>
-                        <div className="radar-axis horizontal"></div>
-                        <div className="radar-axis diagonal1"></div>
-                        <div className="radar-axis diagonal2"></div>
-                        <div className="radar-label top">창의성</div>
-                        <div className="radar-label right">적응력</div>
-                        <div className="radar-label bottom-right">자기표현</div>
-                        <div className="radar-label bottom-left">안정성</div>
-                        <div className="radar-label left">공감능력</div>
-                        <div className="radar-label top-left">직관력</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="analysis-summary">
-                    <h4>종합 분석</h4>
-                    <p>직관력과 공감 능력이 뛰어나며, 주변 환경에 유연하게 적응하는 능력이 탁월합니다. 감성이 풍부하고 타인의 감정을 잘 이해하며, 조화로운 관계를 중요시합니다. 깊은 사고력과 통찰력으로 복잡한 문제를 해결하는 능력이 있으며, 창의적인 접근 방식으로 독특한 아이디어를 제시합니다. 다만 때로는 지나치게 감정적이거나 우유부단한 면이 있을 수 있습니다.</p>
-                    <div className="analysis-fade"></div>
-                  </div>
-                  
-                  <div className="fortune-preview">
-                    <div className="fortune-section">
-                      <h4>2023년 운세 흐름</h4>
-                      <div className="fortune-graph">
-                        <div className="month-bars">
-                          <div className="month-bar" style={{height: '55%'}}><span>1월</span></div>
-                          <div className="month-bar" style={{height: '60%'}}><span>2월</span></div>
-                          <div className="month-bar" style={{height: '50%'}}><span>3월</span></div>
-                          <div className="month-bar" style={{height: '75%'}}><span>4월</span></div>
-                          <div className="month-bar" style={{height: '80%'}}><span>5월</span></div>
-                          <div className="month-bar accent" style={{height: '95%'}}><span>6월</span></div>
-                          <div className="blur-overlay"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="sample-blur-overlay"></div>
+                <div className="sample-text fade-bottom">
+                  <h4>종합 분석</h4>
+                  <p>열정적이고 적극적인 성격으로, 리더십이 뛰어나며 새로운 도전을 즐기는 편입니다. 창의적인 분야나 리더십을 발휘할 수 있는 직업이 적합하며, 대인관계에서는 솔직하고 직설적인 성향이 있습니다. 2025년에는 특히 3~4월과 9월에 중요한 기회가 있을 것으로 예상됩니다...</p>
                 </div>
-                
-                <div className="sample-footer">
-                  <div className="sample-tags">
-                    <span className="sample-tag">성격분석</span>
-                    <span className="sample-tag">인간관계</span>
-                    <span className="sample-tag">감정패턴</span>
-                    <span className="sample-tag">연애운</span>
-                  </div>
-                  <div className="btn-container">
-                    <button className="analyze-my-saju-btn" onClick={handleSampleAnalyzeClick}>나도 분석 받기</button>
-                  </div>
-                </div>
+              </div>
+              
+              <div className="sample-cta-container">
+                <button className="sample-cta-button" onClick={() => scrollToSection('saju-form')}>
+                  나도 분석 받기 <i className="fas fa-arrow-right"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -534,111 +348,133 @@ function App() {
           </div>
         </section>
 
-        {/* 사주 입력 폼 섹션 */}
-        <section id="saju-form" className={`saju-form-section ${activeSection === 'saju-form' ? 'active' : ''}`}>
+        {/* 사주 분석 폼 섹션 - 고품질 개선 */}
+        <section id="saju-form" className="saju-form-section">
           <div className="container">
-            <h2>무료 사주 분석 받기</h2>
-            <p className="section-subtitle">기본 정보를 입력하시면 AI가 당신의 사주를 분석합니다</p>
-            
-            <form onSubmit={handleSubmit} className="saju-form">
-              <div className="form-group">
-                <label htmlFor="name">이름</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="이름을 입력하세요"
-                  required
-                />
+            <div className="form-container">
+              <div className="form-header">
+                <h2>무료 사주 분석</h2>
+                <p>아래 정보를 입력하시면 AI가 당신의 사주를 분석해 드립니다</p>
               </div>
               
-              <div className="form-group">
-                <label htmlFor="birthDate">생년월일</label>
-                <input
-                  type="date"
-                  id="birthDate"
-                  name="birthDate"
-                  value={formData.birthDate}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="birthHour">태어난 시간 (시주)</label>
-                <select
-                  id="birthHour"
-                  name="birthHour"
-                  value={formData.birthHour}
-                  onChange={handleChange}
-                >
-                  {hourOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <small>정확한 분석을 위해 시간까지 입력하시면 좋습니다.</small>
-              </div>
-              
-              <div className="form-group">
-                <label>성별</label>
-                <div className="radio-group">
-                  <label className="radio-label">
+              <form onSubmit={handleSubmit} className="saju-form">
+                <div className="form-inner">
+                  <div className="form-group">
+                    <label htmlFor="name">
+                      <i className="fas fa-user"></i> 이름
+                    </label>
                     <input
-                      type="radio"
-                      name="gender"
-                      value="남성"
-                      checked={formData.gender === '남성'}
+                      type="text"
+                      id="name"
+                      name="name"
+                      placeholder="홍길동"
+                      value={formData.name}
                       onChange={handleChange}
+                      required
                     />
-                    남성
-                  </label>
-                  <label className="radio-label">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="여성"
-                      checked={formData.gender === '여성'}
-                      onChange={handleChange}
-                    />
-                    여성
-                  </label>
-                </div>
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="concern">주요 관심사</label>
-                <select
-                  id="concern"
-                  name="concern"
-                  value={formData.concern}
-                  onChange={handleChange}
-                >
-                  <option value="연애/결혼">연애/결혼</option>
-                  <option value="사업/재물">사업/재물</option>
-                  <option value="직장/경력">직장/경력</option>
-                  <option value="건강">건강</option>
-                  <option value="대인관계">대인관계</option>
-                  <option value="진로/적성">진로/적성</option>
-                </select>
-              </div>
-              
-              {error && <div className="error-message">{error}</div>}
-              
-              <button type="submit" className="btn-submit" disabled={loading}>
-                {loading ? (
-                  <div className="loading-spinner-container">
-                    <div className="loading-spinner"></div>
-                    <span>분석 중...</span>
                   </div>
-                ) : (
-                  '사주 분석 받기'
-                )}
-              </button>
-            </form>
+                  
+                  <div className="form-group">
+                    <label htmlFor="birthDate">
+                      <i className="fas fa-calendar-alt"></i> 생년월일
+                    </label>
+                    <input
+                      type="date"
+                      id="birthDate"
+                      name="birthDate"
+                      value={formData.birthDate}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label htmlFor="birthHour">
+                      <i className="fas fa-clock"></i> 태어난 시간 (시주)
+                    </label>
+                    <select
+                      id="birthHour"
+                      name="birthHour"
+                      value={formData.birthHour}
+                      onChange={handleChange}
+                      className="custom-select"
+                    >
+                      {hourOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                    <small>정확한 분석을 위해 시간까지 입력하시면 좋습니다</small>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label><i className="fas fa-venus-mars"></i> 성별</label>
+                    <div className="radio-group">
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="남성"
+                          checked={formData.gender === '남성'}
+                          onChange={handleChange}
+                        />
+                        <span className="radio-custom"></span>
+                        남성
+                      </label>
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="여성"
+                          checked={formData.gender === '여성'}
+                          onChange={handleChange}
+                        />
+                        <span className="radio-custom"></span>
+                        여성
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label htmlFor="concern">
+                      <i className="fas fa-search"></i> 주요 관심사
+                    </label>
+                    <select
+                      id="concern"
+                      name="concern"
+                      value={formData.concern}
+                      onChange={handleChange}
+                      className="custom-select"
+                    >
+                      <option value="연애/결혼">연애/결혼</option>
+                      <option value="사업/재물">사업/재물</option>
+                      <option value="직장/경력">직장/경력</option>
+                      <option value="건강">건강</option>
+                      <option value="대인관계">대인관계</option>
+                      <option value="진로/적성">진로/적성</option>
+                    </select>
+                  </div>
+                
+                  {error && <div className="error-message"><i className="fas fa-exclamation-circle"></i> {error}</div>}
+                  
+                  <button type="submit" className="btn-submit" disabled={loading}>
+                    {loading ? (
+                      <div className="loading-spinner-container">
+                        <div className="loading-spinner"></div>
+                        <span>분석 중...</span>
+                      </div>
+                    ) : (
+                      <>사주 분석 받기 <i className="fas fa-chart-pie"></i></>
+                    )}
+                  </button>
+                </div>
+              </form>
+              
+              <div className="form-decoration">
+                <div className="decoration-element"></div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -682,51 +518,39 @@ function App() {
         </section>
       </main>
 
-      {/* 푸터 */}
+      {/* 푸터 - 개선 */}
       <footer className="site-footer">
         <div className="container">
           <div className="footer-content">
             <div className="footer-logo">
               <h3>사주포춘</h3>
               <p>AI 기반 사주 분석 서비스</p>
-              <p>당신의 운명을 밝혀주는 미래 예측 플랫폼</p>
-              <div className="social-icons">
-                <a href="#" className="social-icon"><i className="fab fa-facebook-f"></i></a>
-                <a href="#" className="social-icon"><i className="fab fa-instagram"></i></a>
-                <a href="#" className="social-icon"><i className="fab fa-youtube"></i></a>
-                <a href="#" className="social-icon"><i className="fab fa-twitter"></i></a>
-              </div>
             </div>
             
             <div className="footer-links">
               <h4>바로가기</h4>
               <ul>
                 <li><a href="/">홈</a></li>
-                <li><a href="/about">소개</a></li>
-                <li><button onClick={() => scrollToSection('saju-form')} className="footer-btn">사주 분석</button></li>
-                <li><a href="/blog">블로그</a></li>
+                <li><button onClick={() => scrollToSection('features')}>서비스</button></li>
+                <li><button onClick={() => scrollToSection('saju-form')}>사주 분석</button></li>
+                <li><button onClick={() => scrollToSection('testimonials')}>후기</button></li>
               </ul>
             </div>
             
             <div className="footer-contact">
               <h4>문의하기</h4>
               <p><i className="far fa-envelope"></i> 이메일: vmeandbeme@gmail.com</p>
-              <p><i className="fas fa-phone-alt"></i> 전화: 070-1234-5678</p>
-              <p><i className="fas fa-map-marker-alt"></i> 주소: 서울시 강남구</p>
-            </div>
-            
-            <div className="footer-company">
-              <h4>회사 정보</h4>
-              <p><i className="far fa-building"></i> 상호명: 사주포춘</p>
-              <p><i className="far fa-user"></i> 대표: 김우진</p>
-              <p><i className="fas fa-registered"></i> 사업자등록번호: 426-62-00632</p>
-              <p><i className="far fa-calendar-alt"></i> 설립일: 2022년 7월</p>
+              <p><i className="fas fa-map-marker-alt"></i> 주소: 인천 광역시 연수구 청룡로 50번길 2</p>
             </div>
           </div>
           
           <div className="footer-bottom">
-            <p>&copy; 2023 사주포춘. All rights reserved.</p>
-            <p><a href="/privacy">개인정보처리방침</a> | <a href="/terms">이용약관</a> | <a href="/refund">환불정책</a></p>
+            <p>&copy; 2025 사주포춘. All rights reserved.</p>
+            <div className="policy-links">
+              <Link to="/privacy">개인정보처리방침</Link>
+              <Link to="/terms">이용약관</Link>
+              <Link to="/refund">환불정책</Link>
+            </div>
           </div>
         </div>
       </footer>
@@ -734,4 +558,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

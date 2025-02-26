@@ -228,9 +228,46 @@
   }
   
   .element-chart {
-    flex: 1;
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .pie-container {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  }
+  
+  .recharts-pie-label-text {
+    font-weight: 600;
+    font-size: 14px;
+    fill: #333;
+  }
+  
+  .custom-legend {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 12px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 12px;
+  }
+  
+  .legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  
+  .legend-text {
+    font-size: 14px;
+    color: #555;
   }
   
   .pie-chart {
@@ -266,26 +303,6 @@
     justify-content: center;
     gap: 10px;
   }
-  
-  .legend-item {
-    display: flex;
-    align-items: center;
-    font-size: 0.9rem;
-    margin-right: 15px;
-  }
-  
-  .color-box {
-    width: 12px;
-    height: 12px;
-    margin-right: 5px;
-    border-radius: 3px;
-  }
-  
-  .color-box.fire { background-color: #ff7675; }
-  .color-box.wood { background-color: #00b894; }
-  .color-box.earth { background-color: #fdcb6e; }
-  .color-box.metal { background-color: #74b9ff; }
-  .color-box.water { background-color: #0984e3; }
   
   .element-explanation {
     flex: 2;
@@ -633,4 +650,54 @@
       width: 100%;
       text-align: right;
     }
+  }
+
+  /* 월별 운세 그래프 개선 */
+  .monthly-chart {
+    margin-top: 20px;
+    height: 250px;
+  }
+
+  .monthly-chart .recharts-cartesian-axis-tick-value {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .monthly-chart .recharts-cartesian-grid line {
+    stroke: rgba(0, 0, 0, 0.06);
+  }
+
+  .monthly-chart .recharts-bar-rectangle {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+
+  .monthly-chart .recharts-tooltip-wrapper .recharts-tooltip-item-name {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  /* 개인성격 레이더 차트 개선 */
+  .personality-radar {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 350px;
+    height: 300px;
+  }
+
+  .personality-radar .recharts-polar-grid-angle line {
+    stroke: rgba(0, 0, 0, 0.1);
+  }
+
+  .personality-radar .recharts-polar-grid-concentric circle {
+    stroke: rgba(0, 0, 0, 0.05);
+  }
+
+  .personality-radar .recharts-polar-angle-axis-tick text {
+    font-size: 12px;
+    font-weight: 500;
+    fill: #555;
+  }
+
+  .personality-radar .recharts-radar {
+    filter: drop-shadow(0 0 8px rgba(108, 92, 231, 0.2));
   }

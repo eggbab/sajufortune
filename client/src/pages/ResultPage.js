@@ -18,17 +18,28 @@ function ResultPage() {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    const storedUserData = localStorage.getItem('userData');
-    const storedSajuResult = localStorage.getItem('sajuResult');
+    const loadData = async () => {
+      const storedUserData = localStorage.getItem('userData');
+      const storedSajuResult = localStorage.getItem('sajuResult');
+      
+      if (storedUserData && storedSajuResult) {
+        try {
+          setUserData(JSON.parse(storedUserData));
+          setSajuResult(JSON.parse(storedSajuResult));
+          // 로딩 효과를 위해 약간의 지연 추가
+          setTimeout(() => {
+            setLoading(false);
+          }, 1500);
+        } catch (error) {
+          console.error("데이터 파싱 오류:", error);
+          history.replace('/');
+        }
+      } else {
+        history.replace('/');
+      }
+    };
     
-    if (storedUserData && storedSajuResult) {
-      setUserData(JSON.parse(storedUserData));
-      setSajuResult(JSON.parse(storedSajuResult));
-      setLoading(false);
-    } else {
-      // 데이터가 없으면 홈으로 리다이렉트
-      history.replace('/');
-    }
+    loadData();
   }, [history]);
   
   // 로딩 효과 유지를 위한 추가 로딩 시간
@@ -575,7 +586,7 @@ function ResultPage() {
               {/* 월별 운세 탭 */}
               {activeTab === 'monthly' && (
                 <div className="monthly-content">
-                  <h3>2023년 월별 운세</h3>
+                  <h3 className="section-title">2025년 월별 운세 흐름</h3>
                   <div className="monthly-chart">
                     <ResponsiveContainer width="100%" height={300}>
                       <BarChart data={monthlyData}>

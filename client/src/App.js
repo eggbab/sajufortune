@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './index.css';
 import HomePage from './pages/HomePage';
 import Analysis from './pages/Analysis';
@@ -19,22 +19,35 @@ function App() {
   const [resultData, setResultData] = useState(null);
   const [userData, setUserData] = useState(null);
   
+  // 페이지 렌더링 함수
+  const renderHomePage = (props) => (
+    <HomePage {...props} setResultData={setResultData} setUserData={setUserData} />
+  );
+  
+  const renderAnalysis = (props) => (
+    <Analysis {...props} setResultData={setResultData} setUserData={setUserData} />
+  );
+  
+  const renderResult = (props) => (
+    <Result {...props} resultData={resultData} userData={userData} />
+  );
+  
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<HomePage setResultData={setResultData} setUserData={setUserData} />} />
-        <Route path="/analysis" element={<Analysis setResultData={setResultData} setUserData={setUserData} />} />
-        <Route path="/result" element={<Result resultData={resultData} userData={userData} />} />
-        <Route path="/shared/:id" element={<OtherResultView />} />
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/refund" element={<RefundPolicy />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/premium" element={<Premium />} />
-        <Route path="/support" element={<Support />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Switch>
+        <Route exact path="/" render={renderHomePage} />
+        <Route path="/analysis" render={renderAnalysis} />
+        <Route path="/result" render={renderResult} />
+        <Route path="/shared/:id" component={OtherResultView} />
+        <Route path="/faq" component={FAQ} />
+        <Route path="/refund" component={RefundPolicy} />
+        <Route path="/privacy" component={PrivacyPolicy} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/products" component={Products} />
+        <Route path="/premium" component={Premium} />
+        <Route path="/support" component={Support} />
+        <Route component={NotFound} />
+      </Switch>
     </Router>
   );
 }

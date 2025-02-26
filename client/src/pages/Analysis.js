@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../styles/Analysis.css';
 
 const Analysis = ({ setResultData, setUserData }) => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [formData, setFormData] = useState({
     name: '',
     birthDate: '',
@@ -61,7 +61,7 @@ const Analysis = ({ setResultData, setUserData }) => {
       setResultData(dummyResult);
       
       // 결과 페이지로 이동
-      navigate('/result');
+      history.push('/result');
     } catch (error) {
       console.error('분석 중 오류 발생:', error);
       alert('분석 중 오류가 발생했습니다. 다시 시도해주세요.');

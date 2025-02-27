@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import '../styles/ElementChart.css';
 
-const ElementChart = ({ elementData }) => {
+const ElementChart = ({ elements }) => {
   const canvasRef = useRef(null);
   
   useEffect(() => {
-    if (!elementData) return;
+    if (!canvasRef.current || !elements) return;
     
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -13,164 +14,125 @@ const ElementChart = ({ elementData }) => {
     const height = canvas.height;
     const centerX = width / 2;
     const centerY = height / 2;
+    const radius = Math.min(width, height) / 2 - 20;
     
-    // 차트 설정
-    const outerRadius = Math.min(width, height) * 0.45; // 바깥 원 반지름
-    const innerRadius = outerRadius * 0.7; // 안쪽 원 반지름 - 오행 요소가 위치할 원
-    const elementRadius = Math.min(width, height) * 0.12; // 오행 요소 원의 크기
-    
-    // 배경 그리기
+    // 캔버스 초기화
     ctx.clearRect(0, 0, width, height);
     
-    // 은은한 별 배경 (밤하늘 느낌)
-    ctx.fillStyle = '#1e213a'; // 어두운 남색 배경
-    ctx.fillRect(0, 0, width, height);
+    // 오행 색상 설정
+    const colors = {
+      wood: '#4CAF50',  // 녹색
+      fire: '#FF5722',  // 적색
+      earth: '#FFC107', // 황색
+      metal: '#9E9E9E', // 백색
+      water: '#2196F3'  // 흑색
+    };
     
-    // 별 그리기
-    drawStars(ctx, width, height);
+    // 오행 데이터 준비
+    const data = [
+      { name: '목(木)', value: elements.wood, color: colors.wood },
+      { name: '화(火)', value: elements.fire, color: colors.fire },
+      { name: '토(土)', value: elements.earth, color: colors.earth },
+      { name: '금(金)', value: elements.metal, color: colors.metal },
+      { name: '수(水)', value: elements.water, color: colors.water }
+    ];
     
-    // 원 그리기
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-    ctx.lineWidth = 1;
+    const total = data.reduce((sum, item) => sum + item.value, 0);
     
-    // 바깥 원
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, outerRadius, 0, Math.PI * 2);
-    ctx.stroke();
+    // 원형 차트 그리기
+    let startAngle = -Math.PI / 2; // 12시 방향에서 시작
     
-    // 안쪽 원
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, innerRadius, 0, Math.PI * 2);
-    ctx.stroke();
-    
-    // 중앙에서 빛나는 효과
-    const gradient = ctx.createRadialGradient(
-      centerX, centerY, 0,
-      centerX, centerY, innerRadius
-    );
-    gradient.addColorStop(0, 'rgba(130, 119, 232, 0.1)');
-    gradient.addColorStop(1, 'rgba(130, 119, 232, 0.01)');
-    
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, innerRadius, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // 오행 요소를 그리기
-    if (elementData) {
-      // 오행 요소의 위치를 계산 (내부 원 위에 배치)
-      const angles = {
-        wood: -Math.PI/2, // 목(木) - 상단
-        fire: -Math.PI/2 + Math.PI*2/5, // 화(火) - 우상단
-        earth: -Math.PI/2 + Math.PI*4/5, // 토(土) - 우하단
-        metal: -Math.PI/2 + Math.PI*6/5, // 금(金) - 좌하단
-        water: -Math.PI/2 + Math.PI*8/5 // 수(水) - 좌상단
-      };
+    data.forEach(item => {
+      const sliceAngle = (2 * Math.PI * item.value) / total;
       
-      const colors = {
-        wood: '#4CAF50', // 녹색
-        fire: '#E57373', // 적색
-        earth: '#FFD54F', // 황색
-        metal: '#B0BEC5', // 은색/회색
-        water: '#42A5F5'  // 청색
-      };
-      
-      Object.entries(elementData).forEach(([element, value]) => {
-        const angle = angles[element];
-        
-        // 내부 원 위에 요소 배치 (이 부분이 변경됨)
-        const x = centerX + Math.cos(angle) * innerRadius;
-        const y = centerY + Math.sin(angle) * innerRadius;
-        
-        // 발광 효과
-        const glowRadius = elementRadius * 1.2;
-        const glow = ctx.createRadialGradient(
-          x, y, 0,
-          x, y, glowRadius
-        );
-        glow.addColorStop(0, colors[element]);
-        glow.addColorStop(0.7, colors[element] + '80'); // 50% 투명도
-        glow.addColorStop(1, colors[element] + '00'); // 완전 투명
-        
-        ctx.fillStyle = glow;
-        ctx.beginPath();
-        ctx.arc(x, y, glowRadius, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // 원 그리기
-        ctx.fillStyle = colors[element];
-        ctx.beginPath();
-        ctx.arc(x, y, elementRadius, 0, Math.PI * 2);
-        ctx.fill();
-        
-        // 테두리
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(x, y, elementRadius, 0, Math.PI * 2);
-        ctx.stroke();
-        
-        // 텍스트 추가
-        ctx.fillStyle = 'white';
-        ctx.font = 'bold 30px "Noto Sans KR", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        
-        // 한자 텍스트
-        const texts = {
-          wood: '木',
-          fire: '火',
-          earth: '土',
-          metal: '金',
-          water: '水'
-        };
-        
-        ctx.fillText(texts[element], x, y);
-      });
-    }
-    
-  }, [elementData]);
-  
-  // 별 그리기 함수
-  const drawStars = (ctx, width, height) => {
-    const starCount = 50;
-    for (let i = 0; i < starCount; i++) {
-      const x = Math.random() * width;
-      const y = Math.random() * height;
-      const radius = Math.random() * 1.5;
-      const opacity = Math.random() * 0.8 + 0.2;
-      
+      // 부채꼴 그리기
       ctx.beginPath();
-      ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+      ctx.closePath();
+      
+      // 부채꼴 채우기
+      ctx.fillStyle = item.color;
       ctx.fill();
-    }
-  };
+      
+      // 테두리 그리기
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#fff';
+      ctx.stroke();
+      
+      // 텍스트 위치 계산
+      const textAngle = startAngle + sliceAngle / 2;
+      const textRadius = radius * 0.7;
+      const textX = centerX + textRadius * Math.cos(textAngle);
+      const textY = centerY + textRadius * Math.sin(textAngle);
+      
+      // 텍스트 그리기
+      ctx.save();
+      ctx.translate(textX, textY);
+      ctx.rotate(textAngle + Math.PI / 2);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 14px "Noto Sans KR", sans-serif';
+      ctx.fillText(item.name, 0, 0);
+      ctx.restore();
+      
+      // 다음 부채꼴의 시작 각도 업데이트
+      startAngle += sliceAngle;
+    });
+    
+    // 중앙 원 그리기
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius * 0.3, 0, 2 * Math.PI);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#8e44ad';
+    ctx.stroke();
+    
+    // 중앙 텍스트 그리기
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 16px "Noto Sans KR", sans-serif';
+    ctx.fillText('오행', centerX, centerY);
+    
+  }, [elements]);
   
   return (
     <div className="element-chart">
-      <h3>오행 분석</h3>
-      <div className="chart-container">
+      <motion.div 
+        className="chart-container"
+        initial={{ rotate: -90, opacity: 0 }}
+        animate={{ rotate: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
         <canvas 
           ref={canvasRef} 
-          width={500} 
-          height={500} 
-          className="element-canvas"
+          width={300} 
+          height={300}
+          className="chart-canvas"
         />
-      </div>
-      <div className="element-legend">
-        {elementData && Object.entries(elementData).map(([key, value]) => (
-          <div className="legend-item" key={key}>
-            <span className={`legend-color ${key}`}></span>
-            <span className="legend-label">
-              {key === 'wood' && '목(木)'}
-              {key === 'fire' && '화(火)'}
-              {key === 'earth' && '토(土)'}
-              {key === 'metal' && '금(金)'}
-              {key === 'water' && '수(水)'}
+      </motion.div>
+      
+      <div className="element-indicators">
+        {Object.entries(elements).map(([element, value]) => (
+          <motion.div 
+            key={element} 
+            className={`element-indicator ${element}`}
+            initial={{ width: 0 }}
+            animate={{ width: `${value}%` }}
+            transition={{ duration: 1, delay: 0.5 }}
+          >
+            <span className="element-name">
+              {element === 'wood' && '목(木)'}
+              {element === 'fire' && '화(火)'}
+              {element === 'earth' && '토(土)'}
+              {element === 'metal' && '금(金)'}
+              {element === 'water' && '수(水)'}
             </span>
-            <span className="legend-value">{value}%</span>
-          </div>
+            <span className="element-value">{value}%</span>
+          </motion.div>
         ))}
       </div>
     </div>

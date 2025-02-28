@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -9,7 +9,7 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Toolti
 
 const ResultsPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
   const [premium, setPremium] = useState(false);
@@ -34,15 +34,15 @@ const ResultsPage = () => {
           setTimeout(() => setLoading(false), 1500);
         } catch (error) {
           console.error("데이터 파싱 오류:", error);
-          navigate('/');
+          history.push('/');
         }
       } else {
-        navigate('/');
+        history.push('/');
       }
     };
     
     loadData();
-  }, [location.state, navigate]);
+  }, [location.state, history]);
   
   // 로딩 화면
   if (loading) {
@@ -223,6 +223,9 @@ const ResultsPage = () => {
               <div className="action-buttons">
                 <button className="btn-share" onClick={handleShareResult}>
                   <FaArrowRight /> 결과 공유하기
+                </button>
+                <button className="btn-reanalyze" onClick={() => history.push('/analysis')}>
+                  다시 분석하기
                 </button>
                 <button className="btn-premium" onClick={togglePremiumModal}>
                   <FaStar /> 프리미엄 분석 받기

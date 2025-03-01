@@ -894,3 +894,199 @@
     overflow: hidden;
     height: 32px;
   }
+
+  /* ResultPage.css */
+  /* 이 파일은 App.js에서 이미 import하고 있는 CSS 컴포넌트들을 통해 스타일이 적용되므로, 여기서는 추가적인 스타일만 정의합니다 */
+
+  .results-page {
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  .loading-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--bg-hover);
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  }
+
+  .loading-progress {
+    width: 200px;
+    height: 4px;
+    background-color: var(--bg-hover);
+    border-radius: 2px;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    animation: progress 2s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes progress {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .results-hero {
+    position: relative;
+    padding: 80px 0;
+    text-align: center;
+    background-color: var(--primary-color);
+    color: white;
+    margin-bottom: 60px;
+    overflow: hidden;
+  }
+
+  .hero-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(142, 68, 173, 0.8), rgba(41, 128, 185, 0.8));
+    z-index: 0;
+  }
+
+  .results-content {
+    padding: 0 0 80px;
+  }
+
+  .results-card {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .charts-section {
+    margin-bottom: 40px;
+  }
+
+  .charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .chart-wrapper {
+    background-color: var(--bg-hover);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .analysis-section {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .btn-share,
+  .btn-reanalyze,
+  .btn-premium {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-share {
+    background-color: var(--bg-hover);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
+
+  .btn-reanalyze {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+
+  .btn-premium {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+  }
+
+  .premium-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 90%;
+  }
+
+  @media (max-width: 768px) {
+    .results-hero {
+      padding: 60px 0;
+    }
+
+    .results-card {
+      padding: 20px;
+    }
+
+    .charts-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+      flex-direction: column;
+    }
+    
+    .btn-share,
+    .btn-reanalyze,
+    .btn-premium {
+      width: 100%;
+      justify-content: center;
+    }
+  }

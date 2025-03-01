@@ -92,10 +92,19 @@ const TestimonialSlider = ({ testimonials }) => {
               <div className="testimonial-card">
                 <div className="testimonial-header">
                   <div className="testimonial-avatar">
-                    <img 
-                      src={testimonials[currentIndex].image || '/assets/default-avatar.jpg'} 
-                      alt={testimonials[currentIndex].name} 
-                    />
+                    {testimonials[currentIndex].image ? (
+                      <img 
+                        src={testimonials[currentIndex].image} 
+                        alt={testimonials[currentIndex].name} 
+                      />
+                    ) : (
+                      <div 
+                        className="avatar-placeholder"
+                        style={testimonials[currentIndex].avatarStyle || { backgroundColor: '#cccccc' }}
+                      >
+                        <span>{testimonials[currentIndex].name.charAt(0)}</span>
+                      </div>
+                    )}
                   </div>
                   <div className="testimonial-info">
                     <h3 className="testimonial-name">{testimonials[currentIndex].name}</h3>

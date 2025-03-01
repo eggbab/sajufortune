@@ -640,4 +640,46 @@
   .btn-action {
     width: 100%;
   }
+}
+
+/* 새로 추가되는 스타일 */
+.product-image-small {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.product-image-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-color {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.product-details-small {
+  flex: 1;
+}
+
+.product-details-small h4 {
+  margin: 0 0 5px;
+  font-size: 16px;
+}
+
+.product-details-small p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
 } 

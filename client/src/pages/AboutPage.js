@@ -354,7 +354,7 @@ const AboutPage = () => {
           justify-content: center;
           text-align: center;
           color: white;
-          background-image: url('/assets/about/hero-bg.jpg');
+          background-image: linear-gradient(135deg, rgba(142, 68, 173, 0.9), rgba(41, 128, 185, 0.85)), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
           background-size: cover;
           background-position: center;
         }

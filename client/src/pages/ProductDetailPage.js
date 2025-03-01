@@ -26,49 +26,14 @@ const ProductDetailPage = () => {
       price: 19900,
       originalPrice: 29900,
       discount: 33,
-      description: '기본적인 사주팔자 분석과 올해의 운세 정보',
-      detailedDescription: `
-        기본 사주 분석 패키지는 사주팔자의 기본 구성 요소를 분석하여 당신의 타고난 기질과 올해의 운세를 알려드립니다.
-        
-        동양 철학에 기반한 수천 년의 지혜와 현대적 해석이 결합된 이 분석은 자신의 장단점을 이해하고 
-        더 나은 선택을 할 수 있는 기초적인 통찰력을 제공합니다.
-        
-        이 패키지에는 당신의 오행 구성 분석, 올해의 운세, 기본 적성 분석이 포함되어 있으며, 
-        텍스트 형태의 상세 리포트로 받아보실 수 있습니다.
-      `,
-      features: [
-        {
-          title: '기본 사주팔자 분석',
-          description: '당신의 사주에 나타난 기본적인 기질과 성향을 분석합니다.',
-          icon: 'fa-chart-pie'
-        },
-        {
-          title: '오행 구성 분석',
-          description: '당신의 사주에 나타난 오행(금,수,목,화,토)의 구성과 균형을 분석합니다.',
-          icon: 'fa-balance-scale'
-        },
-        {
-          title: '올해의 운세',
-          description: '올해의 전반적인 운세와 주요 시기별 변화를 예측합니다.',
-          icon: 'fa-calendar-alt'
-        },
-        {
-          title: '적성 분석',
-          description: '당신에게 적합한 직업 분야와 재능을 분석합니다.',
-          icon: 'fa-user-graduate'
-        },
-        {
-          title: '텍스트 리포트',
-          description: '모든 분석 결과를 텍스트 형태의 리포트로 제공받을 수 있습니다.',
-          icon: 'fa-file-alt'
-        }
-      ],
+      description: '사주팔자를 바탕으로 당신의 운명과 성격, 적성, 올해의 운세를 분석해 드립니다. 사주에 나타난 타고난 기질과 잠재력을 파악하고, 현재와 미래의 운세를 이해하는 데 도움을 드립니다.',
+      longDescription: '동양의 전통 철학인 사주명리학을 바탕으로 개인의 출생 시간과 장소에 따른 사주팔자를 분석합니다. 음양오행의 조화와 불균형을 파악하여 개인의 타고난 성격, 적성, 그리고 운명의 흐름을 읽어냅니다. 과학적인 알고리즘과 전문가의 해석을 결합하여 더욱 정확하고 유용한 정보를 제공합니다.',
       categories: ['basic', 'popular'],
-      image: '/assets/products/basic-saju.jpg',
+      imageStyle: { backgroundColor: '#8e44ad' },
       gallery: [
-        '/assets/products/basic-saju-detail1.jpg',
-        '/assets/products/basic-saju-detail2.jpg',
-        '/assets/products/basic-saju-detail3.jpg'
+        { type: 'color', style: { backgroundColor: '#9b59b6' } },
+        { type: 'color', style: { backgroundColor: '#8e44ad' } },
+        { type: 'color', style: { backgroundColor: '#7d3c98' } },
       ],
       rating: 4.7,
       reviews: 128,
@@ -285,11 +250,7 @@ const ProductDetailPage = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6 }}
                   >
-                    <img 
-                      src={product.image || '/assets/product-placeholder.jpg'} 
-                      alt={product.title} 
-                      className="product-main-image"
-                    />
+                    <div className="product-image-background" style={product.imageStyle}></div>
                   </motion.div>
                   
                   <motion.div 

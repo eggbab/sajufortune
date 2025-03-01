@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -9,7 +9,7 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Toolti
 
 const ResultsPage = () => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [showPremiumModal, setShowPremiumModal] = useState(false);
   const [premium, setPremium] = useState(false);
@@ -87,7 +87,7 @@ const ResultsPage = () => {
     };
     
     loadData();
-  }, [location.state, history]);
+  }, [location.state, navigate]);
   
   // 로딩 화면
   if (loading) {
@@ -269,7 +269,7 @@ const ResultsPage = () => {
                 <button className="btn-share" onClick={handleShareResult}>
                   <FaArrowRight /> 결과 공유하기
                 </button>
-                <button className="btn-reanalyze" onClick={() => history.push('/analysis')}>
+                <button className="btn-reanalyze" onClick={() => navigate('/analysis')}>
                   다시 분석하기
                 </button>
                 <button className="btn-premium" onClick={togglePremiumModal}>

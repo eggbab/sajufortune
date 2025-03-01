@@ -21,18 +21,12 @@ const ProductsPage = () => {
       originalPrice: 29900,
       discount: 33,
       description: '기본적인 사주팔자 분석과 올해의 운세 정보',
-      features: [
-        '기본 사주팔자 분석',
-        '오행 구성 분석',
-        '올해의 운세',
-        '적성 분석',
-        '텍스트 리포트'
-      ],
       categories: ['basic', 'popular'],
-      image: '/assets/products/basic-saju.jpg',
+      imageStyle: { backgroundColor: '#8e44ad' },
       rating: 4.7,
       reviews: 128,
-      recommended: false
+      recommended: true,
+      features: ['오행 분석', '기본 사주해석', '올해 운세', '적성 분석']
     },
     {
       id: 2,
@@ -41,20 +35,12 @@ const ProductsPage = () => {
       originalPrice: 59900,
       discount: 33,
       description: '더 정확하고 자세한 사주 분석과 10년 운세 예측',
-      features: [
-        '전체 사주팔자 분석',
-        '오행 균형 상세 분석',
-        '10년 운세 예측',
-        '연애/결혼 궁합',
-        '직업 적성 분석',
-        '음성 해설 제공',
-        'PDF 상세 리포트'
-      ],
       categories: ['premium', 'popular'],
-      image: '/assets/products/premium-saju.jpg',
+      imageStyle: { backgroundColor: '#3498db' },
       rating: 4.9,
       reviews: 86,
-      recommended: true
+      recommended: false,
+      features: ['오행 상세 분석', '10년 대운 분석', '적성 심층 분석', '궁합 분석']
     },
     {
       id: 3,
@@ -74,7 +60,7 @@ const ProductsPage = () => {
         '주요 날짜 알림 서비스'
       ],
       categories: ['vip'],
-      image: '/assets/products/vip-saju.jpg',
+      imageStyle: { backgroundColor: '#e74c3c' },
       rating: 5.0,
       reviews: 42,
       recommended: false
@@ -95,7 +81,7 @@ const ProductsPage = () => {
         '데이트 추천일'
       ],
       categories: ['couple', 'popular'],
-      image: '/assets/products/couple-compatibility.jpg',
+      imageStyle: { backgroundColor: '#f39c12' },
       rating: 4.8,
       reviews: 74,
       recommended: false
@@ -116,7 +102,7 @@ const ProductsPage = () => {
         '5년 사업 전망'
       ],
       categories: ['business'],
-      image: '/assets/products/business-fortune.jpg',
+      imageStyle: { backgroundColor: '#2ecc71' },
       rating: 4.6,
       reviews: 53,
       recommended: false
@@ -137,7 +123,7 @@ const ProductsPage = () => {
         '성장 가이드라인'
       ],
       categories: ['family'],
-      image: '/assets/products/child-growth.jpg',
+      imageStyle: { backgroundColor: '#9b59b6' },
       rating: 4.9,
       reviews: 62,
       recommended: false
@@ -175,7 +161,7 @@ const ProductsPage = () => {
       id: 1,
       name: '김지연',
       age: 28,
-      image: '/assets/testimonial1.jpg',
+      avatarStyle: { backgroundColor: '#e74c3c' },
       text: '프리미엄 사주 분석을 통해 저의 진로에 대한 확신을 얻을 수 있었어요. 특히 직업 적성 분석이 정말 도움이 되었습니다.',
       productName: '프리미엄 사주 분석',
       rating: 5
@@ -184,7 +170,7 @@ const ProductsPage = () => {
       id: 2,
       name: '박준호',
       age: 34,
-      image: '/assets/testimonial2.jpg',
+      avatarStyle: { backgroundColor: '#3498db' },
       text: 'VIP 사주 분석의 전문가 상담이 정말 인상적이었습니다. 제 사주에 대한 깊은 통찰력을 바탕으로 구체적인 조언을 해주셨어요.',
       productName: 'VIP 사주 분석',
       rating: 5
@@ -193,7 +179,7 @@ const ProductsPage = () => {
       id: 3,
       name: '이미나',
       age: 31,
-      image: '/assets/testimonial3.jpg',
+      avatarStyle: { backgroundColor: '#2ecc71' },
       text: '커플 궁합 분석을 통해 남자친구와의 관계를 더 깊이 이해하게 되었어요. 우리의 강점과 주의해야 할 점을 알게 되어 더 건강한 관계를 유지할 수 있게 되었습니다.',
       productName: '커플 궁합 분석',
       rating: 4

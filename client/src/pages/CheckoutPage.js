@@ -37,95 +37,107 @@ const CheckoutPage = () => {
   // 에러 상태
   const [errors, setErrors] = useState({});
   
-  // 제품 데이터 (실제 프로젝트에서는 API에서 가져올 것입니다)
-  const productsData = [
-    {
+  // 제품 데이터 예시 (실제로는 위치 상태나 API로부터 가져옴)
+  const sampleProducts = {
+    basic: {
       id: 1,
       title: '기본 사주 분석',
       price: 19900,
       originalPrice: 29900,
       discount: 33,
-      description: '기본적인 사주팔자 분석과 올해의 운세 정보',
-      features: [
-        '기본 사주팔자 분석',
-        '오행 구성 분석',
-        '올해의 운세',
-        '적성 분석',
-        '텍스트 리포트'
-      ],
-      categories: ['basic', 'popular'],
-      image: '/assets/products/basic-saju.jpg',
-      rating: 4.7,
-      reviews: 128,
-      recommended: false
+      description: '사주팔자를 바탕으로 당신의 운명과 성격, 적성, 올해의 운세를 분석합니다.',
+      imageStyle: { backgroundColor: '#8e44ad' }, // 이미지 대신 배경색으로 대체
+      packages: [
+        {
+          id: 'basic-text',
+          name: '텍스트 리포트',
+          price: 19900,
+          description: '사주 분석 결과를 텍스트 리포트로 받아보세요'
+        },
+        {
+          id: 'basic-audio',
+          name: '오디오 해설 추가',
+          price: 29900,
+          description: '전문가의 음성 해설이 포함된 프리미엄 패키지'
+        }
+      ]
     },
-    {
+    premium: {
       id: 2,
       title: '프리미엄 사주 분석',
       price: 39900,
       originalPrice: 59900,
       discount: 33,
-      description: '더 정확하고 자세한 사주 분석과 10년 운세 예측',
-      features: [
-        '전체 사주팔자 분석',
-        '오행 균형 상세 분석',
-        '10년 운세 예측',
-        '연애/결혼 궁합',
-        '직업 적성 분석',
-        '음성 해설 제공',
-        'PDF 상세 리포트'
-      ],
-      categories: ['premium', 'popular'],
-      image: '/assets/products/premium-saju.jpg',
-      rating: 4.9,
-      reviews: 86,
-      recommended: true
+      description: '더 정확하고 자세한 사주 분석과 10년 운세 예측을 제공합니다.',
+      imageStyle: { backgroundColor: '#3498db' }, // 이미지 대신 배경색으로 대체
+      packages: [
+        {
+          id: 'premium-text',
+          name: '텍스트 리포트',
+          price: 39900,
+          description: '상세한 사주 분석과 10년 운세 예측 리포트'
+        },
+        {
+          id: 'premium-audio',
+          name: '오디오 해설 추가',
+          price: 49900,
+          description: '전문가의 음성 해설과 PDF 리포트 포함'
+        },
+        {
+          id: 'premium-consulting',
+          name: '1:1 상담 추가',
+          price: 69900,
+          description: '15분 화상 상담으로 더 깊은 인사이트 제공'
+        }
+      ]
     },
-    {
+    vip: {
       id: 3,
       title: 'VIP 사주 분석',
       price: 99900,
       originalPrice: 149900,
       discount: 33,
       description: '가장 상세한 분석과 전문가의 1:1 상담을 포함한 프리미엄 패키지',
-      features: [
-        '평생 사주 분석',
-        '오행 맞춤 개운법',
-        '월별 상세 운세',
-        '전문가 1:1 상담 (30분)',
-        '맞춤형 개운법 제공',
-        '인생 로드맵 설계',
-        '프리미엄 PDF 리포트',
-        '주요 날짜 알림 서비스'
-      ],
-      categories: ['vip'],
-      image: '/assets/products/vip-saju.jpg',
-      rating: 5.0,
-      reviews: 42,
-      recommended: false
+      imageStyle: { backgroundColor: '#e74c3c' }, // 이미지 대신 배경색으로 대체
+      packages: [
+        {
+          id: 'vip-complete',
+          name: 'VIP 패키지',
+          price: 99900,
+          description: '가장 상세한 분석과 30분 1:1 상담 포함'
+        },
+        {
+          id: 'vip-extended',
+          name: 'VIP 확장 패키지',
+          price: 149900,
+          description: '상세 분석, 60분 1:1 상담, 맞춤형 개운법 제공'
+        }
+      ]
     },
-    {
+    couple: {
       id: 4,
       title: '커플 궁합 분석',
       price: 29900,
       originalPrice: 39900,
       discount: 25,
       description: '두 사람의 사주를 분석하여 궁합과 관계의 발전 방향을 제시',
-      features: [
-        '두 사람의 기본 사주 분석',
-        '궁합 점수 및 해석',
-        '관계 발전 방향',
-        '잠재적 갈등 요소',
-        '상생과 상극 분석',
-        '데이트 추천일'
-      ],
-      categories: ['couple', 'popular'],
-      image: '/assets/products/couple-compatibility.jpg',
-      rating: 4.8,
-      reviews: 74,
-      recommended: false
+      imageStyle: { backgroundColor: '#f39c12' }, // 이미지 대신 배경색으로 대체
+      packages: [
+        {
+          id: 'couple-basic',
+          name: '기본 궁합 분석',
+          price: 29900,
+          description: '두 사람의 기본 궁합 점수와 해석'
+        },
+        {
+          id: 'couple-complete',
+          name: '상세 궁합 분석',
+          price: 49900,
+          description: '궁합 상세 분석과 관계 발전 방향 제시'
+        }
+      ]
     }
-  ];
+  };
   
   // 가격을 천 단위로 구분하여 형식화
   const formatPrice = (price) => {
@@ -141,7 +153,7 @@ const CheckoutPage = () => {
       try {
         if (productId) {
           // ID로 제품 찾기
-          const foundProduct = productsData.find(p => p.id === parseInt(productId));
+          const foundProduct = Object.values(sampleProducts).find(p => p.id === parseInt(productId));
           
           if (foundProduct) {
             setProduct(foundProduct);
@@ -666,19 +678,19 @@ const CheckoutPage = () => {
               
               {product && (
                 <div className="order-summary">
-                  <div className="product-summary">
-                    <img 
-                      src={product.image || '/assets/product-placeholder.jpg'} 
-                      alt={product.title}
-                      className="product-summary-image"
-                    />
-                    <div className="product-summary-info">
-                      <h3 className="product-summary-title">{product.title}</h3>
-                      <div className="product-summary-meta">
-                        {product.features && product.features.length > 0 && (
-                          <span>{product.features.length}개 항목 분석</span>
-                        )}
-                      </div>
+                  <h3>주문 요약</h3>
+                  
+                  <div className="order-product">
+                    <div className="product-image-small">
+                      {product.image ? (
+                        <img src={product.image} alt={product.title} />
+                      ) : (
+                        <div className="product-color" style={product.imageStyle}></div>
+                      )}
+                    </div>
+                    <div className="product-details-small">
+                      <h4>{product.title}</h4>
+                      <p>{product.description}</p>
                     </div>
                   </div>
                 </div>

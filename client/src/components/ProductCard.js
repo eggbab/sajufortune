@@ -11,7 +11,8 @@ const ProductCard = ({ product }) => {
     discount, 
     description, 
     features, 
-    image, 
+    image,
+    imageStyle, 
     rating, 
     reviews, 
     recommended 
@@ -69,7 +70,16 @@ const ProductCard = ({ product }) => {
       )}
       
       <div className="product-image">
-        <img src={image || '/assets/product-placeholder.jpg'} alt={title} />
+        {image ? (
+          <img src={image} alt={title} />
+        ) : (
+          <div 
+            className="image-placeholder" 
+            style={imageStyle || { backgroundColor: '#f0f0f0' }}
+          >
+            <span className="product-initial">{title.charAt(0)}</span>
+          </div>
+        )}
       </div>
       
       <div className="product-content">

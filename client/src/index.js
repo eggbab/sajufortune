@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import ResultPage from './pages/ResultPage';
@@ -12,13 +12,13 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route path="/result" component={ResultPage} />
-        <Route path="/privacy" component={PrivacyPolicy} />
-        <Route path="/terms" component={Terms} />
-        <Route path="/refund" component={RefundPolicy} />
-      </Switch>
+      <Routes>
+        <Route exact path="/" element={<App />} />
+        <Route path="/result" element={<ResultPage />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/refund" element={<RefundPolicy />} />
+      </Routes>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

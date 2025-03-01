@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProductCard from '../components/ProductCard';
 import '../styles/ProductDetail.css';
+import { FaStar, FaRegStar, FaStarHalfAlt, FaShoppingCart, FaCheck } from 'react-icons/fa';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -15,6 +16,7 @@ const ProductDetailPage = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [activeFaq, setActiveFaq] = useState(null);
   const [inWishlist, setInWishlist] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState(null);
   
   // 제품 데이터 모음 (실제 프로젝트에서는 API에서 가져올 것입니다)
   const productsData = [
@@ -230,6 +232,25 @@ const ProductDetailPage = () => {
     // 실제 구현에서는 서버에 위시리스트 상태를 저장
   };
   
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+  
+  const handlePackageSelect = (pkg) => {
+    setSelectedPackage(pkg);
+  };
+  
+  const handleAddToCart = () => {
+    // 실제로는 장바구니에 추가하는 로직
+    // 지금은 바로 체크아웃 페이지로 이동
+    navigate('/checkout', { 
+      state: { 
+        product: product,
+        selectedPackage: selectedPackage 
+      } 
+    });
+  };
+  
   if (loading) {
     return (
       <div className="product-detail-page">
@@ -341,25 +362,25 @@ const ProductDetailPage = () => {
                 <div className="content-tabs">
                   <div 
                     className={`content-tab ${activeTab === 'features' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('features')}
+                    onClick={() => handleTabChange('features')}
                   >
                     특징 및 장점
                   </div>
                   <div 
                     className={`content-tab ${activeTab === 'description' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('description')}
+                    onClick={() => handleTabChange('description')}
                   >
                     상세 설명
                   </div>
                   <div 
                     className={`content-tab ${activeTab === 'reviews' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('reviews')}
+                    onClick={() => handleTabChange('reviews')}
                   >
                     리뷰 ({product.reviews})
                   </div>
                   <div 
                     className={`content-tab ${activeTab === 'faq' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('faq')}
+                    onClick={() => handleTabChange('faq')}
                   >
                     자주 묻는 질문
                   </div>
